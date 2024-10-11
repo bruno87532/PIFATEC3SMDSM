@@ -1,24 +1,21 @@
-from django.db import models
+import uuid
+from djongo import models
 
 # Create your models here.
 
 class Doacao(models.Model):
-    nome_produto = models.CharField(max_length=100)
-    descricao_produto = models.CharField(max_length=256, blank=True, null=True)
-    quantidade_produto = models.IntegerField()
-
-    class Meta:
-        abstract = True
+   id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+   nome_produto = models.CharField(max_length=100)
+   descricao_produto = models.CharField(max_length=256, blank=True, null=True)
+   quantidade_produto = models.IntegerField()
 
 class ProdutoOfertado(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     nome_produto = models.CharField(max_length=100)
     descricao_produto = models.CharField(max_length=256, blank=True, null=True)
     quantidade_produto = models.IntegerField()
     validade_produto = models.DateTimeField()
     disponivel_produto = models.BooleanField(default=True)
-
-    class Meta:
-        abstract = True
 
 class Empresa(models.Model):
     nome_empresa = models.CharField(max_length=100)

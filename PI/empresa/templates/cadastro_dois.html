@@ -1,0 +1,48 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de empresa</title>
+</head>
+<body>
+    <form id="form_dois">
+        {% csrf_token %}
+        <p>
+            <label for="id_cep_empresa">CEP da empresa: </label>
+            {{ form.cep_empresa }}
+        </p>
+        <p>
+            <label for="id_estado_empresa">Estado da empresa: </label>
+            {{ form.estado_empresa }}
+        </p>
+        <p>
+            <label for="id_cidade_empresa">Cidade da empresa: </label>
+            {{ form.cidade_empresa }}
+        </p>
+        <p>
+            <label for="id_bairro_empresa">Bairro da empresa: </label>
+            {{ form.bairro_empresa }}
+        </p>
+        <p>
+            <label for="id_rua_empresa">Rua da empresa: </label>
+            {{ form.rua_empresa }}
+        </p>
+        <p>
+            <label for="id_numero_empresa">Número da empresa: </label>
+            {{ form.numero_empresa }}
+        </p>
+        <p>
+            <label for="id_complemento_empresa">Complemento da empresa: </label>
+            {{ form.complemento_empresa }}
+        </p>
+        <input type="submit" value="Próximo">
+        <script>
+            const url_empresa_post = "{% url 'empresapostcad' %}"
+            const url_empresa_get = "{% url 'empresagetcad' etapa='0' %}"
+        </script>
+        <script src="{% static 'script/FormEmpresaDois.js' %}" type="module"></script>
+    </form>
+</body>
+</html>

@@ -30,6 +30,10 @@
             {{ form.senha_login_empresa }}
         </p>
         <input type="submit" value="Próximo">
+        <script>
+            const url_empresa_post = "{% url 'empresapostcad' %}"
+            const url_empresa_get = "{% url 'empresagetcad' etapa='0' %}"
+        </script>
         <script src="{% static 'script/FormEmpresaUm.js' %}" type="module"></script>
     </form>
 </body>

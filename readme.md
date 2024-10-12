@@ -29,7 +29,7 @@ Dentro da pasta PI, no seu terminal, execute o comando python manage.py runserve
  
 - [Abner Souza](https://github.com/AbnerSouza2)
 - [Ana Laura](https://github.com/nalaura97)
-- Athos Sperber da Cunha
+- [Athos Sperber da Cunha](https://github.com/AthosSperber)
 - [Bruno Henrique Guinerio](https://github.com/bruno87532)
-- Camila
-- Christian Santos Rocha
+- [Camila Schiabel](http://github.com/produtocamila)
+- [Christian Santos Rocha](https://github.com/christiansrocha)

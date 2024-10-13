@@ -11,6 +11,7 @@ class FormEmpresaDois extends Form{
             rua_empresa: document.getElementById('id_rua_empresa').value,
             numero_empresa: document.getElementById('id_numero_empresa').value,
             complemento_empresa: document.getElementById('id_complemento_empresa').value,
+            etapa: 2,
         }) 
         this.api = new Api();
         this.api.envia_etapa(dados, '3')

@@ -8,6 +8,7 @@ class FormEmpresaTres extends Form{
             cpf_representante_empresa: document.getElementById('id_cpf_representante_empresa').value,
             telefone_representante_empresa: document.getElementById('id_telefone_representante_empresa').value,
             email_representante_empresa: document.getElementById('id_email_representante_empresa').value,
+            etapa: 3,
         }) 
         this.api = new Api();
         this.api.envia_etapa(dados)

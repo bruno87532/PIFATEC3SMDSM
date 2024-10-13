@@ -8,7 +8,8 @@ class FormEmpresaUm extends Form{
             cnpj_empresa: document.getElementById('id_cnpj_empresa').value,
             tipo_empresa: document.getElementById('id_tipo_empresa').value,
             email_login_empresa: document.getElementById('id_email_login_empresa').value,
-            senha_login_empresa: document.getElementById('id_senha_login_empresa').value
+            senha_login_empresa: document.getElementById('id_senha_login_empresa').value,
+            etapa: 1,
         }) 
         this.api = new Api();
         this.api.envia_etapa(dados, '2')

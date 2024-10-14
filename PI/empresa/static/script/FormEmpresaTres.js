@@ -1,5 +1,5 @@
-import Form from './Form.js';
-import Api from './Api.js';
+import Form from '/static/script/Form.js';
+import Api from '/static/script/Api.js'
 
 class FormEmpresaTres extends Form{
     para_json(){

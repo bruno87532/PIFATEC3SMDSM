@@ -19,11 +19,11 @@ class ProdutoOfertado(models.Model):
 
 class Empresa(models.Model):
     nome_empresa = models.CharField(max_length=100)
-    cnpj_empresa = models.CharField(max_length=14)
+    cnpj_empresa = models.CharField(max_length=20)
     tipo_empresa = models.CharField(max_length=100)
     email_login_empresa = models.EmailField(max_length=100)
     senha_login_empresa = models.CharField(max_length=100)
-    cep_empresa = models.CharField(max_length=8)
+    cep_empresa = models.CharField(max_length=20)
     estado_empresa = models.CharField(max_length=100)
     cidade_empresa = models.CharField(max_length=100)
     bairro_empresa = models.CharField(max_length=100)

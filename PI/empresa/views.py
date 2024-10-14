@@ -1,9 +1,7 @@
 from django.shortcuts import render
 from empresa.forms import EmpresaFormUm, EmpresaFormDois, EmpresaFormTres
-from rest_framework.views import APIView
 from django.http import JsonResponse
 from rest_framework.generics import ListCreateAPIView
-from empresa.models import Empresa
 from empresa.serializers import EmpresaSerializer
 
 # Create your views here.
@@ -39,7 +37,7 @@ class EmpresaCadastro(ListCreateAPIView):
                     request.session['dados_empresa'].update(form.cleaned_data)
                 request.session.modified = True
                 if etapa == 3:
-                    serializer = EmpresaSerializer(data = request.session['dados_empresa'])
+                    serializer = EmpresaSerializer(data = form.cleaned_data)
                     if serializer.is_valid():
                         serializer.save()
                     else:
@@ -54,6 +52,6 @@ class EmpresaCadastro(ListCreateAPIView):
             }, status = 500)
         
         ## POSTERIORMENTE REFATORE ESTE CÓDIGO PARA MELHORAR
-class EmpresaLogin(APIView):
+class EmpresaLogin(ListCreateAPIView):
     def get(self, request):
         return render(request=request, template_name='login.html')

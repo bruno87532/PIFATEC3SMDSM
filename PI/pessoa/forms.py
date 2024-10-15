@@ -1,5 +1,6 @@
 from django import forms
 from pessoa.models import Pessoa
+import re 
 
 # AQUI SERÁ FEITA A SANITAÇÃO DOS DADOS, A VERIFICAÇÃO DE SE ESTAR CORRETOS FAREMOS NO SERIALIZER USANDO DJANGO REST FRAMEWORK
 
@@ -17,15 +18,15 @@ class PessoaForm(forms.ModelForm):
     
     def clean_nome_pessoa(self):
         nome_pessoa = self.cleaned_data.get('nome_pessoa')
-        print('A sanitização de nome da pessoa foi executada')
+        nome_pessoa = ''.join(re.findall(r'[a-zA-Z\s]', nome_pessoa)).title()
         return nome_pessoa
     
     def clean_cpf_pessoa(self):
         cpf_pessoa = self.cleaned_data.get('cpf_pessoa')
-        print('A sanitização de cpf da pessoa foi executada')
+        cpf_pessoa = ''.join(re.findall(r'\d', cpf_pessoa))
         return cpf_pessoa
 
     def clean_telefone_pessoa(self):
         telefone_pessoa = self.cleaned_data.get('telefone_pessoa')
-        print('A sanitização de telefone da pessoa foi executada')
+        telefone_pessoa = ''.join(re.findall(r'\d', telefone_pessoa))
         return telefone_pessoa

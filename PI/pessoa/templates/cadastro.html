@@ -9,7 +9,40 @@
 <body>
     <form id="form_pessoa">
         {% csrf_token %}
-        {{ form.as_p }}
+        <p>
+            <label for="id_nome_pessoa">Nome completo: </label>
+            {{ form.nome_pessoa }}
+        </p>
+        <p>
+            <label for="id_cpf_pessoa">CPF: </label>
+            {{ form.cpf_pessoa }}
+            {% for erro in lista_contexto %}
+                {% if erro.cpf_erro %}
+                    <label>{{ erro.cpf_erro }}</label>
+                {% endif %}
+            {% endfor %}
+        </p>
+        <p>
+            <label for="id_email_login_pessoa">Email: </label>
+            {{ form.email_login_pessoa }}
+        </p>
+        <p>
+            <label for="id_senha_login_pessoa">Senha: </label>
+            {{ form.senha_login_pessoa }}
+        </p>
+        <p>
+            <label for="id_data_nascimento_pessoa">Data de nascimento: </label>
+            {{ form.data_nascimento_pessoa }}
+            {% for erro in lista_contexto %}
+                {% if erro.data_nascimento_erro %}
+                    <label>{{ erro.data_nascimento_erro }}</label>
+                {% endif %}
+            {% endfor %}
+        </p>
+        <p>
+            <label for="id_telefone_pessoa">Telefone: </label>
+            {{ form.telefone_pessoa }}
+        </p>
         <input type="submit" value="Enviar">
         <script>
             const url_get = "{% url 'pessoagetlogin' %}"

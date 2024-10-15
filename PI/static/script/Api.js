@@ -19,6 +19,8 @@ class Api {
                 }
                 const url_get_dinamico = url_get.replace('0', etapa)
                 window.location.href = url_get_dinamico
+            }else{
+                
             }
         } catch (error) {
             console.error('Erro ao enviar dados', error);

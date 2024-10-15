@@ -20,8 +20,16 @@ class PessoaCadastro(ListCreateAPIView):
                     serializer.save()
                     return JsonResponse({'status': 'sucesso'}, status=201)
                 else:
-                    print(f'teste: {serializer.errors}')
-                    return JsonResponse({'status': 'erro', 'errors': serializer.errors}, status=400)
+                    form = PessoaForm(request.data)
+                    lista_erro = list(serializer.errors.keys())
+                    lista_contexto = []
+                    if 'cpf_pessoa' in lista_erro:
+                        cpf_erro = {'cpf_erro': 'CPF inválido'}
+                        lista_contexto.append(cpf_erro)
+                    if 'data_nascimento_pessoa' in lista_erro:
+                        data_nascimento_erro = {'data_nascimento_erro': 'Data de nascimento inválida'}
+                        lista_contexto.append(data_nascimento_erro)
+                    return render(request=request, template_name='cadastro.html', context={'form': form, 'erro': lista_contexto})
             else: 
                 # Tratar aqui
                 ...

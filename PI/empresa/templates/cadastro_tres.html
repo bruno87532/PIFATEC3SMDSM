@@ -7,7 +7,7 @@
     <title>Cadastro de empresa</title>
 </head>
 <body>
-    <form id="form_tres">
+    <form action="{% url 'empresapostcad' %}" method="post">
         {% csrf_token %}
         <p>
             <label for="id_nome_representante_empresa">Nome do representante legal da empresa: </label>
@@ -25,12 +25,8 @@
             <label for="id_email_representante_empresa">Email do representante legal da empresa: </label>
             {{ form.email_representante_empresa }}
         </p>
+        <input type="hidden" name="etapa3" value="etapa3">
         <input type="submit" value="Próximo">
-        <script>
-            const url_post = "{% url 'empresapostcad' %}"
-            const url_get = "{% url 'empresagetlogin' %}"
-        </script>
-        <script src="{% static 'script/FormEmpresaTres.js' %}" type="module"></script>
     </form>
 </body>
 </html>

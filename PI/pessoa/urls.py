@@ -4,5 +4,5 @@ urlpatternscad = [
     path('', PessoaCadastro.as_view(), name='pessoa'),
 ]
 urlpatternslogin = [
-    path('', PessoaLogin.as_view(), name='pessoagetlogin')
+    path('', PessoaLogin.as_view(), name='pessoalogin')
 ]

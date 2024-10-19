@@ -7,18 +7,23 @@
     <title>Cadastro de pessoa</title>
 </head>
 <body>
-    <form id="form_pessoa">
+    <form id="form_pessoa" action="{% url 'pessoa' %}" method="post">
         {% csrf_token %}
         <p>
             <label for="id_nome_pessoa">Nome completo: </label>
             {{ form.nome_pessoa }}
+            {% for i in erro %}
+                {% if i.nome_erro %}
+                    <label>{{ i.nome_erro }}</label>
+                {% endif %}
+            {% endfor %}
         </p>
         <p>
             <label for="id_cpf_pessoa">CPF: </label>
             {{ form.cpf_pessoa }}
-            {% for erro in lista_contexto %}
-                {% if erro.cpf_erro %}
-                    <label>{{ erro.cpf_erro }}</label>
+            {% for i in erro %}
+                {% if i.cpf_erro %}
+                    <label>{{ i.cpf_erro }}</label>
                 {% endif %}
             {% endfor %}
         </p>
@@ -33,22 +38,22 @@
         <p>
             <label for="id_data_nascimento_pessoa">Data de nascimento: </label>
             {{ form.data_nascimento_pessoa }}
-            {% for erro in lista_contexto %}
-                {% if erro.data_nascimento_erro %}
-                    <label>{{ erro.data_nascimento_erro }}</label>
+            {% for i in erro %}
+                {% if i.data_nascimento_erro %}
+                    <label>{{ i.data_nascimento_erro }}</label>
                 {% endif %}
             {% endfor %}
         </p>
         <p>
             <label for="id_telefone_pessoa">Telefone: </label>
             {{ form.telefone_pessoa }}
+            {% for i in erro %}
+                {% if i.telefone_erro %}
+                    <label>{{ i.telefone_erro }}</label>
+                {% endif %}
+            {% endfor %}
         </p>
         <input type="submit" value="Enviar">
-        <script>
-            const url_get = "{% url 'pessoagetlogin' %}"
-            const url_post = "{% url 'pessoa' %}"
-        </script>
-        <script src="{% static 'script/FormPessoa.js' %}" type="module"></script>
     </form>
 </body>
 </html>

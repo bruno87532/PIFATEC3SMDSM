@@ -1,12 +1,10 @@
-from django.shortcuts import render
-from empresa.forms import EmpresaFormUm, EmpresaFormDois, EmpresaFormTres
-from django.http import JsonResponse
-from rest_framework.generics import ListCreateAPIView
-from empresa.serializers import EmpresaSerializer
+from django.shortcuts import render, redirect
+from empresa.forms import EmpresaFormUm, EmpresaFormDois, EmpresaFormTres, EmpresaCompleta
+from django.views import View
 
 # Create your views here.
 
-class EmpresaCadastro(ListCreateAPIView):
+class EmpresaCadastro(View):
     def get(self, request, etapa):
         if etapa == 1:
             template = 'cadastro_um.html'
@@ -19,39 +17,34 @@ class EmpresaCadastro(ListCreateAPIView):
             form = EmpresaFormTres()
         return render(request=request, template_name=template, context={'form': form}) 
     def post(self, request):
-        try:
-            etapa = request.data.get('etapa')
-            if etapa == 1:
-                form = EmpresaFormUm(request.data)
-
-            elif etapa == 2:
-                form = EmpresaFormDois(request.data)
-
-            elif etapa == 3:
-                form = EmpresaFormTres(request.data)
-
+        if request.POST.get('etapa1', ''):
+            form = EmpresaFormUm(request.POST)
             if form.is_valid():
-                if not request.session.get('dados_empresa', ''):
-                    request.session['dados_empresa'] = form.cleaned_data
-                else:
-                    request.session['dados_empresa'].update(form.cleaned_data)
+                request.session['empresa'] = request.POST
                 request.session.modified = True
-                if etapa == 3:
-                    serializer = EmpresaSerializer(data = form.cleaned_data)
-                    if serializer.is_valid():
-                        serializer.save()
-                    else:
-                        ...
-                        print(serializer.errors)
-                        ## Devo tratar aqui
-                print(request.session['dados_empresa'])
-                return JsonResponse({'status': 'sucesso'}, status=201)
-        except Exception as e:
-            return JsonResponse({
-                'erro': str(e)
-            }, status = 500)
+                print(request.session['empresa'])
+                return redirect('empresagetcad', etapa = 2)
+        elif request.POST.get('etapa2', ''):
+            form = EmpresaFormDois(request.POST)
+            if form.is_valid():
+                request.session['empresa'] = request.session['empresa'] | request.POST
+                request.session.modified = True
+                print(request.session['empresa'])
+                return redirect('empresagetcad', etapa = 3)
+        elif request.POST.get('etapa3', ''):
+            form = EmpresaFormTres(request.POST)
+            if form.is_valid():
+                request.session['empresa'] = request.session['empresa'] | request.POST
+                print(request.session['empresa'])
+                form_completo = EmpresaCompleta(request.session['empresa'])
+                request.session['empresa'].pop('etapa1')
+                request.session['empresa'].pop('etapa2')
+                request.session['empresa'].pop('etapa3')
+                form_completo.save()
+                return render(request=request, template_name='login_empresa.html')
+            else:
+                print(f'teste: {form.errors}')
         
-        ## POSTERIORMENTE REFATORE ESTE CÓDIGO PARA MELHORAR
-class EmpresaLogin(ListCreateAPIView):
+class EmpresaLogin(View):
     def get(self, request):
         return render(request=request, template_name='login.html')

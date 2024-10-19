@@ -7,7 +7,7 @@
     <title>Cadastro de empresa</title>
 </head>
 <body>
-    <form id="form_um">
+    <form action="{% url 'empresapostcad' %}" method="post">
         {% csrf_token %}
         <p>
             <label for="id_nome_empresa">Nome da empresa: </label>
@@ -29,12 +29,10 @@
             <label for="id_senha_login_empresa">Senha para login da empresa: </label>
             {{ form.senha_login_empresa }}
         </p>
+        <p>
+            <input type="hidden" name="etapa1" value="etapa1">
+        </p>
         <input type="submit" value="Próximo">
-        <script>
-            const url_post = "{% url 'empresapostcad' %}"
-            const url_get = "{% url 'empresagetcad' etapa='0' %}"
-        </script>
-        <script src="{% static 'script/FormEmpresaUm.js' %}" type="module"></script>
     </form>
 </body>
 </html>

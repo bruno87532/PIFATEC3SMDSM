@@ -7,7 +7,7 @@
     <title>Cadastro de empresa</title>
 </head>
 <body>
-    <form id="form_dois">
+    <form action="{% url 'empresapostcad' %}" method="post">
         {% csrf_token %}
         <p>
             <label for="id_cep_empresa">CEP da empresa: </label>
@@ -37,12 +37,8 @@
             <label for="id_complemento_empresa">Complemento da empresa: </label>
             {{ form.complemento_empresa }}
         </p>
+        <input type="hidden" name="etapa2" value="etapa2">
         <input type="submit" value="Próximo">
-        <script>
-            const url_post = "{% url 'empresapostcad' %}"
-            const url_get = "{% url 'empresagetcad' etapa='0' %}"
-        </script>
-        <script src="{% static 'script/FormEmpresaDois.js' %}" type="module"></script>
     </form>
 </body>
 </html>

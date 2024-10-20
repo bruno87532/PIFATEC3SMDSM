@@ -1,10 +1,8 @@
 from django import forms
 from pessoa.models import Pessoa
-from datetime import datetime
+from datetime import date
 from django.utils import timezone
 import re 
-
-# AQUI SERÁ FEITA A SANITAÇÃO DOS DADOS, A VERIFICAÇÃO DE SE ESTAR CORRETOS FAREMOS NO SERIALIZER USANDO DJANGO REST FRAMEWORK
 
 class PessoaForm(forms.ModelForm):
     class Meta: 
@@ -17,16 +15,26 @@ class PessoaForm(forms.ModelForm):
             'data_nascimento_pessoa',
             'telefone_pessoa'
         ]
+        widgets = {
+            'data_nascimento_pessoa': forms.DateInput(attrs={'type': 'date',
+                                                             'min': '1900-01-01',
+                                                             'max': date.today(),
+                                                             'onkeydown': 'return false',
+                                                             }),
+            'senha_login_pessoa': forms.PasswordInput(attrs={'type': 'password',})
+        }
     
     def clean_nome_pessoa(self):
         nome_pessoa = self.cleaned_data.get('nome_pessoa')
         nome_pessoa = ''.join(re.findall(r'[a-zA-Z\s]', str(nome_pessoa))).title()
         if not nome_pessoa:
-            raise forms.ValidationError('Nome inválido!')
+            raise forms.ValidationError('Nome inválido')
         return nome_pessoa
     
     def clean_cpf_pessoa(self):
         cpf_pessoa = self.cleaned_data.get('cpf_pessoa')
+        if Pessoa.objects.filter(cpf_pessoa=cpf_pessoa):
+            raise forms.ValidationError('CPF já cadastrado')
         cpf_pessoa = ''.join(re.findall(r'\d', str(cpf_pessoa)))
         peso_primeiro_digito = [10, 9, 8, 7, 6, 5, 4, 3, 2]
         peso_segundo_digito = [11, 10, 9, 8, 7, 6, 5, 4, 3, 2]
@@ -50,6 +58,19 @@ class PessoaForm(forms.ModelForm):
             raise forms.ValidationError('CPF inválido!')
         return cpf_pessoa
 
+    def clean_email_login_pessoa(self):
+        email_login_pessoa = self.cleaned_data.get('email_login_pessoa')
+        print(email_login_pessoa)
+        if Pessoa.objects.filter(email_login_pessoa=email_login_pessoa):
+            print('isto aqui não está indo')
+            raise forms.ValidationError('Email já cadastrado!')
+        
+    def clean_senha_login_pessoa(self):
+        senha_login_pessoa = self.cleaned_data.get('senha_login_pessoa')
+        if len(senha_login_pessoa) < 8:
+            raise forms.ValidationError('Senha inválida')
+        return senha_login_pessoa
+
     def clean_telefone_pessoa(self):
         telefone_pessoa = self.cleaned_data.get('telefone_pessoa')
         telefone_pessoa = ''.join(re.findall(r'\d', str(telefone_pessoa)))
@@ -59,6 +80,6 @@ class PessoaForm(forms.ModelForm):
     
     def clean_data_nascimento_pessoa(self):
         data_nascimento_pessoa = self.cleaned_data.get('data_nascimento_pessoa')
-        if data_nascimento_pessoa > timezone.now() or data_nascimento_pessoa < datetime(1900, 1, 1, tzinfo=timezone.utc):
+        if timezone.now().date().year - data_nascimento_pessoa.year < 18:
             raise forms.ValidationError('Data de nascimento inválida')
         return data_nascimento_pessoa

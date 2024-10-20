@@ -18,6 +18,7 @@ from django.urls import path, include
 from empresa.urls import urlpatternscad as url_empresa_cad, urlpatternslogin as url_empresa_login
 from home.urls import urlpatterns as url_home
 from pessoa.urls import urlpatternscad as url_pessoa_cad, urlpatternslogin as url_pessoa_login
+from home.urls import urlpatterns as url_home
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -25,5 +26,6 @@ urlpatterns = [
     path('login/empresa/', include(url_empresa_login)),
     path('cadastro/pessoa/', include(url_pessoa_cad)),
     path('login/pessoa/', include(url_pessoa_login)),
+    path('home/', include(url_home)),
     path('', include(url_home))
 ]

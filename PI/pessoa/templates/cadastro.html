@@ -24,16 +24,29 @@
             {% for i in erro %}
                 {% if i.cpf_erro %}
                     <label>{{ i.cpf_erro }}</label>
-                {% endif %}
+                {% elif i.cpf_existe %}
+                    <label>{{ i.cpf_existe }}</label>
+                {% endif %}                
             {% endfor %}
         </p>
         <p>
             <label for="id_email_login_pessoa">Email: </label>
             {{ form.email_login_pessoa }}
+            {% for i in erro %}
+                {% if i.email_erro %}
+                    <label>{{ i.email_erro }}</label>
+                {% endif %}
+            {% endfor %}
         </p>
         <p>
             <label for="id_senha_login_pessoa">Senha: </label>
             {{ form.senha_login_pessoa }}
+            <label id="img_olho" class="img_olho">&#128065;</label>
+            {% for i in erro %}
+                {% if i.senha_erro %}
+                    <label>{{ i.senha_erro }}</label>
+                {% endif %}
+            {% endfor %}
         </p>
         <p>
             <label for="id_data_nascimento_pessoa">Data de nascimento: </label>
@@ -55,5 +68,6 @@
         </p>
         <input type="submit" value="Enviar">
     </form>
+    <script src="{% static 'script/Input.js' %}"></script>
 </body>
 </html>

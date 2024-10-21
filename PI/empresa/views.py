@@ -20,31 +20,28 @@ class EmpresaCadastro(View):
         if request.POST.get('etapa1', ''):
             form = EmpresaFormUm(request.POST)
             if form.is_valid():
-                request.session['empresa'] = request.POST
+                request.session['empresa'] = form.cleaned_data
                 request.session.modified = True
                 print(request.session['empresa'])
                 return redirect('empresagetcad', etapa = 2)
         elif request.POST.get('etapa2', ''):
             form = EmpresaFormDois(request.POST)
             if form.is_valid():
-                request.session['empresa'] = request.session['empresa'] | request.POST
+                request.session['empresa'] = request.session['empresa'] | form.cleaned_data
                 request.session.modified = True
                 print(request.session['empresa'])
                 return redirect('empresagetcad', etapa = 3)
         elif request.POST.get('etapa3', ''):
             form = EmpresaFormTres(request.POST)
             if form.is_valid():
-                request.session['empresa'] = request.session['empresa'] | request.POST
+                request.session['empresa'] = request.session['empresa'] | form.cleaned_data
                 print(request.session['empresa'])
                 form_completo = EmpresaCompleta(request.session['empresa'])
-                request.session['empresa'].pop('etapa1')
-                request.session['empresa'].pop('etapa2')
-                request.session['empresa'].pop('etapa3')
                 form_completo.save()
-                return render(request=request, template_name='login_empresa.html')
+                return redirect('empresagetlogin')
             else:
                 print(f'teste: {form.errors}')
         
 class EmpresaLogin(View):
     def get(self, request):
-        return render(request=request, template_name='dados_empresa.html')
+        return render(request=request, template_name='login_empresa.html')

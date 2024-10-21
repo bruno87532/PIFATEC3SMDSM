@@ -13,6 +13,23 @@ class EmpresaFormUm(forms.ModelForm):
             'email_login_empresa',
             'senha_login_empresa',
         ]
+        widgets = {
+            'nome_empresa': forms.TextInput(attrs={
+                'class': 'form-control',
+            }),
+            'cnpj_empresa': forms.TextInput(attrs={
+                'class': 'form-control',
+            }),
+            'tipo_empresa': forms.TextInput(attrs={
+                'class': 'form-control',
+            }),
+            'email_login_empresa': forms.TextInput(attrs={
+                'class': 'form-control',
+            }),
+            'senha_login_empresa': forms.TextInput(attrs={
+                'class': 'form-control',
+            }),
+        }
     
     def clean_nome_empresa(self):
         nome_empresa = self.cleaned_data.get('nome_empresa')   
@@ -39,6 +56,29 @@ class EmpresaFormDois(forms.ModelForm):
             'numero_empresa',
             'complemento_empresa',
         ]
+        widgets = {
+            'cep_empresa': forms.TextInput(attrs={
+                'class': 'form-control',
+            }),
+            'estado_empresa': forms.TextInput(attrs={
+                'class': 'form-control',
+            }),
+            'cidade_empresa': forms.TextInput(attrs={
+                'class': 'form-control',
+            }),
+            'bairro_empresa': forms.TextInput(attrs={
+                'class': 'form-control',
+            }),
+            'rua_empresa': forms.TextInput(attrs={
+                'class': 'form-control',
+            }),
+            'numero_empresa': forms.TextInput(attrs={
+                'class': 'form-control',
+            }),
+            'complemento_empresa': forms.TextInput(attrs={
+                'class': 'form-control',
+            }),
+        }
 
     def clean_cep_empresa(self):
         cep_empresa = self.cleaned_data.get('cep_empresa')
@@ -55,6 +95,20 @@ class EmpresaFormTres(forms.ModelForm):
             'telefone_representante_empresa',
             'email_representante_empresa',
         ]
+        widgets = {
+            'nome_representante_empresa': forms.TextInput(attrs={
+                'class': 'form-control',
+            }),
+            'cpf_representante_empresa': forms.TextInput(attrs={
+                'class': 'form-control',
+            }),
+            'telefone_representante_empresa': forms.TextInput(attrs={
+                'class': 'form-control',
+            }),
+            'email_representante_empresa': forms.TextInput(attrs={
+                'class': 'form-control',
+            })
+        }
 
     def clean_nome_representante_empresa(self):
         nome_representante_empresa = self.cleaned_data.get('nome_representante_empresa')

@@ -2,7 +2,6 @@ from django.shortcuts import render, redirect
 from pessoa.forms import PessoaForm
 from pessoa.forms import PessoaForm
 from django.views import View
-import re 
 
 # Create your views here.
 
@@ -14,13 +13,11 @@ class PessoaCadastro(View):
         form = PessoaForm(request.POST)
         if form.is_valid():
             pessoa = form.save(commit=False)
-            print(pessoa.id)
             pessoa.set_senha(form.cleaned_data['senha_login_pessoa'])
             pessoa.save()
             return redirect('pessoalogin')
         else:
             lista_erro = list(form.errors.keys())
-            print(lista_erro)
             lista_contexto = []
             if 'nome_pessoa' in lista_erro:
                 nome_pessoa = {'nome_erro': 'Nome inválido'}

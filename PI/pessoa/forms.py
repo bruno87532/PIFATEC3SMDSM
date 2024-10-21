@@ -33,6 +33,7 @@ class PessoaForm(forms.ModelForm):
     
     def clean_cpf_pessoa(self):
         cpf_pessoa = self.cleaned_data.get('cpf_pessoa')
+        (f'pao com ovo {Pessoa.objects.filter(cpf_pessoa=cpf_pessoa)}')
         if Pessoa.objects.filter(cpf_pessoa=cpf_pessoa):
             raise forms.ValidationError('CPF já cadastrado')
         cpf_pessoa = ''.join(re.findall(r'\d', str(cpf_pessoa)))
@@ -60,10 +61,9 @@ class PessoaForm(forms.ModelForm):
 
     def clean_email_login_pessoa(self):
         email_login_pessoa = self.cleaned_data.get('email_login_pessoa')
-        print(email_login_pessoa)
         if Pessoa.objects.filter(email_login_pessoa=email_login_pessoa):
-            print('isto aqui não está indo')
             raise forms.ValidationError('Email já cadastrado!')
+        return email_login_pessoa
         
     def clean_senha_login_pessoa(self):
         senha_login_pessoa = self.cleaned_data.get('senha_login_pessoa')

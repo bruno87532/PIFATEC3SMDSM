@@ -75,13 +75,23 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="id_nome_representante_empresa">Nome do representante:</label>
-                            <input type="text" class="form-control" id="id_nome_representante_empresa" name="nome_representante_empresa" required>
+                            {{ form.nome_representante_empresa }}
+                            {% for i in erro %}
+                                {% if i.nome_erro %}
+                                    <label>{{ i.nome_erro }}</label>
+                                {% endif %}
+                            {% endfor %}
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="id_cpf_representante_empresa">CPF:</label>
-                            <input type="text" class="form-control" id="id_cpf_representante_empresa" name="cpf_representante_empresa" required>
+                            {{ form.cpf_representante_empresa }}
+                                {% for i in erro %}
+                                    {% if i.cpf_representante_erro %}
+                                        <label>{{ i.cpf_representante_erro }}</label>
+                                    {% endif %}
+                                {% endfor %}
                         </div>
                     </div>
                 </div>
@@ -89,13 +99,18 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="id_telefone_representante_empresa">Telefone:</label>
-                            <input type="text" class="form-control" id="id_telefone_representante_empresa" name="telefone_representante_empresa" required>
+                            {{ form.telefone_representante_empresa }}
+                            {% for i in erro %}
+                                {% if i.telefone_representante_erro %}
+                                    <label>{{ i.telefone_representante_erro }}</label>
+                                {% endif %}
+                            {% endfor %}
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="id_email_representante_empresa">E-mail:</label>
-                            <input type="email" class="form-control" id="id_email_representante_empresa" name="email_representante_empresa" required>
+                            {{ form.email_representante_empresa }}
                         </div>
                     </div>
                     <p>

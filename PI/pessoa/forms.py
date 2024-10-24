@@ -33,7 +33,6 @@ class PessoaForm(forms.ModelForm):
     
     def clean_cpf_pessoa(self):
         cpf_pessoa = self.cleaned_data.get('cpf_pessoa')
-        (f'pao com ovo {Pessoa.objects.filter(cpf_pessoa=cpf_pessoa)}')
         if Pessoa.objects.filter(cpf_pessoa=cpf_pessoa):
             raise forms.ValidationError('CPF já cadastrado')
         cpf_pessoa = ''.join(re.findall(r'\d', str(cpf_pessoa)))

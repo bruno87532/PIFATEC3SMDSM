@@ -80,6 +80,11 @@
                     <div class="col-md-3">
                         <label for="id_cep_empresa">CEP:</label>
                         {{ form.cep_empresa }}
+                        {% for i in erro %}
+                            {% if i.cep_erro %}
+                                <label>{{ i.cep_erro }}</label>
+                            {% endif %}
+                        {% endfor %}
                     </div>
                     <div class="col-md-4">
                             <label for="id_estado_empresa">Estado:</label>

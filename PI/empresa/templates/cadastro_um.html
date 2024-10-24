@@ -82,6 +82,11 @@
                         <div class="form-group">
                             <label for="id_cnpj_empresa">CNPJ:</label>
                             {{ form.cnpj_empresa }}
+                            {% for i in erro %}
+                                {% if i.cnpj_erro %}
+                                    <label>{{ i.cnpj_erro }}</label>
+                                {% endif %}
+                            {% endfor %}
                         </div>
                     </div>
                 </div>
@@ -89,13 +94,18 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="id_email_login_empresa">Email para login:</label>
-                            {{ form.email_login_empresa }}                           
+                            {{ form.email_login_empresa }}          
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="id_senha_login_empresa">Senha para login:</label>
                             {{ form.senha_login_empresa }}
+                            {% for i in erro %}
+                                {% if i.senha_login_erro %}
+                                    <label>{{ i.senha_login_erro }}</label>
+                                {% endif %}
+                            {% endfor %}
                         </div>
                     </div>
                 </div>

@@ -1,5 +1,7 @@
 from django import forms
 from empresa.models import Empresa
+import requests
+import re
 
 # AQUI SERÁ FEITA A SANITAÇÃO DOS DADOS, A VERIFICAÇÃO DE SE ESTAR CORRETOS FAREMOS NO SERIALIZER USANDO DJANGO REST FRAMEWORK
 
@@ -31,18 +33,24 @@ class EmpresaFormUm(forms.ModelForm):
             }),
         }
     
-    def clean_nome_empresa(self):
-        nome_empresa = self.cleaned_data.get('nome_empresa')   
-        print('A sanitização de nome da empresa foi executada')
-        # REMOVA NÚMEROS
-        return nome_empresa
-    
     def clean_cnpj_empresa(self):
         cnpj_empresa = self.cleaned_data.get('cnpj_empresa')
-        print('A sanitização de cnpj da empresa foi executada')
-        # REMOVA CARACTERES E DEIXE APENAS OS NÚMEROS DO CNPJ
+        cnpj_empresa = ''.join(re.findall(r'\d', cnpj_empresa))
+        if len(cnpj_empresa) != 14:
+            raise forms.ValidationError('CNPJ inválido')
+        r = requests.get(f'https://brasilapi.com.br/api/cnpj/v1/{cnpj_empresa}')
+        print(cnpj_empresa)
+        print(r.status_code)
+        if r.status_code != 200:
+            print(r.text)
+            raise forms.ValidationError('CNPJ inválido')
         return cnpj_empresa
 
+    def clean_senha_login_empresa(self):
+        senha_login_empresa = self.cleaned_data.get('senha_login_empresa')
+        if len(senha_login_empresa) < 8:
+            raise forms.ValidationError('Senha inválida')
+        return senha_login_empresa
 
 class EmpresaFormDois(forms.ModelForm):
     class Meta:
@@ -82,8 +90,14 @@ class EmpresaFormDois(forms.ModelForm):
 
     def clean_cep_empresa(self):
         cep_empresa = self.cleaned_data.get('cep_empresa')
-        print('A sanitização de cep da empresa foi executada')
-        # REMOVA CARACTERES E DEIXE APENAS OS NUMEROS DO CEP
+        cep_empresa = ''.join(re.findall(r'\d', cep_empresa))
+        if len(cep_empresa) != 8:
+            raise forms.ValidationError('CEP inválido')
+        r = requests.get(f'viacep.com.br/ws/{cep_empresa}/json/')
+        if r.status_code != 200:
+            raise forms.ValidationError('CEP inválido')
+        if r.json().get('erro'):
+            raise forms.ValidationError('CEP inválido')
         return cep_empresa
 
 class EmpresaFormTres(forms.ModelForm):
@@ -112,18 +126,41 @@ class EmpresaFormTres(forms.ModelForm):
 
     def clean_nome_representante_empresa(self):
         nome_representante_empresa = self.cleaned_data.get('nome_representante_empresa')
-        print('A sanitização de nome do representante da empresa foi executada')
-        # REMOVA NÚMEROS E DEIXE A PRIMEIRA LETRA DE CADA PALAVRA CAPITALIZADA
+        nome_representante_empresa = ''.join(re.findall(r'[a-zA-Z\s]', str(nome_representante_empresa)))
+        if len(nome_representante_empresa) == 0:
+            raise forms.ValidationError('Nome inválido')
         return nome_representante_empresa
     def clean_cpf_representante_empresa(self):
         cpf_representante_empresa = self.cleaned_data.get('cpf_representante_empresa')
-        print('A sanitização de cpf do representante da empresa foi executada')
-        # REMOVA CARACTERES E DEIXA APENAS O NUMERO DO CPF
+        if Empresa.objects.filter(cpf_representante_empresa=cpf_representante_empresa):
+            raise forms.ValidationError('CPF já cadastrado')
+        cpf_representante_empresa = ''.join(re.findall(r'\d', str(cpf_representante_empresa)))
+        peso_primeiro_digito = [10, 9, 8, 7, 6, 5, 4, 3, 2]
+        peso_segundo_digito = [11, 10, 9, 8, 7, 6, 5, 4, 3, 2]
+        soma_primeiro_digito = 0
+        soma_segundo_digito = 0
+        if len(str(cpf_representante_empresa)) != 11:
+            raise forms.ValidationError('CPF inválido')
+        for n, p in zip(str(cpf_representante_empresa)[0:9], peso_primeiro_digito):
+            soma_primeiro_digito += int(n) * p
+        resultado_soma_primeiro_digito = soma_primeiro_digito % 11
+        if resultado_soma_primeiro_digito > 1 and not str(11 - resultado_soma_primeiro_digito) == str(cpf_representante_empresa)[9]:
+            raise forms.ValidationError('CPF inválido!')
+        if (resultado_soma_primeiro_digito == 1 or resultado_soma_primeiro_digito == 0) and str(cpf_representante_empresa)[9] != '0':
+            raise forms.ValidationError('CPF inválido!')
+        for n, p in zip(str(cpf_representante_empresa)[0:10], peso_segundo_digito):
+            soma_segundo_digito += int(n) * p
+        resultado_soma_segundo_digito = soma_segundo_digito % 11
+        if resultado_soma_segundo_digito > 1 and not str(11 - resultado_soma_segundo_digito) == str(cpf_representante_empresa)[10]:
+            raise forms.ValidationError('CPF inválido!')
+        if (resultado_soma_segundo_digito == 1 or resultado_soma_segundo_digito == 0) and str(cpf_representante_empresa)[10] != '0':
+            raise forms.ValidationError('CPF inválido!')
         return cpf_representante_empresa
     def clean_telefone_representante_empresa(self):
         telefone_representante_empresa = self.cleaned_data.get('telefone_representante_empresa')
-        print('A sanitização de telefone do representante da empresa foi executada')
-        # REMOVA CARACTERES E DEIXA APENAS O NUMERO DO TELEFONE
+        telefone_representante_empresa = ''.join(re.findall(r'\d', telefone_representante_empresa))
+        if telefone_representante_empresa < 9:
+            raise forms.ValidationError('Telefone inválido')
         return telefone_representante_empresa
     
 class EmpresaCompleta(forms.ModelForm):

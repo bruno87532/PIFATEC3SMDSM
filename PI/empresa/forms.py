@@ -38,11 +38,11 @@ class EmpresaFormUm(forms.ModelForm):
         cnpj_empresa = ''.join(re.findall(r'\d', cnpj_empresa))
         if len(cnpj_empresa) != 14:
             raise forms.ValidationError('CNPJ inválido')
-        r = requests.get(f'https://brasilapi.com.br/api/cnpj/v1/{cnpj_empresa}')
-        print(cnpj_empresa)
-        print(r.status_code)
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.83 Safari/537.36'
+        }
+        r = requests.get(f'https://brasilapi.com.br/api/cnpj/v1/{cnpj_empresa}', headers=headers)
         if r.status_code != 200:
-            print(r.text)
             raise forms.ValidationError('CNPJ inválido')
         return cnpj_empresa
 
@@ -93,7 +93,7 @@ class EmpresaFormDois(forms.ModelForm):
         cep_empresa = ''.join(re.findall(r'\d', cep_empresa))
         if len(cep_empresa) != 8:
             raise forms.ValidationError('CEP inválido')
-        r = requests.get(f'viacep.com.br/ws/{cep_empresa}/json/')
+        r = requests.get(f'https://viacep.com.br/ws/{cep_empresa}/json/')
         if r.status_code != 200:
             raise forms.ValidationError('CEP inválido')
         if r.json().get('erro'):
@@ -159,7 +159,7 @@ class EmpresaFormTres(forms.ModelForm):
     def clean_telefone_representante_empresa(self):
         telefone_representante_empresa = self.cleaned_data.get('telefone_representante_empresa')
         telefone_representante_empresa = ''.join(re.findall(r'\d', telefone_representante_empresa))
-        if telefone_representante_empresa < 9:
+        if len(telefone_representante_empresa) < 9:
             raise forms.ValidationError('Telefone inválido')
         return telefone_representante_empresa
     

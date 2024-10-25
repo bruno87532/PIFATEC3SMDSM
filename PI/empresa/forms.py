@@ -3,8 +3,6 @@ from empresa.models import Empresa
 import requests
 import re
 
-# AQUI SERÁ FEITA A SANITAÇÃO DOS DADOS, A VERIFICAÇÃO DE SE ESTAR CORRETOS FAREMOS NO SERIALIZER USANDO DJANGO REST FRAMEWORK
-
 class EmpresaFormUm(forms.ModelForm):
     class Meta:
         model = Empresa
@@ -28,8 +26,9 @@ class EmpresaFormUm(forms.ModelForm):
             'email_login_empresa': forms.TextInput(attrs={
                 'class': 'form-control',
             }),
-            'senha_login_empresa': forms.TextInput(attrs={
+            'senha_login_empresa': forms.PasswordInput(attrs={
                 'class': 'form-control',
+                'type': 'password',
             }),
         }
     
@@ -45,6 +44,12 @@ class EmpresaFormUm(forms.ModelForm):
         if r.status_code != 200:
             raise forms.ValidationError('CNPJ inválido')
         return cnpj_empresa
+
+    def clean_email_login_empresa(self):
+        email_login_empresa = self.cleaned_data.get('email_login_empresa')
+        if Empresa.objects.filter(email_login_empresa=email_login_empresa):
+            raise forms.ValidationError('Email já cadastrado')
+        return email_login_empresa
 
     def clean_senha_login_empresa(self):
         senha_login_empresa = self.cleaned_data.get('senha_login_empresa')
@@ -132,8 +137,6 @@ class EmpresaFormTres(forms.ModelForm):
         return nome_representante_empresa
     def clean_cpf_representante_empresa(self):
         cpf_representante_empresa = self.cleaned_data.get('cpf_representante_empresa')
-        if Empresa.objects.filter(cpf_representante_empresa=cpf_representante_empresa):
-            raise forms.ValidationError('CPF já cadastrado')
         cpf_representante_empresa = ''.join(re.findall(r'\d', str(cpf_representante_empresa)))
         peso_primeiro_digito = [10, 9, 8, 7, 6, 5, 4, 3, 2]
         peso_segundo_digito = [11, 10, 9, 8, 7, 6, 5, 4, 3, 2]

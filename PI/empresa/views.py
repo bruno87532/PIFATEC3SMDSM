@@ -30,6 +30,9 @@ class EmpresaCadastro(View):
                 if 'cnpj_empresa' in lista_erro:
                     cnpj_empresa = {'cnpj_erro': 'CNPJ inválido'}
                     lista_contexto.append(cnpj_empresa)
+                if 'email_login_empresa' in lista_erro:
+                    email_login_empresa = {'email_login_erro': 'Email já cadastrado'}
+                    lista_contexto.append(email_login_empresa)
                 if 'senha_login_empresa' in lista_erro:
                     senha_login_empresa = {'senha_login_erro': 'Senha inválida'}
                     lista_contexto.append(senha_login_empresa)
@@ -53,9 +56,10 @@ class EmpresaCadastro(View):
             form = EmpresaFormTres(request.POST)
             if form.is_valid():
                 request.session['empresa'] = request.session['empresa'] | form.cleaned_data
-                print(request.session['empresa'])
                 form_completo = EmpresaCompleta(request.session['empresa'])
-                form_completo.save()
+                empresa = form_completo.save(commit=False)
+                empresa.set_senha(form_completo.cleaned_data['senha_login_empresa'])
+                empresa.save()
                 return redirect('empresagetlogin')
             else:
                 lista_erro = list(form.errors.keys())
@@ -74,3 +78,4 @@ class EmpresaCadastro(View):
 class EmpresaLogin(View):
     def get(self, request):
         return render(request=request, template_name='login_empresa.html')
+    

@@ -1,5 +1,6 @@
 import uuid
 from djongo import models
+from django.contrib.auth.hashers import make_password, check_password
 
 # Create your models here.
 
@@ -44,3 +45,9 @@ class Empresa(models.Model):
         null = True,
         blank = True
     )
+
+    def set_senha(self, senha_login_empresa):
+        self.senha_login_empresa = make_password(senha_login_empresa)
+
+    def verifica_senha(self, senha_login_empresa):
+        return check_password(senha_login_empresa, self.senha_login_empresa)

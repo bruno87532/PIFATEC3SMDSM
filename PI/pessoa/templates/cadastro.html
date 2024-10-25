@@ -68,6 +68,15 @@
         </p>
         <input type="submit" value="Enviar">
     </form>
-    <script src="{% static 'script/Input.js' %}"></script>
+    <script src="{% static 'script/Password.js' %}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            campo = document.getElementById('id_senha_login_pessoa')
+            const password = new Password(campo)
+            document.getElementById('img_olho').addEventListener('click', () => {
+                password.MostraSenha()
+            })
+        })
+    </script>
 </body>
 </html>

@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'empresa.apps.EmpresaConfig',
     'home.apps.HomeConfig',
     'pessoa.apps.PessoaConfig',
+    'login.apps.LoginConfig',
     'djongo',
 ]
 

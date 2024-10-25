@@ -15,17 +15,17 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from empresa.urls import urlpatternscad as url_empresa_cad, urlpatternslogin as url_empresa_login
+from empresa.urls import urlpatternscad as url_empresa_cad
 from home.urls import urlpatterns as url_home
-from pessoa.urls import urlpatternscad as url_pessoa_cad, urlpatternslogin as url_pessoa_login
+from pessoa.urls import urlpatternscad as url_pessoa_cad
 from home.urls import urlpatterns as url_home
+from login.urls import urlpatterns as url_login
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('cadastro/empresa/', include(url_empresa_cad)),
-    path('login/empresa/', include(url_empresa_login)),
     path('cadastro/pessoa/', include(url_pessoa_cad)),
-    path('login/pessoa/', include(url_pessoa_login)),
     path('home/', include(url_home)),
+    path('login/', include(url_login)),
     path('', include(url_home))
 ]

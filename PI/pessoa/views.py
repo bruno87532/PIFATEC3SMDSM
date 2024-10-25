@@ -15,7 +15,7 @@ class PessoaCadastro(View):
             pessoa = form.save(commit=False)
             pessoa.set_senha(form.cleaned_data['senha_login_pessoa'])
             pessoa.save()
-            return redirect('pessoalogin')
+            return redirect('login')
         else:
             lista_erro = list(form.errors.keys())
             lista_contexto = []
@@ -46,7 +46,3 @@ class PessoaCadastro(View):
                 telefone_pessoa = {'telefone_erro': 'Número de telefone inválido'}
                 lista_contexto.append(telefone_pessoa)
             return render(request=request, template_name='cadastro.html', context={'form': form, 'erro': lista_contexto})
-
-class PessoaLogin(View):
-    def get(self, request):
-        return render(request=request, template_name='login.html')

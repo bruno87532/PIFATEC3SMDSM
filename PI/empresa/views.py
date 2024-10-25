@@ -60,7 +60,7 @@ class EmpresaCadastro(View):
                 empresa = form_completo.save(commit=False)
                 empresa.set_senha(form_completo.cleaned_data['senha_login_empresa'])
                 empresa.save()
-                return redirect('empresagetlogin')
+                return redirect('login')
             else:
                 lista_erro = list(form.errors.keys())
                 lista_contexto = []
@@ -75,7 +75,3 @@ class EmpresaCadastro(View):
                     lista_contexto.append(telefone_representante_empresa)
                 return render(request=request, template_name='cadastro_tres.html', context={'form': form, 'erro': lista_contexto})
             
-class EmpresaLogin(View):
-    def get(self, request):
-        return render(request=request, template_name='login_empresa.html')
-    

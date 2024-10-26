@@ -41,7 +41,7 @@ class EmpresaFormUm(forms.ModelForm):
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.83 Safari/537.36'
         }
         r = requests.get(f'https://brasilapi.com.br/api/cnpj/v1/{cnpj_empresa}', headers=headers)
-        if r.status_code != 200:
+        if r.status_code != 200 and r.status_code != 504:
             raise forms.ValidationError('CNPJ inválido')
         return cnpj_empresa
 

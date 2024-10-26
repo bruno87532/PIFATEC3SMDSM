@@ -35,16 +35,16 @@ class Empresa(models.Model):
     cpf_representante_empresa = models.CharField(max_length=11)
     telefone_representante_empresa = models.CharField(max_length=20)
     email_representante_empresa = models.EmailField(max_length=100)
-    doacao_empresa = models.ArrayField(
-        model_container = Doacao,
-        null = True,
-        blank = True
-    )
-    produto_ofertado_empresa = models.ArrayField(
-        model_container = ProdutoOfertado,
-        null = True,
-        blank = True
-    )
+    # doacao_empresa = models.ArrayField(
+    #     model_container = Doacao,
+    #     null = True,
+    #     blank = True
+    # )
+    # produto_ofertado_empresa = models.ArrayField(
+    #     model_container = ProdutoOfertado,
+    #     null = True,
+    #     blank = True
+    # )
 
     def set_senha(self, senha_login_empresa):
         self.senha_login_empresa = make_password(senha_login_empresa)

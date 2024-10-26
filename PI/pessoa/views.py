@@ -1,3 +1,4 @@
+from django.http.response import HttpResponse as HttpResponse
 from django.shortcuts import render, redirect
 from pessoa.forms import PessoaForm
 from pessoa.forms import PessoaForm
@@ -46,3 +47,11 @@ class PessoaCadastro(View):
                 telefone_pessoa = {'telefone_erro': 'Número de telefone inválido'}
                 lista_contexto.append(telefone_pessoa)
             return render(request=request, template_name='cadastro.html', context={'form': form, 'erro': lista_contexto})
+
+class PessoaDoacao(View):
+    def dispatch(self, request, *args, **kwargs):
+        if 'id_pessoa' not in request.session:
+            return redirect('login')
+        return super().dispatch(request, *args, **kwargs)
+    def get(self, request):
+        return render(request=request, template_name='pix.html')

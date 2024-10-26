@@ -19,11 +19,11 @@ class Pessoa(models.Model):
     senha_login_pessoa = models.CharField(max_length=100)
     data_nascimento_pessoa = models.DateField()
     telefone_pessoa = models.CharField(max_length=20)
-    doacao_pessoa  = models.ArrayField(
-        model_container = Doacao,
-        null = True,
-        blank = True
-    )
+    # doacao_pessoa  = models.ArrayField(
+    #     model_container = Doacao,
+    #     null = True,
+    #     blank = True
+    # )
 
     def set_senha(self, senha_login_pessoa):
         self.senha_login_pessoa = make_password(senha_login_pessoa)

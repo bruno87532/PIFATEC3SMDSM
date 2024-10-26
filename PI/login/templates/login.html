@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -6,6 +7,33 @@
     <title>Login</title>
 </head>
 <body>
-    <h1>Olá mundo</h1>
+    <form action="{% url 'login' %}" method="post">
+        {% csrf_token %}
+        <p>
+            <label for="email">Email:</label>
+            <input type="email" name="email" id="email" value="{% if email %}{{ email }}{% endif %}">
+        </p>
+        <p>
+            <label for="senha">Senha:</label>
+            <input type="password" name="senha" id="senha">
+            <label id="img_olho" class="img_olho">&#128065;</label>
+        </p>
+        {% if email %}
+            <label>Email ou senha inválidos.</label>
+        {% endif %}
+        <p>
+            <input type="submit" value="Enviar">
+        </p>
+    </form>
+    <script src="{% static 'script/Password.js' %}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            campo = document.getElementById('senha')
+            const password = new Password(campo)
+            document.getElementById('img_olho').addEventListener('click', () => {
+                password.MostraSenha()
+            })
+        })
+    </script>
 </body>
 </html>

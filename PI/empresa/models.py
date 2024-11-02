@@ -5,11 +5,28 @@ from django.contrib.auth.hashers import make_password, check_password
 # Create your models here.
 
 class Doacao(models.Model):
-   id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-   nome_produto = models.CharField(max_length=100)
-   descricao_produto = models.CharField(max_length=256, blank=True, null=True)
-   quantidade_produto = models.IntegerField()
-   unidade_medida_produto = models.CharField(max_length=50)
+    categoria = [
+        ('carne', 'Carne'),
+        ('flv', 'Frutas, legumes e verduras'),
+        ('frios', 'Frios'),
+        ('higiene', 'Higiene'),
+        ('limpeza', 'Limpeza'),
+        ('mercearia', 'Mercearia'), 
+    ]
+    medida = [
+        ('gramas', 'Grama'),
+        ('kg', 'Kg'),
+        ('tonelada', 'Tonelada'),
+        ('unidade', 'Unidade'),
+    ]    
+
+    id_empresa = models.CharField(max_length=256)
+    nome_produto = models.CharField(max_length=100)
+    descricao_produto = models.CharField(max_length=256, blank=True, null=True)
+    quantidade_produto = models.CharField(max_length=20)
+    unidade_medida_produto = models.CharField(max_length=50, choices=medida)
+    categoria_produto = models.CharField(max_length=50, choices=categoria)
+    data_doado_produto = models.DateField(auto_now_add=True)
 
 class ProdutoOfertado(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)

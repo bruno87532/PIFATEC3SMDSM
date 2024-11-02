@@ -1,8 +1,50 @@
 from django import forms
-from empresa.models import Empresa
+from empresa.models import Empresa, Doacao
 from pessoa.models import Pessoa
 import requests
 import re
+
+class EmpresaDoacao(forms.ModelForm):
+    class Meta:
+        model = Doacao
+        fields = [
+            'nome_produto',
+            'descricao_produto',
+            'quantidade_produto',
+            'unidade_medida_produto',
+            'categoria_produto',
+        ]
+        widgets = {
+            'quantidade_produto': forms.NumberInput(attrs={
+                                                    'type': 'number',
+                                                    'step': '0.1',
+                                                    'min': '0',
+                                                    'onkeypress': 'return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 46 || event.charCode == 44'
+                                                    })
+        }
+
+    def clean_quantidade_produto(self):
+        quantidade_produto = str(self.cleaned_data.get('quantidade_produto'))
+        contador = 0
+        for i in quantidade_produto:
+            if i == ',':
+                quantidade_produto = quantidade_produto.replace(',', '.')
+                contador += 1
+            if i == '.':
+                contador += 1
+        if contador > 1 or ''.join(re.findall(r'[\d.]+', quantidade_produto)) != quantidade_produto or (quantidade_produto[len(quantidade_produto) - 1] == '.'):
+            raise forms.ValidationError('Quantidade inválida')
+        return quantidade_produto
+    def clean(self):
+        cleaned_data = super().clean() 
+        unidade_medida = cleaned_data.get('unidade_medida_produto')
+        quantidade_produto = cleaned_data.get('quantidade_produto')
+        if unidade_medida == 'unidade' and quantidade_produto and '.' in str(quantidade_produto):
+            raise forms.ValidationError('A quantidade deve ser inteira para valores unitários')
+
+        return cleaned_data
+
+
 
 class EmpresaFormUm(forms.ModelForm):
     class Meta:

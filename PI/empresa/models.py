@@ -27,6 +27,7 @@ class Doacao(models.Model):
     unidade_medida_produto = models.CharField(max_length=50, choices=medida)
     categoria_produto = models.CharField(max_length=50, choices=categoria)
     data_doado_produto = models.DateField(auto_now_add=True)
+    disponivel_produto = models.BooleanField(default=True)
 
 class ProdutoOfertado(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)

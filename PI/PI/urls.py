@@ -29,7 +29,7 @@ urlpatterns = [
     path('cadastro/pessoa/', include(url_pessoa_cad)),
     path('home/', include(url_home)),
     path('login/', include(url_login)),
-    path('doacao/pessoa/', include(url_pessoa_doacao)),
-    path('doacao/empresa/', include(url_empresa_doacao)),
+    # path('doacao/pessoa/', include(url_pessoa_doacao)),
+    path('doacao/', include(url_empresa_doacao)),
     path('', include(url_home)),
 ]

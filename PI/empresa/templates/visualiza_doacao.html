@@ -73,22 +73,42 @@
                         <th>Nome da Empresa</th>
                         <th>Produto</th>
                         <th>Quantidade</th>
+                        <th>Medida</th>
                         <th>Data</th>
                         <th>Status</th>
-                        <th>Ações</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- As doações serão preenchidas aqui via JavaScript -->
+                    {% for i in doacoes %}
+                        <tr>
+                            <td>{{ i.nome_empresa }}</td>
+                            <td>{{ i.nome_produto }}</td>
+                            <td>{{ i.quantidade_produto }}</td>
+                            <td>{{ i.unidade_medida_produto }}</td>
+                            <td>{{ i.data_doado_produto | date:"d/m/Y" }}</td>
+                            {% if i.disponivel_produto %}
+                                <td>Disponível</td>
+                            {% else %} 
+                                <td>Não disponível</td>                                       
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
                 </tbody>
             </table>
+            <div>
+                {% if doacoes.has_previous %}
+                    <a href="{% url 'empresa_doacao_lista' numero_pagina=doacoes.previous_page_number %}">Página anterior</a>
+                {% endif %}
+                {% if doacoes.has_next %}
+                    <a href="{% url 'empresa_doacao_lista' numero_pagina=doacoes.next_page_number %}">Próxima página</a>
+                {% endif %}
+            </div>
             <div class="text-center mt-4">
                 <button class="btn btn-primary" onclick="modalDoacaoAlimento()">Adicionar Doação</button>
             </div>
         </div>
     </section>
 
-    <!-- Formulário de Adicionar Doação -->
     <div class="modal fade" id="donationModal" tabindex="-1" aria-labelledby="donationModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">

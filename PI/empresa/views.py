@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from empresa.forms import EmpresaFormUm, EmpresaFormDois, EmpresaFormTres, EmpresaCompleta, EmpresaDoacao as EmpresaDoacaoForm
+from empresa.models import Doacao, Empresa
 from django.views import View
+from django.core.paginator import Paginator
 
 # Create your views here.
 
@@ -101,8 +103,6 @@ class EmpresaDoacao(View):
         if form.is_valid():
             doacao = form.save(commit=False)
             doacao.id_empresa = request.session['id_empresa']
-            print('teste')
-            print(f'teste penis: {request.session['id_empresa']}')
             doacao.save()
             return redirect('home')
         else:
@@ -115,3 +115,24 @@ class EmpresaDoacao(View):
                 unidade_decimal = {'unidade_decimal_erro': 'O valor deve ser inteiro para medidas unitária'}
                 lista_contexto.append(unidade_decimal)
             return render(request=request, template_name='doacao_empresa.html', context={'form': form, 'erro': lista_contexto})
+        
+class EmpresaDoacaoLista(View):
+    def get(self, request, numero_pagina):
+        doacoes = Doacao.objects.values('id_empresa', 'nome_produto', 'quantidade_produto', 'unidade_medida_produto', 'data_doado_produto', 'disponivel_produto')
+        lista_contexto = []
+        
+        empresas = {empresa.id: empresa.nome_empresa for empresa in Empresa.objects.all()}
+
+        for i in list(doacoes):
+            doacao = {
+                'nome_empresa': empresas.get(i['id_empresa']),
+                'nome_produto': i['nome_produto'],
+                'quantidade_produto': i['quantidade_produto'],
+                'unidade_medida_produto': i['unidade_medida_produto'],
+                'data_doado_produto': i['data_doado_produto'],
+                'disponivel_produto': i['disponivel_produto']
+            }
+            lista_contexto.append(doacao)
+        doacao_paginada = Paginator(lista_contexto, 10)
+        pagina = doacao_paginada.get_page(numero_pagina)
+        return render(request=request, template_name='visualiza_doacao.html', context={'doacoes': pagina})

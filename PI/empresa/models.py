@@ -9,6 +9,7 @@ class Doacao(models.Model):
    nome_produto = models.CharField(max_length=100)
    descricao_produto = models.CharField(max_length=256, blank=True, null=True)
    quantidade_produto = models.IntegerField()
+   unidade_medida_produto = models.CharField(max_length=50)
 
 class ProdutoOfertado(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)

@@ -21,6 +21,7 @@ from pessoa.urls import urlpatternscad as url_pessoa_cad
 from home.urls import urlpatterns as url_home
 from login.urls import urlpatterns as url_login
 from pessoa.urls import urlpatternsdoacao as url_pessoa_doacao
+from empresa.urls import urlpatternsdoacao as url_empresa_doacao
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -29,5 +30,6 @@ urlpatterns = [
     path('home/', include(url_home)),
     path('login/', include(url_login)),
     path('doacao/pessoa/', include(url_pessoa_doacao)),
+    path('doacao/empresa/', include(url_empresa_doacao)),
     path('', include(url_home)),
 ]

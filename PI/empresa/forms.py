@@ -1,5 +1,6 @@
 from django import forms
 from empresa.models import Empresa
+from pessoa.models import Pessoa
 import requests
 import re
 
@@ -37,6 +38,8 @@ class EmpresaFormUm(forms.ModelForm):
         cnpj_empresa = ''.join(re.findall(r'\d', cnpj_empresa))
         if len(cnpj_empresa) != 14:
             raise forms.ValidationError('CNPJ inválido')
+        if Empresa.objects.filter(cnpj_empresa=cnpj_empresa):
+            raise forms.ValidationError('CNPJ já cadastrado')
         headers = {
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.83 Safari/537.36'
         }
@@ -47,7 +50,7 @@ class EmpresaFormUm(forms.ModelForm):
 
     def clean_email_login_empresa(self):
         email_login_empresa = self.cleaned_data.get('email_login_empresa')
-        if Empresa.objects.filter(email_login_empresa=email_login_empresa):
+        if Empresa.objects.filter(email_login_empresa=email_login_empresa) or Pessoa.objects.filter(email_login_pessoa=email_login_empresa):
             raise forms.ValidationError('Email já cadastrado')
         return email_login_empresa
 

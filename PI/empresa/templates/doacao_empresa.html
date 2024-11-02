@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doação - Empresa</title>
+</head>
+<body>
+    <form id="form-produto" method="post">
+        {% csrf_token %}
+    
+        <div id="container-formularios">
+            <div class="formulario-produto">
+                <input type="text" name="nome_produto[]" placeholder="Nome do Produto">
+                <input type="number" name="preco_produto[]" placeholder="Preço">
+                <button type="button" onclick="removerFormulario(this)">Remover</button>
+            </div>
+        </div>
+    
+        <button type="button" onclick="adicionarFormulario()">Adicionar Produto</button>
+        <button type="submit">Salvar Produtos</button>
+    </form>    
+</body>
+</html>
+<script>
+    function adicionarFormulario() {
+    const container = document.getElementById('container-formularios');
+    
+    // Clone o formulário de produto existente e reseta os valores dos campos
+    const novoFormulario = container.children[0].cloneNode(true);
+    novoFormulario.querySelectorAll('input').forEach(input => input.value = '');
+
+    // Adicione o novo formulário ao container
+    container.appendChild(novoFormulario);
+}
+
+function removerFormulario(botao) {
+    const container = document.getElementById('container-formularios');
+    
+    // Remova o formulário apenas se houver mais de um
+    if (container.children.length > 1) {
+        botao.parentNode.remove();
+    }
+}
+
+</script>
+<!-- nome_produto = models.CharField(max_length=100)
+descricao_produto = models.CharField(max_length=256, blank=True, null=True)
+quantidade_produto = models.IntegerField()
+unidade_medida_produto = models.CharField(max_length=50) -->

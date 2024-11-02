@@ -1,5 +1,6 @@
 from django import forms
 from pessoa.models import Pessoa
+from empresa.models import Empresa
 from datetime import date
 from django.utils import timezone
 import re 
@@ -60,7 +61,7 @@ class PessoaForm(forms.ModelForm):
 
     def clean_email_login_pessoa(self):
         email_login_pessoa = self.cleaned_data.get('email_login_pessoa')
-        if Pessoa.objects.filter(email_login_pessoa=email_login_pessoa):
+        if Pessoa.objects.filter(email_login_pessoa=email_login_pessoa) or Empresa.objects.filter(email_login_empresa=email_login_pessoa):
             raise forms.ValidationError('Email já cadastrado!')
         return email_login_pessoa
         

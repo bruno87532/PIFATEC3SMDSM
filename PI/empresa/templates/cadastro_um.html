@@ -85,7 +85,9 @@
                             {% for i in erro %}
                                 {% if i.cnpj_erro %}
                                     <label>{{ i.cnpj_erro }}</label>
-                                {% endif %}
+                                {% elif i.cnpj_existe %}
+                                    <label>{{ i.cnpj_existe }}</label>
+                                {% endif %}                
                             {% endfor %}
                         </div>
                     </div>

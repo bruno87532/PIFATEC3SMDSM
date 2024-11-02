@@ -10,9 +10,13 @@ class EmpresaCadastro(View):
             template = 'cadastro_um.html'
             form = EmpresaFormUm()
         elif etapa == 2:
+            if not 'etapa1' in request.session:
+                return redirect('empresagetcad', etapa = 1)
             template = 'cadastro_dois.html'
             form = EmpresaFormDois()
         elif etapa == 3:
+            if not 'etapa2' in request.session:
+                return redirect('empresagetcad', etapa = 1)
             template = 'cadastro_tres.html'
             form = EmpresaFormTres()
         return render(request=request, template_name=template, context={'form': form}) 
@@ -22,14 +26,23 @@ class EmpresaCadastro(View):
             if form.is_valid():
                 request.session['empresa'] = form.cleaned_data
                 request.session.modified = True
-                print(request.session['empresa'])
+                request.session['etapa1'] = True
                 return redirect('empresagetcad', etapa = 2)
             else:
                 lista_erro = list(form.errors.keys())
                 lista_contexto = []
                 if 'cnpj_empresa' in lista_erro:
-                    cnpj_empresa = {'cnpj_erro': 'CNPJ inválido'}
-                    lista_contexto.append(cnpj_empresa)
+                    erro = 0
+                    for n in form.errors.values():
+                        print(form.errors.values())
+                        if 'CNPJ já cadastrado' == n[0]:
+                            erro = 1
+                            cnpj_existe = {'cnpj_existe': 'CNPJ já cadastrado'}
+                            lista_contexto.append(cnpj_existe)
+                            break
+                    if not erro:
+                        cnpj_erro = {'cnpj_erro': 'CNPJ inválido'}
+                        lista_contexto.append(cnpj_erro)
                 if 'email_login_empresa' in lista_erro:
                     email_login_empresa = {'email_login_erro': 'Email já cadastrado'}
                     lista_contexto.append(email_login_empresa)
@@ -43,7 +56,7 @@ class EmpresaCadastro(View):
             if form.is_valid():
                 request.session['empresa'] = request.session['empresa'] | form.cleaned_data
                 request.session.modified = True
-                print(request.session['empresa'])
+                request.session['etapa2'] = True
                 return redirect('empresagetcad', etapa = 3)
             else:
                 lista_erro = list(form.errors.keys())
@@ -75,3 +88,10 @@ class EmpresaCadastro(View):
                     lista_contexto.append(telefone_representante_empresa)
                 return render(request=request, template_name='cadastro_tres.html', context={'form': form, 'erro': lista_contexto})
             
+class EmpresaDoacao(View):
+    def dispatch(self, request, *args, **kwargs):
+        if 'id_empresa' not in request.session:
+            return redirect('login')
+        return super().dispatch(request, *args, **kwargs)
+    def get(self, request):
+        return render(request=request, template_name='doacao_empresa.html')

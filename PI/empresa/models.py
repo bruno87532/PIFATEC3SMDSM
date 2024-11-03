@@ -26,7 +26,7 @@ class Doacao(models.Model):
     quantidade_produto = models.CharField(max_length=20)
     unidade_medida_produto = models.CharField(max_length=50, choices=medida)
     categoria_produto = models.CharField(max_length=50, choices=categoria)
-    data_doado_produto = models.DateField(auto_now_add=True)
+    data_doado_produto = models.DateTimeField(auto_now_add=True)
     disponivel_produto = models.BooleanField(default=True)
 
 class ProdutoOfertado(models.Model):
@@ -54,16 +54,6 @@ class Empresa(models.Model):
     cpf_representante_empresa = models.CharField(max_length=11)
     telefone_representante_empresa = models.CharField(max_length=20)
     email_representante_empresa = models.EmailField(max_length=100)
-    # doacao_empresa = models.ArrayField(
-    #     model_container = Doacao,
-    #     null = True,
-    #     blank = True
-    # )
-    # produto_ofertado_empresa = models.ArrayField(
-    #     model_container = ProdutoOfertado,
-    #     null = True,
-    #     blank = True
-    # )
 
     def set_senha(self, senha_login_empresa):
         self.senha_login_empresa = make_password(senha_login_empresa)

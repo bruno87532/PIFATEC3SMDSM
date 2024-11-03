@@ -67,7 +67,11 @@
                 {% csrf_token %}
                 <p>
                     <label for="nome_empresa">Digite o nome da empresa</label>
-                    <input type="text" name="nome_empresa" id="nome_empresa">
+                    {% if erro %}
+                        <input type="text" name="nome_empresa" id="nome_empresa" value="{{ nome_empresa }}">
+                    {% else %}
+                        <input type="text" name="nome_empresa" id="nome_empresa">    
+                    {% endif %}
                 </p>
                 <p>
                     <input type="submit" value="Procurar">
@@ -77,46 +81,52 @@
                 <h2 class="section-heading text-uppercase">Doações de Produtos Alimentícios</h2>
                 <h3 class="section-subheading text-muted">Lista de doações recebidas</h3>
             </div>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Nome da Empresa</th>
-                        <th>Produto</th>
-                        <th>Quantidade</th>
-                        <th>Medida</th>
-                        <th>Data</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for i in doacoes %}
-                        <tr>
-                            <td>{{ i.nome_empresa }}</td>
-                            <td>{{ i.nome_produto }}</td>
-                            <td>{{ i.quantidade_produto }}</td>
-                            <td>{{ i.unidade_medida_produto }}</td>
-                            <td>{{ i.data_doado_produto | date:"d/m/Y" }}</td>
-                            {% if i.disponivel_produto %}
-                                <td>Disponível</td>
-                            {% else %} 
-                                <td>Não disponível</td>                                       
-                            {% endif %}
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-            <div>
-                {% if doacoes.has_previous %}
-                    <a href="{% url 'empresa_doacao_lista' numero_pagina=doacoes.previous_page_number %}">Página anterior</a>
-                {% endif %}
-                {% if doacoes.has_next %}
-                    <a href="{% url 'empresa_doacao_lista' numero_pagina=doacoes.next_page_number %}">Próxima página</a>
+                {% if not erro %}
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Nome da Empresa</th>
+                                <th>Produto</th>
+                                <th>Quantidade</th>
+                                <th>Medida</th>
+                                <th>Data</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for i in doacoes %}
+                                <tr>
+                                    <td>{{ i.nome_empresa }}</td>
+                                    <td>{{ i.nome_produto }}</td>
+                                    <td>{{ i.quantidade_produto }}</td>
+                                    <td>{{ i.unidade_medida_produto }}</td>
+                                    <td>{{ i.data_doado_produto | date:"d/m/Y" }}</td>
+                                    {% if i.disponivel_produto %}
+                                        <td>Disponível</td>
+                                    {% else %} 
+                                        <td>Não disponível</td>                                       
+                                    {% endif %}
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <div>
+                        {% if doacoes.has_previous %}
+                            <a href="{% url 'empresa_doacao_localiza' numero_pagina=doacoes.previous_page_number %}">Página anterior</a>
+                        {% endif %}
+                        {% if doacoes.has_next %}
+                            <a href="{% url 'empresa_doacao_localiza' numero_pagina=doacoes.next_page_number %}">Próxima página</a>
+                        {% endif %}
+                    </div>
+                    <div class="text-center mt-4">
+                        <button class="btn btn-primary" onclick="modalDoacaoAlimento()">Adicionar Doação</button>
+                    </div>
+                    <a href="{% url 'empresa_doacao_lista' numero_pagina=1 %}">Voltar para todas as empresas</a>
+                {% else %}
+                    <p>Não encontrado nenhuma empresa com este nome</p>
+                    <a href="{% url 'empresa_doacao_lista' numero_pagina=1 %}">Voltar para todas as empresas</a>
                 {% endif %}
             </div>
-            <div class="text-center mt-4">
-                <button class="btn btn-primary" onclick="modalDoacaoAlimento()">Adicionar Doação</button>
-            </div>
-        </div>
     </section>
 
     <div class="modal fade" id="donationModal" tabindex="-1" aria-labelledby="donationModalLabel" aria-hidden="true">

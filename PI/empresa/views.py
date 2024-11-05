@@ -105,8 +105,8 @@ class EmpresaDoacao(View):
             doacao.id_empresa = request.session['id_empresa']
             empresa = Empresa.objects.get(id=request.session['id_empresa'])
             doacao.save()
-            monta_pdf(empresa.nome_empresa, empresa.cnpj_empresa, doacao.categoria_produto, doacao.data_doado_produto, doacao.data_doado_produto, doacao.nome_produto, doacao.descricao_produto, doacao.quantidade_produto, empresa.nome_representante_empresa, empresa.cpf_representante_empresa) 
-            return redirect('home')
+            resposta = monta_pdf(empresa.nome_empresa, empresa.cnpj_empresa, doacao.categoria_produto, doacao.data_doado_produto, doacao.nome_produto, doacao.descricao_produto, doacao.quantidade_produto, empresa.nome_representante_empresa, empresa.cpf_representante_empresa) 
+            return resposta
         else:
             lista_erro = list(form.errors.keys())
             lista_contexto = []
@@ -161,19 +161,49 @@ class EmpresaDoacaoLocaliza(View):
             nome_empresa = request.session['nome_empresa']
             empresas, lista_doacoes = self.obter_doacoes(nome_empresa) 
             if not lista_doacoes:
-                return render(request, 'visualiza_doacao_empresa', {'erro': 'erro', 'nome_empresa': nome_empresa})       
+                return render(request, 'visualiza_doacao_empresa.html', {'erro': 'erro', 'nome_empresa': nome_empresa})       
             lista_contexto = self.criar_contexto_doacoes(empresas, lista_doacoes)
             doacao_paginada = Paginator(lista_contexto, 10)
             pagina = doacao_paginada.get_page(numero_pagina)
-            return render(request, 'visualiza_doacao_empresa', {'doacoes': pagina})       
+            return render(request, 'visualiza_doacao_empresa.html', {'doacoes': pagina})       
         return redirect('empresa_doacao_list', numero_pagina=1)
     def post(self, request, numero_pagina):
         nome_empresa = request.POST.get('nome_empresa')
         request.session['nome_empresa'] = nome_empresa
         empresas, lista_doacoes = self.obter_doacoes(nome_empresa)   
         if not lista_doacoes:
-            return render(request, 'visualiza_doacao_empresa', {'erro': 'erro', 'nome_empresa': nome_empresa})     
+            return render(request, 'visualiza_doacao_empresa.html', {'erro': 'erro', 'nome_empresa': nome_empresa})     
         lista_contexto = self.criar_contexto_doacoes(empresas, lista_doacoes)
         doacao_paginada = Paginator(lista_contexto, 10)
         pagina = doacao_paginada.get_page(numero_pagina)
-        return render(request, 'visualiza_doacao_empresa', {'doacoes': pagina})
+        return render(request, 'visualiza_doacao_empresa.html', {'doacoes': pagina})
+    
+class EmpresaDoacaoMinha(View):
+    def dispatch(self, request, *args, **kwargs):
+        if 'id_empresa' not in request.session:
+            return redirect('login')
+        return super().dispatch(request, *args, **kwargs)
+    def get(self, request, numero_pagina):
+        doacoes = Doacao.objects.filter(id_empresa=request.session['id_empresa']).values('id', 'id_empresa', 'nome_produto', 'quantidade_produto', 'unidade_medida_produto', 'data_doado_produto', 'disponivel_produto')
+        empresa = Empresa.objects.get(id=request.session['id_empresa'])
+        lista_contexto = [
+            {
+                'id': i['id'],
+                'nome_empresa': empresa.nome_empresa,
+                'nome_produto': i['nome_produto'],
+                'quantidade_produto': i['quantidade_produto'],
+                'unidade_medida_produto': i['unidade_medida_produto'],
+                'data_doado_produto': i['data_doado_produto'],
+                'disponivel_produto': i['disponivel_produto'],
+            }
+            for i in doacoes
+        ]
+        doacao_paginada = Paginator(lista_contexto, 10)
+        pagina = doacao_paginada.get_page(numero_pagina)
+        return render(request, 'visualiza_doacao_minha.html', {'doacoes': pagina})
+    
+def gera_pdf(request, id):
+    doacao = Doacao.objects.get(id=id)
+    empresa = Empresa.objects.get(id=request.session['id_empresa'])
+    resposta = monta_pdf(empresa.nome_empresa, empresa.cnpj_empresa, doacao.categoria_produto, doacao.data_doado_produto, doacao.nome_produto, doacao.descricao_produto, doacao.quantidade_produto, empresa.nome_representante_empresa, empresa.cpf_representante_empresa) 
+    return resposta

@@ -7,7 +7,7 @@
     <title>Doação - Empresa</title>
 </head>
 <body>
-    <form method="post" action="{% url 'empresa_doacao' %}">
+    <form id="doacao_form" method="post" action="{% url 'empresa_doacao' %}" onsubmit="return envia_formulario();">
         {% csrf_token %}
         <p>
             <label for="id_nome_produto">Nome do produto</label>
@@ -28,7 +28,6 @@
                     <label>{{ i.unidade_decimal_erro }}</label>
                 {% endif %}    
             {% endfor %}
-
         </p>
         <p>
             <label for="id_unidade_medida_produto">Unidade de medida do produto</label>
@@ -42,5 +41,28 @@
             <input type="submit" value="Enviar">
         </p>
     </form>
+
+    <script>
+        function envia_formulario() {
+            const form = document.getElementById('doacao_form');
+            const url = form.action;
+            const form_data = new FormData(form); 
+            fetch(url, {
+                method: 'POST',
+                body: form_data
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.blob(); 
+                }
+            })
+            .then(blob => {
+                const pdf = URL.createObjectURL(blob); 
+                window.open(pdf, '_blank');
+                window.location.href = "{% url 'home' %}";
+            })
+            return false; 
+        }
+    </script>
 </body>
 </html>

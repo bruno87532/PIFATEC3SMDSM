@@ -45,7 +45,13 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#loginModal">
-                            <i class="fa-solid fa-user"></i> Login
+                            {% if logout %}
+                                <a href="{% url 'logout' %}"> 
+                                    <i class="fa-solid fa-user"></i> Logout
+                                </a>
+                            {% else %}
+                                <i class="fa-solid fa-user"></i> Login
+                            {% endif %}
                         </a>
                     </li>
                 </ul>

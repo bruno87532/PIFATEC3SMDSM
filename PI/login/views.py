@@ -28,3 +28,7 @@ class Login(View):
         if not autenticado:
             return render(request=request, template_name='login.html', context={'email': email})
         return redirect('home')
+class Logout(View):
+    def get(self, request):
+        request.session.flush()
+        return redirect('home')

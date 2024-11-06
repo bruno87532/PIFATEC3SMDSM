@@ -4,4 +4,6 @@ from rest_framework.views import APIView
 
 class Home(APIView):
     def get(self, request):
-        return render(request=request, template_name='index.html')
+        if request.session.get('id_empresa') or request.session.get('id_pessoa'):
+            return render(request=request, template_name='index.html', context={'logout': True})
+        return render(request=request, template_name='index.html') 

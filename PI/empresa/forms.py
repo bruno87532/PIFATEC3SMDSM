@@ -20,7 +20,12 @@ class EmpresaDoacao(forms.ModelForm):
                                                     'step': '0.1',
                                                     'min': '0',
                                                     'onkeypress': 'return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 46 || event.charCode == 44'
-                                                    })
+                                                    }),
+            'nome_produto': forms.TextInput(attrs={
+                'class': 'form-control',
+                'class': 'form-control',
+                
+            })
         }
 
     def clean_quantidade_produto(self):

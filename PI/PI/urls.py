@@ -19,7 +19,7 @@ from empresa.urls import urlpatternscad as url_empresa_cad
 from home.urls import urlpatterns as url_home
 from pessoa.urls import urlpatternscad as url_pessoa_cad
 from home.urls import urlpatterns as url_home
-from login.urls import urlpatterns as url_login
+from login.urls import urlpatterns as url_login_logout
 from pessoa.urls import urlpatternsdoacao as url_pessoa_doacao
 from empresa.urls import urlpatternsdoacao as url_empresa_doacao
 
@@ -28,7 +28,7 @@ urlpatterns = [
     path('cadastro/empresa/', include(url_empresa_cad)),
     path('cadastro/pessoa/', include(url_pessoa_cad)),
     path('home/', include(url_home)),
-    path('login/', include(url_login)),
+    path('auth/', include(url_login_logout)),
     # path('doacao/pessoa/', include(url_pessoa_doacao)),
     path('doacao/', include(url_empresa_doacao)),
     path('', include(url_home)),

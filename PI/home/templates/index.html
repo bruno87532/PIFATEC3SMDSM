@@ -1,90 +1,24 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="Solidariedade do Campo - Juntos, alimentamos esperança." />
-    <meta name="keywords" content="solidariedade, campo, serviços, realizações" />
+    <meta name="keywords" content="solidariedade, campo, doações, alimentos, ONGs" />
     <meta name="author" content="Seu Nome" />
-    <title>Solidariedade do Campo</title>
-    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <title>Solidariedade do Campo | Conectando Empresas Alimentícias com ONGs</title>
+    <link rel="icon" type="image/x-icon" href="{% static 'css/assets/favicon.ico' %}" />
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" />
     <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
 </head>
-<body id="page-top">
-    <!-- Navegação -->
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
-        <div class="container">
-            <a class="navbar-brand" href="#page-top">
-                <img src="../static/css/assets/img/logo-semfundo.png" alt="Logo" />
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                Menu <i class="fas fa-bars ms-1"></i>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
-                    <li class="nav-item"><a class="nav-link" href="#services">Serviços</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#portfolio">Realizações</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#about">Sobre</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#team">Contatos</a></li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Cadastro
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="dados_empresa.html">Empresa</a></li>
-                            <li><a class="dropdown-item" href="gerenciar_ong.html">ONG</a></li>
-                            <li><a class="dropdown-item" href="gerenciar_pessoafisica.html">Pessoa Física</a></li>
-                        </ul>
-                    </li>                    
-                    <li class="nav-item">
-                        <a class="nav-link" href="gerenciar_doacao.html">Doação</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#loginModal">
-                            {% if logout %}
-                                <a href="{% url 'logout' %}"> 
-                                    <i class="fa-solid fa-user"></i> Logout
-                                </a>
-                            {% else %}
-                                <i class="fa-solid fa-user"></i> Login
-                            {% endif %}
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
 
-    <!-- Modal de Login -->
-    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="loginModalLabel">Login</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form method="post" action="{% url 'login' %}">
-                        {% csrf_token %}
-                        <div class="mb-3">
-                            <label for="email" class="form-label">E-mail</label>
-                            <input type="email" class="form-control" id="email" name="email" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="senha" class="form-label">Senha</label>
-                            <input type="password" class="form-control" id="senha" name="senha" required>
-                            <label id="img_olho" class="img_olho">&#128065;</label>
-                        </div>
-                        <button type="submit" class="btn btn-primary btn-black-text">Enviar</button>
-                    </form>
-                </div> 
-            </div>
-        </div>
-    </div>
+<body id="page-top">
+
+    {% include 'Menu/menuSemLogin.html' %}
 
     <!-- Masthead -->
     <header class="masthead">
@@ -95,159 +29,207 @@
         </div>
     </header>
 
+<!-- Como Funciona -->
+<section class="page-section" id="como-funciona">
+    <div class="container">
+        <div class="text-center">
+            <h2 class="section-heading text-uppercase">Como Funciona</h2>
+            <h3 class="section-subheading text-muted">Acompanhe o passo a passo para começar a doar ou receber alimentos.</h3>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="how-it-works-item">
+                    <h4 class="my-3">1. Cadastro</h4>
+                    <p class="text-muted">Cadastre sua empresa ou ONG na plataforma, fornecendo as informações necessárias para realizar ou receber doações.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="how-it-works-item">
+                    <h4 class="my-3">2. Realize a Doação</h4>
+                    <p class="text-muted">Escolha a ONG para a qual você deseja doar alimentos, registre a doação e forneça as informações fiscais para o abatimento.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="how-it-works-item">
+                    <h4 class="my-3">3. Receba seu Abatimento</h4>
+                    <p class="text-muted">Após a doação, utilize o comprovante gerado para solicitar o abatimento fiscal no Imposto de Renda da sua empresa.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
     <!-- Serviços -->
-    <section class="page-section" id="services">
+    <section class="page-section bg-light" id="services">
         <div class="container">
             <div class="text-center">
                 <h2 class="section-heading text-uppercase">Serviços</h2>
-                <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
+                <h3 class="section-subheading text-muted">Conectamos empresas alimentícias com ONGs para levar alimentos a quem mais precisa.</h3>
             </div>
             <div class="row text-center">
                 <div class="col-md-4">
                     <span class="fa-stack fa-4x">
                         <i class="fas fa-circle fa-stack-2x text-primary"></i>
-                        <img src="../static/css/assets/img/doadores.jpg" width="110" height="110" class="fa-stack-1x fa-inverse custom-img" alt="Icon Image" style="border-radius: 50%; object-fit: cover;">
+                        <img src="{% static 'css/assets/img/doadores.jpg' %}" width="110" height="110" class="fa-stack-1x fa-inverse custom-img" alt="Doadores" style="border-radius: 50%; object-fit: cover;">
                     </span>
                     <h4 class="my-3">Doadores</h4>
-                    <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                    <p class="text-muted">Empresas alimentícias que oferecem doações para ONGs, garantindo que alimentos cheguem a quem mais precisa.</p>
                 </div>
                 <div class="col-md-4">
                     <span class="fa-stack fa-4x">
                         <i class="fas fa-circle fa-stack-2x text-primary"></i>
-                        <img src="../static/css/assets/img/industria.jpg" width="110" height="110" class="fa-stack-1x fa-inverse custom-img" alt="Icon Image" style="border-radius: 50%; object-fit: cover;">
+                        <img src="{% static 'css/assets/img/industria.jpg' %}" width="110" height="110" class="fa-stack-1x fa-inverse custom-img" alt="Indústrias" style="border-radius: 50%; object-fit: cover;">
                     </span>
                     <h4 class="my-3">Indústrias</h4>
-                    <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                    <p class="text-muted">Apoiam a distribuição de alimentos através de doações, ajudando no combate à fome e na promoção da solidariedade.</p>
                 </div>
                 <div class="col-md-4">
                     <span class="fa-stack fa-4x">
                         <i class="fas fa-circle fa-stack-2x text-primary"></i>
-                        <img src="../static/css/assets/img/recebedores.jpg" width="110" height="110" class="fa-stack-1x fa-inverse custom-img" alt="Icon Image" style="border-radius: 50%; object-fit: cover;">
+                        <img src="{% static 'css/assets/img/recebedores.jpg' %}" width="110" height="110" class="fa-stack-1x fa-inverse custom-img" alt="Recebedores" style="border-radius: 50%; object-fit: cover;">
                     </span>
                     <h4 class="my-3">Recebedores</h4>
-                    <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                    <p class="text-muted">ONGs e instituições que recebem alimentos para distribuir entre as pessoas em situação de vulnerabilidade social.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Portfolio -->
-    <section class="page-section bg-light" id="portfolio">
-        <div class="container">
-            <div class="text-center">
-                <h2 class="section-heading text-uppercase">Trabalhos realizados</h2>
-                <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
-            </div>
-            <div class="row">
-                <div class="col-lg-4 col-sm-6 mb-4">
-                    <div class="portfolio-item">
-                        <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal1">
-                            <div class="portfolio-hover">
-                                <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
-                            </div>
-                            <img class="img-fluid" src="../static/css/assets/img/trabalhos1.jpg" alt="Trabalho 1" />
-                        </a>
-                        <div class="portfolio-caption">
-                            <div class="portfolio-caption-heading">Threads</div>
-                            <div class="portfolio-caption-subheading text-muted">Illustration</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-sm-6 mb-4">
-                    <div class="portfolio-item">
-                        <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal2">
-                            <div class="portfolio-hover">
-                                <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
-                            </div>
-                            <img class="img-fluid" src="../static/css/assets/img/trabalhos2.jpg" alt="Trabalho 2" />
-                        </a>
-                        <div class="portfolio-caption">
-                            <div class="portfolio-caption-heading">Explore</div>
-                            <div class="portfolio-caption-subheading text-muted">Graphic Design</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-sm-6 mb-4">
-                    <div class="portfolio-item">
-                        <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal3">
-                            <div class="portfolio-hover">
-                                <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
-                            </div>
-                            <img class="img-fluid" src="../static/css/assets/img/trabalhos3.jpg" alt="Trabalho 3" />
-                        </a>
-                        <div class="portfolio-caption">
-                            <div class="portfolio-caption-heading">Finish</div>
-                            <div class="portfolio-caption-subheading text-muted">Identity</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+<!-- About Section-->
+<section class="page-section" id="about">
+    <div class="container">
+        <div class="text-center">
+            <h2 class="section-heading text-uppercase">Sobre</h2>
+            <h3 class="section-subheading text-muted">A história e os valores que nos motivam a fazer a diferença no mundo.</h3>
         </div>
-    </section>
+        <ul class="timeline">
+            <li>
+                <div class="timeline-image"><img class="rounded-circle img-fluid" src="{% static 'css/assets/img/1.jpg' %}" alt="Fundadores" /></div>
+                <div class="timeline-panel">
+                    <div class="timeline-heading">
+                        <h4>2017-2022</h4>
+                        <h4 class="subheading">Nossos Fundadores</h4>
+                    </div>
+                    <div class="timeline-body"><p class="text-muted">Desde 2017, nossa missão tem sido unir empresas e ONGs para combater a fome e a insegurança alimentar em várias regiões do país.</p></div>
+                </div>
+            </li>
+            <li class="timeline-inverted">
+                <div class="timeline-image"><img class="rounded-circle img-fluid" src="{% static 'css/assets/img/2.jpg' %}" alt="Crescimento" /></div>
+                <div class="timeline-panel">
+                    <div class="timeline-heading">
+                        <h4>2022-Atualidade</h4>
+                        <h4 class="subheading">Nosso Crescimento</h4>
+                    </div>
+                    <div class="timeline-body"><p class="text-muted">Estamos expandindo nossa rede de parcerias, alcançando mais comunidades e impactando ainda mais vidas com alimentos essenciais.</p></div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</section>
 
-    <!-- About-->
-    <section class="page-section" id="about">
-        <div class="container">
-            <div class="text-center">
-                <h2 class="section-heading text-uppercase">Sobre</h2>
-                <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
-            </div>
-            <ul class="timeline">
-                <li>
-                    <div class="timeline-image"><img class="rounded-circle img-fluid" src="../static/css/assets/img/1.jpg" alt="..." /></div>
-                    <div class="timeline-panel">
-                        <div class="timeline-heading">
-                            <h4>2017-2022</h4>
-                            <h4 class="subheading">Nossos fundadores</h4>
-                        </div>
-                        <div class="timeline-body"><p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatum nihil, ipsa aperiam suscipit accusamus quae, amet voluptatibus dolorem possimus!</p></div>
-                    </div>
-                </li>
-                <li class="timeline-inverted">
-                    <div class="timeline-image"><img class="rounded-circle img-fluid" src="../static/css/assets/img/2.jpg" alt="..." /></div>
-                    <div class="timeline-panel">
-                        <div class="timeline-heading">
-                            <h4>2022-Atualidade</h4>
-                            <h4 class="subheading">Nosso crescimento</h4>
-                        </div>
-                        <div class="timeline-body"><p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatum nihil, ipsa aperiam suscipit accusamus quae, amet voluptatibus dolorem possimus!</p></div>
-                    </div>
-                </li>
-            </ul>
+<!-- Trabalhos Realizados Section -->
+<section class="page-section bg-light" id="portfolio">
+    <div class="container">
+        <div class="text-center">
+            <h2 class="section-heading text-uppercase">Trabalhos Realizados</h2>
+            <h3 class="section-subheading text-muted">Ações que impactaram milhares de vidas com o auxílio de nossas parcerias.</h3>
         </div>
-    </section>
+        <div class="row">
+            <div class="col-lg-4 col-sm-6 mb-4">
+                <div class="portfolio-item">
+                    <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal1">
+                        <div class="portfolio-hover">
+                            <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                        </div>
+                        <img class="img-fluid" src="{% static 'css/assets/img/trabalhos1.jpg' %}" alt="Doação de Alimentos 1" />
+                    </a>
+                    <div class="portfolio-caption">
+                        <div class="portfolio-caption-heading">Doação de Alimentos</div>
+                        <div class="portfolio-caption-subheading text-muted">Evento de arrecadação em 2023</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-sm-6 mb-4">
+                <div class="portfolio-item">
+                    <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal2">
+                        <div class="portfolio-hover">
+                            <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                        </div>
+                        <img class="img-fluid" src="{% static 'css/assets/img/trabalhos2.jpg' %}" alt="Doação de Alimentos 2" />
+                    </a>
+                    <div class="portfolio-caption">
+                        <div class="portfolio-caption-heading">Campanha de Arrecadação</div>
+                        <div class="portfolio-caption-subheading text-muted">Parceiros Unidos Contra a Fome</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-sm-6 mb-4">
+                <div class="portfolio-item">
+                    <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal3">
+                        <div class="portfolio-hover">
+                            <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                        </div>
+                        <img class="img-fluid" src="{% static 'css/assets/img/trabalhos3.jpg' %}" alt="Doação de Alimentos 3" />
+                    </a>
+                    <div class="portfolio-caption">
+                        <div class="portfolio-caption-heading">Distribuição de Cestas Básicas</div>
+                        <div class="portfolio-caption-subheading text-muted">Ações comunitárias realizadas em 2023</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Benefício Fiscal Section -->
+<section class="page-section" id="beneficio-fiscal">
+    <div class="container">
+        <div class="text-center">
+            <h2 class="section-heading text-uppercase">Benefício Fiscal para Empresas</h2>
+            <h3 class="section-subheading text-muted">A sua doação pode gerar um abatimento no Imposto de Renda! Entenda como funciona.</h3>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <p class="text-muted">Ao realizar uma doação de alimentos para uma ONG cadastrada em nossa plataforma, sua empresa poderá solicitar um abatimento no imposto de renda, conforme a legislação vigente. O valor da doação será deduzido, reduzindo a carga tributária da sua empresa e, ao mesmo tempo, ajudando milhares de pessoas que estão em situação de vulnerabilidade social.</p>
+                <a class="btn btn-primary btn-xl text-uppercase" href="{% url 'empresagetcad' 1 %}">Cadastre-se agora e faça sua primeira doação!</a>
+            </div>
+        </div>
+    </div>
+</section>
+
     <!-- Team-->
     <section class="page-section bg-light" id="team">
         <div class="container">
             <div class="text-center">
                 <h2 class="section-heading text-uppercase">Contatos</h2>
-                <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
+                <h3 class="section-subheading text-muted">Nossa equipe está pronta para ajudar no que for necessário.</h3>
             </div>
             <div class="row">
                 <div class="col-lg-4">
                     <div class="team-member">
-                        <img class="mx-auto rounded-circle" src="../static/css/assets/img/team/1.jpg" alt="..." />
+                        <img class="mx-auto rounded-circle" src="{% static 'css/assets/img/team/1.jpg' %}" alt="..." />
                         <h4>Parceria</h4>
-                        <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                        <p class="text-muted">Para estabelecer parcerias com empresas e ONGs, entre em contato conosco e saiba como podemos atuar juntos.</p>
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="team-member">
-                        <img class="mx-auto rounded-circle" src="../static/css/assets/img/team/2.jpg" alt="..." />
+                        <img class="mx-auto rounded-circle" src="{% static 'css/assets/img/team/2.jpg' %}" alt="..." />
                         <h4>Comunicação</h4>
-                        <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                        <p class="text-muted">Estamos disponíveis para esclarecer dúvidas e fornecer informações sobre nossa plataforma e ações.</p>
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="team-member">
-                        <img class="mx-auto rounded-circle" src="../static/css/assets/img/team/3.jpg" alt="..." />
+                        <img class="mx-auto rounded-circle" src="{% static 'css/assets/img/team/3.jpg' %}" alt="..." />
                         <h4>Suporte</h4>
-                        <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                        <p class="text-muted">Caso necessite de suporte técnico ou tenha problemas com a plataforma, nossa equipe está pronta para ajudar.</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+
     <!-- Footer-->
     <footer class="footer py-4">
         <div class="container">
@@ -284,9 +266,5 @@
     <!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" crossorigin="anonymous"></script>
-    <!-- Google API -->
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
-    <!-- Core theme JS-->
-    <script src="../static/js/scripts.js"></script>
 </body>
 </html>

@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from ong.urls import urlpatternscad as url_ong_cad
 from empresa.urls import urlpatternscad as url_empresa_cad
 from home.urls import urlpatterns as url_home
 from pessoa.urls import urlpatternscad as url_pessoa_cad
@@ -27,6 +28,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('cadastro/empresa/', include(url_empresa_cad)),
     path('cadastro/pessoa/', include(url_pessoa_cad)),
+    path('cadastro/ong/', include(url_ong_cad)),
     path('home/', include(url_home)),
     path('auth/', include(url_login_logout)),
     # path('doacao/pessoa/', include(url_pessoa_doacao)),

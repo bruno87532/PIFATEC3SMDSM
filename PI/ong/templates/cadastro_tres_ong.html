@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <title>Cadastro de empresa - Representante Legal</title>
+    <title>Cadastro de ONG - Representante Legal</title>
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" />
@@ -24,7 +24,7 @@
                 <h2 class="section-heading text-uppercase">Representante Legal</h2>
                 <h3 class="section-subheading text-muted">Informe os dados do representante legal</h3>
             </div>
-            <form action="{% url 'empresapostcad' %}" method="post">
+            <form action="{% url 'ongpostcad' %}" method="post">
                 {% csrf_token %}
                 <div class="row">
                     <div class="col-md-6">

@@ -14,7 +14,7 @@ class EmpresaDoacaoMinha(View):
         lista_contexto = [
             {
                 'id': i['id'],
-                'nome_empresa': empresa.nome_empresa,
+                'nome_empresa': empresa.nome,
                 'nome_produto': i['nome_produto'],
                 'quantidade_produto': i['quantidade_produto'],
                 'unidade_medida_produto': i['unidade_medida_produto'],

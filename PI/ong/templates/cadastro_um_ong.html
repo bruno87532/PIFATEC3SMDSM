@@ -21,15 +21,15 @@
     <section class="page-section" id="cadastro">
         <div class="container">
             <div class="text-center">
-                <h2 class="section-heading text-uppercase">Cadastro de Empresas</h2>
-                <h3 class="section-subheading text-muted">Informe os dados básicos da sua empresa</h3>
+                <h2 class="section-heading text-uppercase">Cadastro de ONG's</h2>
+                <h3 class="section-subheading text-muted">Informe os dados básicos da sua ONG</h3>
             </div>
-            <form action="{% url 'empresapostcad' %}" method="post">
+            <form action="{% url 'ongpostcad' %}" method="post">
                 {% csrf_token %}
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="id_nome">Nome da empresa:</label>
+                            <label for="id_nome">Nome da ONG:</label>
                             {{ form.nome }}
                         </div>
                     </div>
@@ -63,7 +63,7 @@
                         <div class="form-group">
                             <label for="id_senha_login">Senha para login:</label>
                             {{ form.senha_login }}
-                            <label id="img_olho" class="img_olho">&#128065;</label>
+                            <label  style="z-index: 1000;" id="img_olho" class="img_olho">&#128065;</label>
                             {% for i in erro %}
                                 {% if i.senha_login_erro %}
                                     <label>{{ i.senha_login_erro }}</label>
@@ -73,8 +73,8 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="id_tipo_empresa">Tipo de empresa:</label>
-                    {{ form.tipo_empresa }}
+                    <label for="id_objetivo_ong">Objetivo da ONG:</label>
+                    {{ form.objetivo_ong }}
                 </div>
                 <p>
                     <input type="hidden" name="etapa1" value="1">

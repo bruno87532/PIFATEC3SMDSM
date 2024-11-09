@@ -7,7 +7,7 @@ class EmpresaDoacaoLista(View):
     def get(self, request, numero_pagina):
         doacoes = Doacao.objects.values('id_empresa', 'nome_produto', 'quantidade_produto', 'unidade_medida_produto', 'data_doado_produto', 'disponivel_produto')
         lista_contexto = []
-        empresas = {empresa.id: empresa.nome_empresa for empresa in Empresa.objects.all()}
+        empresas = {empresa.id: empresa.nome for empresa in Empresa.objects.all()}
 
         for i in list(doacoes):
             doacao = {

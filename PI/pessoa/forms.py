@@ -4,6 +4,7 @@ from empresa.models import Empresa
 from datetime import date
 from django.utils import timezone
 import re 
+from services.validacao import Validacao
 
 class PessoaForm(forms.ModelForm):
     class Meta: 
@@ -27,8 +28,7 @@ class PessoaForm(forms.ModelForm):
     
     def clean_nome_pessoa(self):
         nome_pessoa = self.cleaned_data.get('nome_pessoa')
-        nome_pessoa = ''.join(re.findall(r'[a-zA-Z\s]', str(nome_pessoa))).title()
-        if not nome_pessoa:
+        if not Validacao.verifica_nome(nome_pessoa):
             raise forms.ValidationError('Nome inválido')
         return nome_pessoa
     

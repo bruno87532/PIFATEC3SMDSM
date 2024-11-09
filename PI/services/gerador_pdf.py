@@ -53,17 +53,17 @@ class GeraPDF():
         return resposta
 
 
-def monta_pdf(nome_empresa, cnpj_empresa, categoria_produto, data_doado_produto, nome_produto, descricao_produto, quantidade_produto, nome_representante_legal, cpf_representante_legal):
-    data_doado_produto = data_doado_produto - timedelta(hours=3)
+def monta_pdf(doacao, empresa):
+    data_doado_produto = doacao.data_doado_produto - timedelta(hours=3)
     MontaPDF = GeraPDF(A4, 801)
     MontaPDF.insere_titulo('Certificado de doação', 'Helvetica-Bold', 25, 'centro')
-    texto = f'Certificamos que a empresa {nome_empresa}, inscrita sob o CNPJ {cnpj_empresa}, realizou uma doação de {categoria_produto} na data {data_doado_produto.strftime("%d/%m/%Y")} as {data_doado_produto.strftime("%H:%M")} para a instituição Solidariedade do Campo, inscrita sob o CNPJ 67016422000126.'
+    texto = f'Certificamos que a empresa {empresa.nome}, inscrita sob o CNPJ {empresa.cnpj}, realizou uma doação de {doacao.categoria_produto} na data {data_doado_produto.strftime("%d/%m/%Y")} as {data_doado_produto.strftime("%H:%M")} para a instituição Solidariedade do Campo, inscrita sob o CNPJ 67016422000126.'
     MontaPDF.insere_texto(texto, 'Helvetica', 12, 495, 30)
     MontaPDF.insere_titulo('Detalhes da doação', 'Helvetica-Bold', 19, 'esquerda')
     MontaPDF.insere_titulo('Item doado', 'Helvetica-Bold', 16, 'esquerda')
-    MontaPDF.insere_texto(f'• Nome do produto: {nome_produto}', 'Helvetica', 14, 470, 10)
-    MontaPDF.insere_texto(f'• Descrição do produto: {descricao_produto}', 'Helvetica', 14, 470, 10)
-    MontaPDF.insere_texto(f'• Quantidade doada: {quantidade_produto}', 'Helvetica', 14, 470, 30)
+    MontaPDF.insere_texto(f'• Nome do produto: {doacao.nome_produto}', 'Helvetica', 14, 470, 10)
+    MontaPDF.insere_texto(f'• Descrição do produto: {doacao.descricao_produto}', 'Helvetica', 14, 470, 10)
+    MontaPDF.insere_texto(f'• Quantidade doada: {doacao.quantidade_produto}', 'Helvetica', 14, 470, 30)
     MontaPDF.insere_titulo('Declaração', 'Helvetica-Bold', 19, 'esquerda')
     texto = 'Esta doação foi realiza com o objetivo de contribuir com ONGS carentes. Este documento dedica-se a registrar a vericidade desta doação para questões legais.'
     MontaPDF.insere_texto(texto, 'Helvetica', 14, 495, 15)
@@ -72,8 +72,8 @@ def monta_pdf(nome_empresa, cnpj_empresa, categoria_produto, data_doado_produto,
     MontaPDF.insere_linha(50, 545)
     MontaPDF.subtrai_eixo_y(30)
     MontaPDF.insere_titulo('Representante legal da empresa', 'Helvetica-Bold', 19, 'esquerda')
-    MontaPDF.insere_texto(f'Nome: {nome_representante_legal}', 'Helvetica', 16, 495, 10)
-    MontaPDF.insere_texto(f'CPF: {cpf_representante_legal}', 'Helvetica', 16, 495, 10)
+    MontaPDF.insere_texto(f'Nome: {empresa.nome_representante}', 'Helvetica', 16, 495, 10)
+    MontaPDF.insere_texto(f'CPF: {empresa.cpf_representante}', 'Helvetica', 16, 495, 10)
     MontaPDF.insere_texto(f'Data: {data_doado_produto.strftime("%d/%m/%Y")}', 'Helvetica', 16, 495, 25)
     MontaPDF.insere_linha(150, 450)
     MontaPDF.subtrai_eixo_y(20)

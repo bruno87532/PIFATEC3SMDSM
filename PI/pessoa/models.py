@@ -8,11 +8,12 @@ import uuid
 from djongo import models
 
 class Doacao(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    id = models.ObjectIdField(primary_key=True)
     valor_doacao = models.FloatField()
 
 
 class Pessoa(models.Model):
+    id = models.ObjectIdField(primary_key=True)
     nome_pessoa = models.CharField(max_length=100)
     cpf_pessoa = models.CharField(max_length=20)
     email_login_pessoa = models.EmailField(max_length=100)

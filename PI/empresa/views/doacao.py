@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from empresa.forms import EmpresaDoacao as EmpresaDoacaoForm
 from empresa.models import Empresa
-from empresa.gerador_pdf import monta_pdf
+from services.gerador_pdf import monta_pdf
 from django.views import View
 
 class EmpresaDoacao(View):
@@ -19,7 +19,7 @@ class EmpresaDoacao(View):
             doacao.id_empresa = request.session['id_empresa']
             empresa = Empresa.objects.get(id=request.session['id_empresa'])
             doacao.save()
-            resposta = monta_pdf(empresa.nome_empresa, empresa.cnpj_empresa, doacao.categoria_produto, doacao.data_doado_produto, doacao.nome_produto, doacao.descricao_produto, doacao.quantidade_produto, empresa.nome_representante_empresa, empresa.cpf_representante_empresa) 
+            resposta = monta_pdf(doacao, empresa) 
             return resposta
         else:
             lista_erro = list(form.errors.keys())

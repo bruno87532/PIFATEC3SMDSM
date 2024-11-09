@@ -5,7 +5,7 @@ from django.core.paginator import Paginator
 
 class EmpresaDoacaoLocaliza(View):
     def obter_doacoes(self, nome_empresa):
-        empresas = {empresa.id: empresa.nome_empresa for empresa in Empresa.objects.all()}
+        empresas = {empresa.id: empresa.nome for empresa in Empresa.objects.all()}
         lista_empresas = [i for i, e in empresas.items() if e == nome_empresa]
         lista_doacoes = list(Doacao.objects.filter(id_empresa__in=lista_empresas).values('id_empresa', 'nome_produto', 'quantidade_produto', 'unidade_medida_produto', 'data_doado_produto', 'disponivel_produto'))
         return empresas, lista_doacoes

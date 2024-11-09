@@ -1,62 +1,14 @@
 from django import forms
-from empresa.models import Empresa, Doacao
-from pessoa.models import Pessoa
-import requests
-import re
+from ong.models import Ong
 from services.validacao import Validacao
 
-class EmpresaDoacao(forms.ModelForm):
+class OngFormUm(forms.ModelForm):
     class Meta:
-        model = Doacao
-        fields = [
-            'nome_produto',
-            'descricao_produto',
-            'quantidade_produto',
-            'unidade_medida_produto',
-            'categoria_produto',
-        ]
-        widgets = {
-            'quantidade_produto': forms.NumberInput(attrs={
-                                                    'type': 'number',
-                                                    'step': '0.1',
-                                                    'min': '0',
-                                                    'onkeypress': 'return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 46 || event.charCode == 44'
-                                                    }),
-            'nome_produto': forms.TextInput(attrs={
-                'class': 'form-control',
-            })
-        }
-
-    def clean_quantidade_produto(self):
-        quantidade_produto = str(self.cleaned_data.get('quantidade_produto'))
-        contador = 0
-        for i in quantidade_produto:
-            if i == ',':
-                quantidade_produto = quantidade_produto.replace(',', '.')
-                contador += 1
-            if i == '.':
-                contador += 1
-        if contador > 1 or ''.join(re.findall(r'[\d.]+', quantidade_produto)) != quantidade_produto or (quantidade_produto[len(quantidade_produto) - 1] == '.'):
-            raise forms.ValidationError('Quantidade inválida')
-        return quantidade_produto
-    def clean(self):
-        cleaned_data = super().clean() 
-        unidade_medida = cleaned_data.get('unidade_medida_produto')
-        quantidade_produto = cleaned_data.get('quantidade_produto')
-        if unidade_medida == 'unidade' and quantidade_produto and '.' in str(quantidade_produto):
-            raise forms.ValidationError('A quantidade deve ser inteira para valores unitários')
-
-        return cleaned_data
-
-
-
-class EmpresaFormUm(forms.ModelForm):
-    class Meta:
-        model = Empresa
+        model = Ong
         fields = [
             'nome',
             'cnpj',
-            'tipo_empresa',
+            'objetivo_ong',
             'email_login',
             'senha_login',
         ]
@@ -67,7 +19,7 @@ class EmpresaFormUm(forms.ModelForm):
             'cnpj': forms.TextInput(attrs={
                 'class': 'form-control',
             }),
-            'tipo_empresa': forms.TextInput(attrs={
+            'objetivo_ong': forms.TextInput(attrs={
                 'class': 'form-control',
             }),
             'email_login': forms.TextInput(attrs={
@@ -95,12 +47,12 @@ class EmpresaFormUm(forms.ModelForm):
             raise forms.ValidationError('CNPJ já cadastrado')
         return cnpj
     
-    def clean_tipo_empresa(self):
-        tipo_empresa = self.cleaned_data.get('tipo_empresa')
-        tipo_empresa = Validacao.verifica_campo_vazio(tipo_empresa)
-        if not tipo_empresa:
-            raise forms.ValidationError('Tipo de empresa inválido')
-        return tipo_empresa
+    def clean_objetivo_ong(self):
+        objetivo_ong = self.cleaned_data.get('objetivo_ong')
+        objetivo_ong = Validacao.verifica_campo_vazio(objetivo_ong)
+        if not objetivo_ong:
+            raise forms.ValidationError('Objetivo de ong inválido')
+        return objetivo_ong
 
     def clean_email_login(self):
         email_login = self.cleaned_data.get('email_login')
@@ -116,9 +68,9 @@ class EmpresaFormUm(forms.ModelForm):
             raise forms.ValidationError('Senha inválida')
         return senha_login
 
-class EmpresaFormDois(forms.ModelForm):
+class OngFormDois(forms.ModelForm):
     class Meta:
-        model = Empresa
+        model = Ong
         fields = [
             'cep',
             'estado',
@@ -194,9 +146,9 @@ class EmpresaFormDois(forms.ModelForm):
             raise forms.ValidationError('Número inválido')
         return numero   
 
-class EmpresaFormTres(forms.ModelForm):
+class OngFormTres(forms.ModelForm):
     class Meta:
-        model = Empresa
+        model = Ong
         fields = [
             'nome_representante',
             'cpf_representante',
@@ -222,37 +174,37 @@ class EmpresaFormTres(forms.ModelForm):
         nome_representante = self.cleaned_data.get('nome_representante')
         nome_representante = Validacao.verifica_nome_representante(nome_representante)
         if not nome_representante:
-            raise forms.ValidationError('Nome do representante inválido')
+            raise forms.ValidationError('Nome inválido')
         return nome_representante
     
     def clean_cpf_representante(self):
         cpf_representante = self.cleaned_data.get('cpf_representante')
         cpf_representante = Validacao.verifica_cpf(cpf_representante)
         if not cpf_representante:
-            raise forms.ValidationError('CPF do representante inválido')
+            raise forms.ValidationError('CPF inválido')
         return cpf_representante
     
     def clean_email_representante(self):
         email_representante = self.cleaned_data.get('email_representante')
         email_representante = Validacao.verifica_campo_vazio(email_representante)
         if not email_representante:
-            raise forms.ValidationError('Email do representante inválido')
+            raise forms.ValidationError('Email inválido')
         return email_representante
     
     def clean_telefone_representante(self):
         telefone_representante = self.cleaned_data.get('telefone_representante')
         telefone_representante = Validacao.verifica_telefone(telefone_representante)
         if not telefone_representante:
-            raise forms.ValidationError('Telefone do representante inválido')
+            raise forms.ValidationError('Telefone inválido')
         return telefone_representante
 
-class EmpresaCompleta(forms.ModelForm):
+class OngCompleta(forms.ModelForm):
     class Meta:
-        model = Empresa
+        model = Ong
         fields = [
             'nome',
             'cnpj',
-            'tipo_empresa',
+            'objetivo_ong',
             'email_login',
             'senha_login',
             'cep', 

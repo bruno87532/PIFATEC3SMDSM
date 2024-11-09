@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.views import View
 from empresa.models import Empresa
 from pessoa.models import Pessoa
+from ong.models import Ong
 
 class Login(View):
     def get(self, request):
@@ -12,7 +13,7 @@ class Login(View):
         senha = request.POST['senha']
         autenticado = False
         try:
-            empresa = Empresa.objects.get(email_login_empresa=email)
+            empresa = Empresa.objects.get(email_login=email)
             if empresa.verifica_senha(senha):
                 request.session['id_empresa'] = empresa.id
                 autenticado = True    
@@ -24,6 +25,13 @@ class Login(View):
                 request.session['id_pessoa'] = pessoa.id
                 autenticado = True
         except Pessoa.DoesNotExist:
+            pass
+        try:
+            ong = Ong.objects.get(email_login=email)
+            if ong.verifica_senha(senha):
+                request.session['id_ong'] = ong.id
+                autenticado = True
+        except Ong.DoesNotExist:
             pass
         if not autenticado:
             return render(request=request, template_name='login.html', context={'email': email})

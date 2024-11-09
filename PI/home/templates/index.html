@@ -18,7 +18,11 @@
 
 <body id="page-top">
 
-    {% include 'Menu/menuSemLogin.html' %}
+    {% if user.is_authenticated %}
+        {% include 'Menu/menuComLogin.html' %}
+    {% else %}
+        {% include 'Menu/menuSemLogin.html' %}
+    {% endif %}    
 
     <!-- Masthead -->
     <header class="masthead">

@@ -13,7 +13,11 @@
 
 <body id="page-top">
 
-    {% include 'Menu/menuLogin.html' %}
+    {% if user.is_authenticated %}
+        {% include 'Menu/menuCLoginBasic.html' %}
+    {% else %}
+        {% include 'Menu/menuSLoginBasic.html' %}
+    {% endif %}  
 
     <section class="page-section" id="login">
         <div class="container">

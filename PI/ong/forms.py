@@ -1,6 +1,7 @@
 from django import forms
 from ong.models import Ong
 from services.validacao import Validacao
+from django_select2.forms import Select2Widget
 
 class OngFormUm(forms.ModelForm):
     class Meta:

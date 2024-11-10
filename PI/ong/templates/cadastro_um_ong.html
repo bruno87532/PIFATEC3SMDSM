@@ -6,18 +6,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <title>Cadastro  - Dados Básicos</title>
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
-    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" />
     <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
+    <style>
+        .img_olho{
+            z-index: 10000;
+        }
+    </style>
 </head>
 <body id="page-top">
-
+    
     {% if user.is_authenticated %}
-        {% include 'Menu/menuCLoginBasic.html' %}
+    {% include 'Menu/menuCLoginBasic.html' %}
     {% else %}
-        {% include 'Menu/menuSLoginBasic.html' %}
+    {% include 'Menu/menuSLoginBasic.html' %}
     {% endif %}  
-
+    
     <section class="page-section" id="cadastro">
         <div class="container">
             <div class="text-center">
@@ -38,11 +42,11 @@
                             <label for="id_cnpj">CNPJ:</label>
                             {{ form.cnpj }}
                             {% for i in erro %}
-                                {% if i.cnpj_erro %}
-                                    <label>{{ i.cnpj_erro }}</label>
-                                {% elif i.cnpj_existe %}
-                                    <label>{{ i.cnpj_existe }}</label>
-                                {% endif %}                
+                            {% if i.cnpj_erro %}
+                            <label>{{ i.cnpj_erro }}</label>
+                            {% elif i.cnpj_existe %}
+                            <label>{{ i.cnpj_existe }}</label>
+                            {% endif %}                
                             {% endfor %}
                         </div>
                     </div>
@@ -53,9 +57,9 @@
                             <label for="id_email_login">Email para login:</label>
                             {{ form.email_login }}      
                             {% for i in erro %}
-                                {% if i.email_login_erro %}
-                                    <label>{{ i.email_login_erro }}</label>
-                                {% endif %}
+                            {% if i.email_login_erro %}
+                            <label>{{ i.email_login_erro }}</label>
+                            {% endif %}
                             {% endfor %}    
                         </div>
                     </div>
@@ -65,9 +69,9 @@
                             {{ form.senha_login }}
                             <label  style="z-index: 1000;" id="img_olho" class="img_olho">&#128065;</label>
                             {% for i in erro %}
-                                {% if i.senha_login_erro %}
-                                    <label>{{ i.senha_login_erro }}</label>
-                                {% endif %}
+                            {% if i.senha_login_erro %}
+                            <label>{{ i.senha_login_erro }}</label>
+                            {% endif %}
                             {% endfor %}
                         </div>
                     </div>
@@ -94,7 +98,8 @@
                 password.MostraSenha()
             })
         })
-    </script>
+        </script>
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     <!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" crossorigin="anonymous"></script>

@@ -12,11 +12,11 @@
 </head>
 <body id="page-top">
     
-    {% if user.is_authenticated %}
+    {% if logout %}
         {% include 'Menu/menuCLoginBasic.html' %}
     {% else %}
         {% include 'Menu/menuSLoginBasic.html' %}
-    {% endif %}  
+    {% endif %}   
 
     <section class="page-section" id="cadastro">
         <div class="container">

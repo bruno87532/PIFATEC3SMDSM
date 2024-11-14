@@ -5,42 +5,79 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Doação - Empresa</title>
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" />
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
 </head>
-<body>
-    <form id="doacao_form" method="post" action="{% url 'empresa_doacao' %}" onsubmit="return envia_formulario();">
-        {% csrf_token %}
-        <p>
-            <label for="id_nome_produto">Nome do produto</label>
-            {{ form.nome_produto }}
-        </p>
-        <p>
-            <label for="id_descricao_produto">Descrição do produto</label>
-            {{ form.descricao_produto }}
-        </p>
-        <p>
-            <label for="id_quantidade_produto">Quantidade do produto</label>
-            {{ form.quantidade_produto }}
-            {% for i in erro %}
-                {% if i.quantidade_produto_erro %}
-                    <label>{{ i.quantidade_produto_erro }}</label>
-                {% endif %}
-                {% if i.unidade_decimal_erro %}
-                    <label>{{ i.unidade_decimal_erro }}</label>
-                {% endif %}    
-            {% endfor %}
-        </p>
-        <p>
-            <label for="id_unidade_medida_produto">Unidade de medida do produto</label>
-            {{ form.unidade_medida_produto }}
-        </p>
-        <p>
-            <label for="id_categoria_produto">Categoria do produto</label>
-            {{ form.categoria_produto }}
-        </p>
-        <p>
-            <input type="submit" value="Enviar">
-        </p>
-    </form>
+<body id="page-top">
+
+    {% if logout %}
+        {% include 'Menu/menuCLoginBasic.html' %}
+    {% else %}
+        {% include 'Menu/menuSLoginBasic.html' %}
+    {% endif %}  
+
+    <section class="page-section" id="doacao">
+        <div class="container">
+            <div class="text-center">
+                <h2 class="section-heading text-uppercase">Doação de Produtos</h2>
+                <h3 class="section-subheading text-muted">Preencha os dados abaixo para realizar sua doação</h3>
+            </div>
+            <form id="doacao_form" method="post" action="{% url 'empresa_doacao' %}" onsubmit="return envia_formulario();">
+                {% csrf_token %}
+                <div class="form-group mb-3">
+                    <label for="id_nome_produto">Nome do produto:</label>
+                    {{ form.nome_produto }}
+                    {% if form.nome_produto.errors %}
+                        <div class="text-danger">
+                            {% for error in form.nome_produto.errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="id_descricao_produto">Descrição do produto:</label>
+                    {{ form.descricao_produto }}
+                    {% if form.descricao_produto.errors %}
+                        <div class="text-danger">
+                            {% for error in form.descricao_produto.errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="id_quantidade_produto">Quantidade do produto:</label>
+                    {{ form.quantidade_produto }}
+                    {% for i in erro %}
+                        {% if i.quantidade_produto_erro %}
+                            <div class="text-danger">{{ i.quantidade_produto_erro }}</div>
+                        {% endif %}
+                        {% if i.unidade_decimal_erro %}
+                            <div class="text-danger">{{ i.unidade_decimal_erro }}</div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="id_unidade_medida_produto">Unidade de medida do produto:</label>
+                    {{ form.unidade_medida_produto }}
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="id_categoria_produto">Categoria do produto:</label>
+                    {{ form.categoria_produto }}
+                </div>
+
+                <div class="text-center mt-4">
+                    <input type="submit" class="btn btn-primary btn-xl text-uppercase" value="Enviar">
+                </div>
+            </form>
+        </div>
+    </section>
 
     <script>
         function envia_formulario() {
@@ -64,5 +101,9 @@
             return false; 
         }
     </script>
+
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" crossorigin="anonymous"></script>
 </body>
 </html>

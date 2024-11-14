@@ -19,7 +19,7 @@
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdown">
                             <li><a class="dropdown-item" href="{% url 'empresagetcad' 1 %}">Empresa</a></li>
-                            <li><a class="dropdown-item" href="">ONG</a></li>
+                            <li><a class="dropdown-item" href="{% url 'empresa_doacao' %}">ONG</a></li>
                             <li><a class="dropdown-item" href="">Pessoa Física</a></li>
                         </ul>
                     </li>
@@ -54,8 +54,10 @@
                         </div>
                         <div class="mb-3">
                             <label for="senha" class="form-label">Senha</label>
+                            <div class="input-group">
                             <input type="password" class="form-control" id="senha" name="senha" required>
-                            <label id="img_olho" class="img_olho">&#128586;</label>
+                            <span class="input-group-text" id="img_olho_login" style="cursor: pointer;">👁️</span>
+                            </div>
                         </div>
                         <button type="submit" class="btn btn-primary btn-black-text">Enviar</button>
                     </form>

@@ -30,4 +30,4 @@ class EmpresaDoacao(View):
             if '__all__' in lista_erro:
                 unidade_decimal = {'unidade_decimal_erro': 'O valor deve ser inteiro para medidas unitária'}
                 lista_contexto.append(unidade_decimal)
-            return render(request=request, template_name='doacao_empresa.html', context={'form': form, 'erro': lista_contexto})
+            return render(request=request, template_name='doacao_empresa.html', context={'form': form, 'erro': lista_contexto}, status=400)

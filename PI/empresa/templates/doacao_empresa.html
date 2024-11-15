@@ -93,14 +93,17 @@
             .then(response => {
                 if (response.ok) {
                     return response.blob(); 
+                }else {
+                    return response.text();
                 }
             })
-            .then(blob => {
-                const pdf = URL.createObjectURL(blob); 
-                window.open(pdf, '_blank');
-                window.location.href = "{% url 'home' %}";
+            .then(data => {
+                if (data instanceof Blob) {
+                    const pdf = URL.createObjectURL(blob); 
+                    window.open(pdf, '_blank');
+                    window.location.href = "{% url 'home' %}";
+                }
             })
-            return false; 
         }
     </script>
 

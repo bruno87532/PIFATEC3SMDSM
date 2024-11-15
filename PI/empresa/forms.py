@@ -16,12 +16,12 @@ class EmpresaDoacao(forms.ModelForm):
             'categoria_produto',
         ]
         widgets = {
-            'quantidade_produto': forms.NumberInput(attrs={
-                                                    'type': 'number',
-                                                    'step': '0.1',
-                                                    'min': '0',
-                                                    'onkeypress': 'return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 46 || event.charCode == 44'
-                                                    }),
+            # 'quantidade_produto': forms.NumberInput(attrs={
+            #                                         'type': 'number',
+            #                                         'step': '0.1',
+            #                                         'min': '0',
+            #                                         'onkeypress': 'return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 46 || event.charCode == 44'
+            #                                         }),
             'nome_produto': forms.TextInput(attrs={
                 'class': 'form-control',
             })
@@ -43,7 +43,7 @@ class EmpresaDoacao(forms.ModelForm):
         cleaned_data = super().clean() 
         unidade_medida = cleaned_data.get('unidade_medida_produto')
         quantidade_produto = cleaned_data.get('quantidade_produto')
-        if unidade_medida == 'unidade' and quantidade_produto and '.' in str(quantidade_produto):
+        if unidade_medida == 'unidade' and ('.' in str(quantidade_produto) or quantidade_produto is None):
             raise forms.ValidationError('A quantidade deve ser inteira para valores unitários')
 
         return cleaned_data

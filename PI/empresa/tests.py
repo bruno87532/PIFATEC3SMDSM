@@ -2,8 +2,7 @@ from django.test import TestCase
 from django.urls import reverse
 from empresa.models import Empresa
 
-# Create your tests here.
- 
+
 class GET_redireciona_correto_cadastro(TestCase):
     def test_rota_1(self):
         resposta = self.client.get(reverse('empresagetcad', kwargs={'etapa': 1}))
@@ -138,3 +137,5 @@ class cadastra_dados_correto_doacao(TestCase):
         self.assertTemplateNotUsed('doacao_empresa.html')
         self.assertTemplateUsed('index.html')
         ## DPS FAZER TESTE PARA TESTAR GERAÇÃO DE PDF
+
+class cadastra

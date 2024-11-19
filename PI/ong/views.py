@@ -46,7 +46,7 @@ class OngCadastro(View):
             for c, v in zip(erros_chave, erros_valor):
                 if v in lista_erros:
                     lista_contexto.append({c: v})
-        return render(request=request, template_name=self.templates[chave][0], context={'form': form, 'erro': lista_contexto})
+            return render(request=request, template_name=self.templates[chave][0], context={'form': form, 'erro': lista_contexto})
     
 class OngDistribuicao(View):
     def get(self, request, numero_pagina):

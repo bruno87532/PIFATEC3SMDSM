@@ -1,8 +1,12 @@
 from django.test import TestCase
 from django.urls import reverse
-from empresa.models import Empresa
+from empresa.models import Empresa, Doacao
+from datetime import datetime
+from djongo import models
+from django.db import connections
 
-
+# Create your tests here.
+ 
 class GET_redireciona_correto_cadastro(TestCase):
     def test_rota_1(self):
         resposta = self.client.get(reverse('empresagetcad', kwargs={'etapa': 1}))
@@ -30,6 +34,7 @@ class cadastra_dados_correto_cadastro(TestCase):
         resposta = self.client.post(reverse('empresapostcad'), self.dados)
         self.assertEqual(resposta.status_code, 302)
         self.assertRedirects(resposta, reverse('login'))
+        self.assertEqual(Empresa.objects.count(), 1)
  
 class cadastra_dados_errado_etapa_1_cadastro(TestCase):
     def setUp(self):
@@ -132,10 +137,72 @@ class cadastra_dados_errado_doacao(TestCase):
 
 class cadastra_dados_correto_doacao(TestCase):
     def test_doacao(self):
-        self.dados = {'nome_produto': 'Feijão', 'descricao_produto': 'Feijão broto legal', 'quantidade_produto': '80', 'unidade_medida_produto': 'unidade', 'categoria_produto': 'mercearia'}
+        empresa = Empresa.objects.create(email_login='teste@gmail.com')
+        empresa.set_senha('123456789')
+        empresa.save()
+        self.dados = {'email': 'teste@gmail.com', 'senha': '123456789'}
+        resposta = self.client.post(reverse('login'), self.dados)
+        self.dados = {'nome_produto': 'Feijão', 'descricao_produto': 'Feijão broto legal 1kg', 'quantidade_produto': '5.5', 'unidade_medida_produto': 'gramas', 'categoria_produto': 'mercearia'}
         resposta = self.client.post(reverse('empresa_doacao'), self.dados)
-        self.assertTemplateNotUsed('doacao_empresa.html')
-        self.assertTemplateUsed('index.html')
+        self.assertEqual(Doacao.objects.count(), 1)
         ## DPS FAZER TESTE PARA TESTAR GERAÇÃO DE PDF
 
-class cadastra
+class GET_redireciona_correto_minha_doacao(TestCase):
+    def test_rota_sem_login(self):
+        resposta = self.client.get(reverse('empresa_doacao_minha', kwargs={'numero_pagina': 1}), follow=True)
+        self.assertTemplateNotUsed(resposta, 'visualiza_doacao_minha.html')
+        self.assertTemplateUsed(resposta, 'login.html')
+    def test_rota_com_login(self):
+        empresa = Empresa.objects.create(email_login='teste@gmail.com')
+        empresa.set_senha('123456789')
+        empresa.save()
+        self.dados = {'email': 'teste@gmail.com', 'senha': '123456789'}
+        resposta = self.client.post(reverse('login'), self.dados)
+        resposta = self.client.get(reverse('empresa_doacao_minha', kwargs={'numero_pagina': 1}), follow=True)
+        self.assertTemplateUsed(resposta, 'visualiza_doacao_minha.html')
+        self.assertTemplateNotUsed(resposta, 'login.html')
+
+class mostra_minha_doacao(TestCase):
+    def test_mostra_doacao(self):
+        empresa = Empresa.objects.create(nome='BRF', email_login='teste@gmail.com')
+        empresa.set_senha('123456789')
+        empresa.save()
+        self.dados = {'email': 'teste@gmail.com', 'senha': '123456789'}
+        resposta = self.client.post(reverse('login'), self.dados)
+        self.dados = {'nome_produto': 'Feijão', 'descricao_produto': 'Feijão broto legal 1kg', 'quantidade_produto': '5.5', 'unidade_medida_produto': 'gramas', 'categoria_produto': 'mercearia'}
+        resposta = self.client.post(reverse('empresa_doacao'), self.dados)
+        resposta = self.client.get(reverse('empresa_doacao_minha', kwargs={'numero_pagina': 1}), follow=True)
+        self.assertContains(resposta, 'Feijão')
+        self.assertContains(resposta, 'BRF')
+        self.assertContains(resposta, datetime.now().strftime("%d/%m/%Y"))
+        self.assertContains(resposta, '<td><a href="/doacao/gera/18" target="_blank">Certificado da doação</a></td>', html=True)
+
+class doacao_todas_empresas(TestCase):
+    def test_todas_doacoes(self):
+        empresa = Empresa.objects.create(nome='Uber', email_login='teste@gmail.com')
+        empresa.set_senha('123456789')
+        empresa.save()
+        empresa = Empresa.objects.create(nome='Tirolez', email_login='teste2@gmail.com')
+        empresa.set_senha('123456789')
+        empresa.save()
+        self.dados = {'email': 'teste@gmail.com', 'senha': '123456789'}
+        resposta = self.client.post(reverse('login'), self.dados)
+        self.dados = {'nome_produto': 'Feijão', 'descricao_produto': 'Feijão broto legal 1kg', 'quantidade_produto': '5.5', 'unidade_medida_produto': 'gramas', 'categoria_produto': 'mercearia'}
+        resposta = self.client.post(reverse('empresa_doacao'), self.dados)
+        self.dados = {'email': 'teste2@gmail.com', 'senha': '123456789'}
+        resposta = self.client.post(reverse('login'), self.dados)
+        self.dados = {'nome_produto': 'Arroz broto legal 5kg', 'descricao_produto': 'Validade distante', 'quantidade_produto': '500', 'unidade_medida_produto': 'unidade', 'categoria_produto': 'mercearia'}
+        for i in range(15):
+            resposta = self.client.post(reverse('empresa_doacao'), self.dados)
+        doacao = Doacao.objects.first()
+        doacao.disponivel_produto = False
+        doacao.save()
+        resposta = self.client.get(reverse('empresa_doacao_lista', kwargs={'numero_pagina': 1}))
+        self.assertContains(resposta, 'Uber')
+        self.assertContains(resposta, 'Tirolez')
+        self.assertContains(resposta, 'Arroz broto legal 5kg')
+        self.assertContains(resposta, 'Não disponível')
+        self.assertContains(resposta, 'Próxima página')
+        resposta = self.client.get(reverse('empresa_doacao_lista', kwargs={'numero_pagina': 2}))
+        self.assertContains(resposta, 'Página anterior')
+        self.assertNotContains(resposta, 'Próxima página')

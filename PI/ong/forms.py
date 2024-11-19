@@ -175,28 +175,28 @@ class OngFormTres(forms.ModelForm):
         nome_representante = self.cleaned_data.get('nome_representante')
         nome_representante = Validacao.verifica_nome_representante(nome_representante)
         if not nome_representante:
-            raise forms.ValidationError('Nome inválido')
+            raise forms.ValidationError('Nome do representante inválido')
         return nome_representante
     
     def clean_cpf_representante(self):
         cpf_representante = self.cleaned_data.get('cpf_representante')
         cpf_representante = Validacao.verifica_cpf(cpf_representante)
         if not cpf_representante:
-            raise forms.ValidationError('CPF inválido')
+            raise forms.ValidationError('CPF do representante inválido')
         return cpf_representante
     
     def clean_email_representante(self):
         email_representante = self.cleaned_data.get('email_representante')
         email_representante = Validacao.verifica_campo_vazio(email_representante)
         if not email_representante:
-            raise forms.ValidationError('Email inválido')
+            raise forms.ValidationError('Email do representante inválido')
         return email_representante
     
     def clean_telefone_representante(self):
         telefone_representante = self.cleaned_data.get('telefone_representante')
         telefone_representante = Validacao.verifica_telefone(telefone_representante)
         if not telefone_representante:
-            raise forms.ValidationError('Telefone inválido')
+            raise forms.ValidationError('Telefone do representante inválido')
         return telefone_representante
 
 class OngCompleta(forms.ModelForm):

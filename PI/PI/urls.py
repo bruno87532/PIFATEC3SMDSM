@@ -31,8 +31,9 @@ urlpatterns = [
     path('cadastro/ong/', include(url_ong_cad)),
     path('home/', include(url_home)),
     path('auth/', include(url_login_logout)),
-    # path('doacao/pessoa/', include(url_pessoa_doacao)),
+    path('doacao/pessoa/', include(url_pessoa_doacao)),
     path('doacao/', include(url_empresa_doacao)),
     path('', include(url_home)),
-    path('distribuicao/', include(url_ong))
+    path('distribuicao/', include(url_ong)),
+    path('pessoa/pagamento/', include(url_pessoa_doacao))
 ]

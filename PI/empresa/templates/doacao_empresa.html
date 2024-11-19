@@ -25,7 +25,7 @@
                 <h2 class="section-heading text-uppercase">Doação de Produtos</h2>
                 <h3 class="section-subheading text-muted">Preencha os dados abaixo para realizar sua doação</h3>
             </div>
-            <form id="doacao_form" method="post" action="{% url 'empresa_doacao' %}" onsubmit="return envia_formulario();">
+            <form id="doacao_form" method="post" action="{% url 'empresa_doacao' %}" onsubmit="return envia_formulario(event);">
                 {% csrf_token %}
                 <div class="form-group mb-3">
                     <label for="id_nome_produto">Nome do produto:</label>
@@ -82,29 +82,34 @@
     </section>
 
     <script>
-        function envia_formulario() {
+        async function envia_formulario(event) {
+            event.preventDefault();
+            let condicional = false;
             const form = document.getElementById('doacao_form');
             const url = form.action;
             const form_data = new FormData(form); 
-            fetch(url, {
+            const response = await fetch(url, {
                 method: 'POST',
                 body: form_data
-            })
-            .then(response => {
-                if (response.ok) {
-                    return response.blob(); 
-                }else {
-                    return response.text();
-                }
-            })
-            .then(data => {
-                if (data instanceof Blob) {
-                    const pdf = URL.createObjectURL(blob); 
-                    window.open(pdf, '_blank');
-                    window.location.href = "{% url 'home' %}";
-                }
-            })
+            });
+            let data;
+            if (response.ok) {
+                data = await response.blob();
+            } else {
+                data = await response.text();
+            }
+            if (data instanceof Blob) {
+                const pdf = URL.createObjectURL(data);
+                window.open(pdf, '_blank');
+                window.location.href = "{% url 'home' %}";
+            } else {
+                condicional = true;
+            }
+            if (condicional) {
+                form.submit();
+            }
         }
+
     </script>
 
     <!-- Bootstrap core JS-->

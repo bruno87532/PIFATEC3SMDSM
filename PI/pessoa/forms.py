@@ -28,7 +28,8 @@ class PessoaForm(forms.ModelForm):
     
     def clean_nome_pessoa(self):
         nome_pessoa = self.cleaned_data.get('nome_pessoa')
-        if not Validacao.verifica_nome(nome_pessoa):
+        nome_pessoa = Validacao.verifica_nome_representante(nome_pessoa)
+        if not nome_pessoa:
             raise forms.ValidationError('Nome inválido')
         return nome_pessoa
     
@@ -61,7 +62,7 @@ class PessoaForm(forms.ModelForm):
 
     def clean_email_login_pessoa(self):
         email_login_pessoa = self.cleaned_data.get('email_login_pessoa')
-        if Pessoa.objects.filter(email_login_pessoa=email_login_pessoa) or Empresa.objects.filter(email_login_empresa=email_login_pessoa):
+        if Pessoa.objects.filter(email_login_pessoa=email_login_pessoa) or Empresa.objects.filter(email_login=email_login_pessoa):
             raise forms.ValidationError('Email já cadastrado!')
         return email_login_pessoa
         

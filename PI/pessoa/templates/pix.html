@@ -1,11 +1,55 @@
+<!-- templates/checkout.html -->
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Checkout</title>
 </head>
 <body>
-    <h1>Estou testando</h1>
+    <h1>Contribue com a causa</h1>
+    <form action="{% url 'pessoa_doacao' %}" id="form_1" onsubmit="return envia_formulario(event)">
+        <h2>Contribue com 10 reais</h2>
+        {% csrf_token %}
+        <input type="hidden" value="10" name="valor">
+        <input type="submit" value="Contribuir">
+    </form>
+    <form action="{% url 'pessoa_doacao' %}" id="form_2" onsubmit="return envia_formulario(event)">
+        <h2>Contribue com 30 reais</h2>
+        {% csrf_token %}
+        <input type="hidden" value="30" name="valor">
+        <input type="submit" value="Contribuir">
+    </form>
+    <form action="{% url 'pessoa_doacao' %}" id="form_3" onsubmit="return envia_formulario(event)">
+        <h2>Contribue com 50 reais</h2>
+        {% csrf_token %}
+        <input type="hidden" value="50" name="valor">
+        <input type="submit" value="Contribuir">
+    </form>
+    <script src="https://js.stripe.com/v3"></script>
+    <script>
+        const stripe = Stripe('pk_test_51QKUd8GK5KkbiX4wOiFT7IAIyrP8MjfQrD3T2uAhuRk5Gu75wFeZpRwWyx3GbTaohGGGl2A4ikWhLt9A0r6VhbkS00E9HtgcUy')   
+        function envia_formulario(event) {
+            event.preventDefault()
+            const form = document.getElementById(event.target.getAttribute('id'))
+            const form_data = new FormData(form)
+            const url = form.action;
+            fetch(url, {
+                method: 'POST',
+                body: form_data
+            })
+            .then(function(response) {
+                return response.json();
+            })
+            .then(function(id){
+                return stripe.redirectToCheckout({sessionId: id.id})
+            })
+            .then(function(result){
+                if (result.error) {
+                    console.log(result.error.message)
+                }
+            })
+        }
+    </script>
 </body>
 </html>

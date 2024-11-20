@@ -80,10 +80,10 @@
                 <button type="button" id="enviar_form">Distribuir alimentos</button>
             <div>
                 {% if doacoes.has_previous %}
-                        <a href="{% url 'empresa_doacao_minha' numero_pagina=doacoes.previous_page_number %}">Página anterior</a>
+                        <a href="{% url 'distribuicao_ong' numero_pagina=doacoes.previous_page_number %}">Página anterior</a>
                     {% endif %}
                     {% if doacoes.has_next %}
-                        <a href="{% url 'empresa_doacao_minha' numero_pagina=doacoes.next_page_number %}">Próxima página</a>
+                        <a href="{% url 'distribuicao_ong' numero_pagina=doacoes.next_page_number %}">Próxima página</a>
                     {% endif %}
                 </div>
                 <div class="text-center mt-4">

@@ -1,3 +1,6 @@
+from typing import Any
+from django.http import HttpRequest
+from django.http.response import HttpResponse as HttpResponse
 from django.shortcuts import render, redirect
 from ong.forms import OngFormUm, OngFormDois, OngFormTres, OngCompleta
 from django.views import View
@@ -49,6 +52,10 @@ class OngCadastro(View):
             return render(request=request, template_name=self.templates[chave][0], context={'form': form, 'erro': lista_contexto})
     
 class OngDistribuicao(View):
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_superuser:
+            return redirect('home')
+        return super().dispatch(request, *args, **kwargs)
     def get(self, request, numero_pagina):
         empresas = {empresa.id: empresa.nome for empresa in Empresa.objects.all()}
         ongs = Ong.objects.all().values('id', 'nome')

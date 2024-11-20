@@ -6,6 +6,10 @@ from django.views import View
 from django.core.paginator import Paginator
 
 class GeraPdfView(View):
+    def dispatch(self, request, *args, **kwargs):
+        if 'id_empresa' not in request.session:
+            return redirect('login')
+        return super().dispatch(request, *args, **kwargs)
     def get(self, request, id):
         doacao = Doacao.objects.get(id=id)
         empresa = Empresa.objects.get(id=request.session['id_empresa'])

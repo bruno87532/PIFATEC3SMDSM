@@ -45,6 +45,7 @@
                             <th>Medida</th>
                             <th>Data</th>
                             <th>Status</th>
+                            <th>Excluir doação</th>
                             <th>Certificado</th>
                         </tr>
                     </thead>
@@ -58,8 +59,10 @@
                                 <td>{{ i.data_doado_produto | date:"d/m/Y" }}</td>
                                 {% if i.disponivel_produto %}
                                     <td>Disponível</td>
+                                    <td><a href="{% url 'deleta_doacao' id=i.id numero_pagina=doacoes.number %}">Deletar</a></td>
                                 {% else %} 
-                                    <td>Não disponível</td>                                       
+                                    <td>Não disponível</td>
+                                    <td></td>                                       
                                 {% endif %}
                                 <td><a href="{% url 'gera_pdf' id=i.id %}" target="_blank">Certificado da doação</a></td>
                             </tr>

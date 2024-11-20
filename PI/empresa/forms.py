@@ -5,6 +5,9 @@ import requests
 import re
 from services.validacao import Validacao
 
+from django import forms
+from .models import Doacao
+
 class EmpresaDoacao(forms.ModelForm):
     class Meta:
         model = Doacao
@@ -16,16 +19,27 @@ class EmpresaDoacao(forms.ModelForm):
             'categoria_produto',
         ]
         widgets = {
-            # 'quantidade_produto': forms.NumberInput(attrs={
-            #                                         'type': 'number',
-            #                                         'step': '0.1',
-            #                                         'min': '0',
-            #                                         'onkeypress': 'return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 46 || event.charCode == 44'
-            #                                         }),
             'nome_produto': forms.TextInput(attrs={
                 'class': 'form-control',
-            })
+            }),
+            'descricao_produto': forms.Textarea(attrs={
+                'class': 'form-control',
+                'rows': 4,
+            }),
+            'quantidade_produto': forms.NumberInput(attrs={
+                'class': 'form-control',
+                'type': 'number',
+                'step': '0.1',
+                'min': '0',
+            }),
+            'unidade_medida_produto': forms.Select(attrs={
+                'class': 'form-control',
+            }),
+            'categoria_produto': forms.Select(attrs={
+                'class': 'form-control',
+            }),
         }
+
 
     def clean_quantidade_produto(self):
         quantidade_produto = str(self.cleaned_data.get('quantidade_produto'))

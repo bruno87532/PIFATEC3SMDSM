@@ -20,61 +20,75 @@
         {% include 'Menu/menuSLoginBasic.html' %}
     {% endif %}  
 
-    <section class="page-section" id="cadastro-endereco">
+    <section class="page-section d-flex justify-content-center align-items-center" id="cadastro-endereco">
         <div class="container">
-            <div class="text-center">
+            <div class="text-center mb-4">
                 <h2 class="section-heading text-uppercase">Cadastro de Endereço da Empresa</h2>
                 <h3 class="section-subheading text-muted">Informe os dados de endereço da sua empresa</h3>
             </div>
+            
             <form action="{% url 'empresapostcad' %}" method="post">
                 {% csrf_token %}
-                <div class="row">
-                    <div class="col-md-3">
+
+                <div class="row justify-content-center mb-3">
+                    <div class="col-md-6">
                         <label for="id_cep">CEP:</label>
-                        <label id="cep_invalido" style="visibility: hidden;">CEP inválido</label>
+                        <label id="cep_invalido" style="visibility: hidden;" class="text-danger ms-2">CEP inválido</label>
                         {{ form.cep }}
                         {% for i in erro %}
                             {% if i.cep_erro %}
-                                <label>{{ i.cep_erro }}</label>
+                                <div class="text-danger">
+                                    <label>{{ i.cep_erro }}</label>
+                                </div>
                             {% endif %}
                         {% endfor %}
                     </div>
+                </div>
 
-                    <div class="col-md-3">
+                <div class="row justify-content-center mb-3">
+                    <div class="col-md-6">
                         <label for="id_estado">Estado:</label>
                         {{ form.estado }}
                     </div>
+                </div>
 
-                    <div class="col-md-3">
+                <div class="row justify-content-center mb-3">
+                    <div class="col-md-6">
                         <label for="id_cidade">Cidade:</label>
                         {{ form.cidade }}
                     </div>
+                </div>
 
-                    <div class="col-md-3">
+                <div class="row justify-content-center mb-3">
+                    <div class="col-md-6">
                         <label for="id_bairro">Bairro:</label>
                         {{ form.bairro }}
                     </div>
+                </div>
 
+                <div class="row justify-content-center mb-3">
                     <div class="col-md-6">
                         <label for="id_rua">Rua:</label>
                         {{ form.rua }}
                     </div>
+                </div>
 
-                    <div class="col-md-3">
+                <div class="row justify-content-center mb-3">
+                    <div class="col-md-6">
                         <label for="id_numero">Número:</label>
                         {{ form.numero }}
                     </div>
+                </div>
 
-                    <div class="col-md-12">
+                <div class="row justify-content-center mb-3">
+                    <div class="col-md-6">
                         <label for="id_complemento">Complemento:</label>
                         {{ form.complemento }}
                     </div>
                 </div>
-                
-                <p>
-                    <input type="hidden" name="etapa2" value="2">
-                </p>
-                
+
+                <input type="hidden" name="etapa2" value="2">
+
                 <div class="text-center mt-4">
                     <input type="submit" class="btn btn-primary btn-xl text-uppercase" value="Próximo">
                 </div>

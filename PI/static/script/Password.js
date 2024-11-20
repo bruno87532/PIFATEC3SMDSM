@@ -3,7 +3,7 @@ class Password {
     constructor(campo, olhoIcone) {
         this.senha = campo;
         this.olhoIcone = olhoIcone;
-        
+
         if (this.senha && this.olhoIcone) {
             this.olhoIcone.addEventListener('click', () => this.MostraSenha());
         }
@@ -19,7 +19,7 @@ class Password {
 
     static inicializar() {
         document.addEventListener('DOMContentLoaded', () => {
-            const campoSenhaCadastro = document.getElementById('id_senha_login');
+            const campoSenhaCadastro = document.getElementById('id_senha_login_pessoa');
             const olhoIconeCadastro = document.getElementById('img_olho');
 
             const campoSenhaModal = document.getElementById('id_senha_login_modal');

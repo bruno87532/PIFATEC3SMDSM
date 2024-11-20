@@ -7,7 +7,7 @@ import re
 from services.validacao import Validacao
 
 class PessoaForm(forms.ModelForm):
-    class Meta: 
+    class Meta:
         model = Pessoa
         fields = [
             'nome_pessoa',
@@ -18,12 +18,34 @@ class PessoaForm(forms.ModelForm):
             'telefone_pessoa'
         ]
         widgets = {
-            'data_nascimento_pessoa': forms.DateInput(attrs={'type': 'date',
-                                                             'min': '1900-01-01',
-                                                             'max': date.today(),
-                                                             'onkeydown': 'return false',
-                                                             }),
-            'senha_login_pessoa': forms.PasswordInput(attrs={'type': 'password',})
+            'nome_pessoa': forms.TextInput(attrs={
+                'class': 'form-control',
+            }),
+            'cpf_pessoa': forms.TextInput(attrs={
+                'class': 'form-control',
+                'maxlength': '14',
+                'oninput': "this.value=this.value.replace(/[^0-9]/g,'');",
+            }),
+            'email_login_pessoa': forms.EmailInput(attrs={
+                'class': 'form-control',
+            }),
+            'senha_login_pessoa': forms.PasswordInput(attrs={
+                'type': 'password',
+                'minlength': '8',
+                'class': 'form-control',
+            }),
+            'data_nascimento_pessoa': forms.DateInput(attrs={
+                'type': 'date',
+                'min': '1900-01-01',
+                'max': date.today(),
+                'onkeydown': 'return false',
+                'class': 'form-control',
+            }),
+            'telefone_pessoa': forms.TextInput(attrs={
+                'class': 'form-control',
+                'maxlength': '15',
+                'oninput': "this.value=this.value.replace(/[^0-9]/g,'');",
+            }),
         }
     
     def clean_nome_pessoa(self):

@@ -2,76 +2,96 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Doação - Empresa</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>Doação de Produtos</title>
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" />
     <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
 </head>
 <body id="page-top">
-    
+
     <script src="{% static 'script/Password.js' %}"></script>
 
     {% if logout %}
         {% include 'Menu/menuCLoginBasic.html' %}
     {% else %}
         {% include 'Menu/menuSLoginBasic.html' %}
-    {% endif %}  
+    {% endif %}
 
-    <section class="page-section" id="doacao">
+    <section class="page-section d-flex justify-content-center align-items-center" id="doacao">
         <div class="container">
-            <div class="text-center">
+            <div class="text-center mb-4">
                 <h2 class="section-heading text-uppercase">Doação de Produtos</h2>
                 <h3 class="section-subheading text-muted">Preencha os dados abaixo para realizar sua doação</h3>
             </div>
             <form id="doacao_form" method="post" action="{% url 'empresa_doacao' %}" onsubmit="return envia_formulario(event);">
                 {% csrf_token %}
-                <div class="form-group mb-3">
-                    <label for="id_nome_produto">Nome do produto:</label>
-                    {{ form.nome_produto }}
-                    {% if form.nome_produto.errors %}
-                        <div class="text-danger">
-                            {% for error in form.nome_produto.errors %}
-                                <p>{{ error }}</p>
-                            {% endfor %}
+
+                <div class="row justify-content-center mb-3">
+                    <div class="col-md-6">
+                        <div class="d-flex justify-content-between">
+                            <label for="id_nome_produto">Nome do produto:</label>
+                            <div class="text-danger ms-2">
+                                {% if form.nome_produto.errors %}
+                                    {% for error in form.nome_produto.errors %}
+                                        <p>{{ error }}</p>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
                         </div>
-                    {% endif %}
+                        {{ form.nome_produto }}
+                    </div>
                 </div>
 
-                <div class="form-group mb-3">
-                    <label for="id_descricao_produto">Descrição do produto:</label>
-                    {{ form.descricao_produto }}
-                    {% if form.descricao_produto.errors %}
-                        <div class="text-danger">
-                            {% for error in form.descricao_produto.errors %}
-                                <p>{{ error }}</p>
-                            {% endfor %}
+                <div class="row justify-content-center mb-3">
+                    <div class="col-md-6">
+                        <div class="d-flex justify-content-between">
+                            <label for="id_descricao_produto">Descrição do produto:</label>
+                            <div class="text-danger ms-2">
+                                {% if form.descricao_produto.errors %}
+                                    {% for error in form.descricao_produto.errors %}
+                                        <p>{{ error }}</p>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
                         </div>
-                    {% endif %}
+                        {{ form.descricao_produto }}
+                    </div>
                 </div>
 
-                <div class="form-group mb-3">
-                    <label for="id_quantidade_produto">Quantidade do produto:</label>
-                    {{ form.quantidade_produto }}
-                    {% for i in erro %}
-                        {% if i.quantidade_produto_erro %}
-                            <div class="text-danger">{{ i.quantidade_produto_erro }}</div>
-                        {% endif %}
-                        {% if i.unidade_decimal_erro %}
-                            <div class="text-danger">{{ i.unidade_decimal_erro }}</div>
-                        {% endif %}
-                    {% endfor %}
+                <div class="row justify-content-center mb-3">
+                    <div class="col-md-6">
+                        <div class="d-flex justify-content-between">
+                            <label for="id_quantidade_produto">Quantidade do produto:</label>
+                            <div class="text-danger ms-2">
+                                {% for i in erro %}
+                                    {% if i.quantidade_produto_erro %}
+                                        <p>{{ i.quantidade_produto_erro }}</p>
+                                    {% endif %}
+                                    {% if i.unidade_decimal_erro %}
+                                        <p>{{ i.unidade_decimal_erro }}</p>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                        {{ form.quantidade_produto }}
+                    </div>
                 </div>
 
-                <div class="form-group mb-3">
-                    <label for="id_unidade_medida_produto">Unidade de medida do produto:</label>
-                    {{ form.unidade_medida_produto }}
+                <div class="row justify-content-center mb-3">
+                    <div class="col-md-6">
+                        <label for="id_unidade_medida_produto">Unidade de medida do produto:</label>
+                        {{ form.unidade_medida_produto }}
+                    </div>
                 </div>
 
-                <div class="form-group mb-3">
-                    <label for="id_categoria_produto">Categoria do produto:</label>
-                    {{ form.categoria_produto }}
+                <div class="row justify-content-center mb-3">
+                    <div class="col-md-6">
+                        <label for="id_categoria_produto">Categoria do produto:</label>
+                        {{ form.categoria_produto }}
+                    </div>
                 </div>
 
                 <div class="text-center mt-4">
@@ -109,7 +129,6 @@
                 form.submit();
             }
         }
-
     </script>
 
     <!-- Bootstrap core JS-->

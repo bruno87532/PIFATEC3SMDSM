@@ -28,8 +28,5 @@ Dentro da pasta PI, no seu terminal, execute o comando python manage.py runserve
 ## Membros da equipe:
  
 - [Abner Souza](https://github.com/AbnerSouza2)
-- [Ana Laura](https://github.com/nalaura97)
-- [Athos Sperber da Cunha](https://github.com/AthosSperber)
 - [Bruno Henrique Guinerio](https://github.com/bruno87532)
-- [Camila Schiabel](http://github.com/produtocamila)
 - [Christian Santos Rocha](https://github.com/christiansrocha)

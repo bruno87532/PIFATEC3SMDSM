@@ -36,8 +36,8 @@
                             <label for="id_nome_representante">Nome do representante:</label>
                             <div class="text-danger ms-2">
                                 {% for i in erro %}
-                                    {% if i.nome_erro %}
-                                        <label>{{ i.nome_erro }}</label>
+                                    {% if i.nome_representante_erro %}
+                                        <label>{{ i.nome_representante_erro }}</label>
                                     {% endif %}
                                 {% endfor %}
                             </div>

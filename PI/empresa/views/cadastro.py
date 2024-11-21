@@ -17,7 +17,9 @@ class EmpresaCadastro(View):
             return redirect('empresagetcad', etapa=1)
         return render(request=request, template_name=template, context={'form': form}) 
     def post(self, request):
-        chave = 1 if request.POST.get('etapa1', '') else (2 if request.POST.get('etapa2', '') else 3)
+        chave = 1 if request.POST.get('etapa1', '') else (2 if request.POST.get('etapa2', '') else (3 if request.POST.get('etapa3', '') else ''))
+        if chave == '':
+            return redirect('home')
         form = self.templates[chave][1](request.POST)
         if form.is_valid():
             if chave == 1:
@@ -36,7 +38,7 @@ class EmpresaCadastro(View):
             return redirect('empresagetcad', etapa = chave + 1)
         else:
             erros_chave = ['nome_erro', 'cnpj_erro', 'cnpj_existe', 'email_login_erro', 'senha_login_erro', 'cep_erro', 'nome_representante_erro', 'telefone_representante_erro', 'cpf_representante_erro']
-            erros_valor = ['Nome inválido', 'CNPJ inválido', 'CNPJ já cadastrado', 'Email já cadastrado', 'Senha inválida', 'CEP inválido', 'Nome do representante inválido',  'Telefone do representante inválido', 'CPF do representante inválido']
+            erros_valor = ['Nome inválido', 'CNPJ inválido', 'CNPJ já cadastrado', 'Email já cadastrado', 'Senha inválida', 'CEP inválido', 'Nome do representante inválido', 'Telefone do representante inválido', 'CPF do representante inválido']
             lista_erros = list(form.errors.values())
             lista_erros = [i for erro in lista_erros for i in erro]
             lista_contexto = []

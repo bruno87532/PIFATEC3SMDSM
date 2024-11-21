@@ -3,6 +3,8 @@ from empresa.models import Empresa
 from pessoa.models import Pessoa
 from ong.models import Ong
 import requests
+from django.utils import timezone 
+from datetime import datetime
 
 class Validacao():
 
@@ -87,3 +89,10 @@ class Validacao():
         if len(telefone) < 9:
             return False
         return telefone
+    
+    @staticmethod
+    def verifica_data_nascimento(data):
+        print(type(data))
+        if timezone.now().date().year - data.year < 18:
+            return False
+        return data

@@ -16,32 +16,12 @@ class PessoaCadastro(View):
             pessoa.save()
             return redirect('login')
         else:
-            lista_erro = list(form.errors.keys())
+            erros_chave = ['nome_erro', 'cpf_existe', 'cpf_erro', 'email_erro', 'senha_erro', 'telefone_erro', 'data_nascimento_erro']
+            erros_valor = ['Nome inválido', 'CPF já cadastrado', 'CPF inválido', 'Email já cadastrado', 'Senha inválida', 'Número de telefone inválido', 'É necessário ser maior de idade']
+            lista_erros = list(form.errors.values())
+            lista_erros = [i for erro in lista_erros for i in erro]
             lista_contexto = []
-            if 'nome_pessoa' in lista_erro:
-                nome_pessoa = {'nome_erro': 'Nome inválido'}
-                lista_contexto.append(nome_pessoa)
-            if 'cpf_pessoa' in lista_erro:
-                erro = 0
-                for n in form.errors.values():
-                    if 'CPF já cadastrado' == n[0]:
-                        erro = 1
-                        cpf_existe = {'cpf_existe': 'CPF já cadastrado'}
-                        lista_contexto.append(cpf_existe)
-                        break
-                if not erro:
-                    cpf_erro = {'cpf_erro': 'CPF inválido'}
-                    lista_contexto.append(cpf_erro)
-            if 'email_login_pessoa' in lista_erro:
-                email_erro = {'email_erro': 'Email já cadastro'}
-                lista_contexto.append(email_erro)
-            if 'senha_login_pessoa' in lista_erro:
-                senha_erro = {'senha_erro': 'A senha deve possuir mais que 8 caracteres'}
-                lista_contexto.append(senha_erro)
-            if 'data_nascimento_pessoa' in lista_erro:
-                data_nascimento_erro = {'data_nascimento_erro': 'Você deve ser maior que 18 anos'}
-                lista_contexto.append(data_nascimento_erro)
-            if 'telefone_pessoa' in lista_erro:
-                telefone_pessoa = {'telefone_erro': 'Número de telefone inválido'}
-                lista_contexto.append(telefone_pessoa)
+            for c, v in zip(erros_chave, erros_valor):
+                if v in lista_erros:
+                    lista_contexto.append({c: v})
             return render(request=request, template_name='cadastro.html', context={'form': form, 'erro': lista_contexto})

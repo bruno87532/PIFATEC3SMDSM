@@ -90,15 +90,9 @@ class EmpresaFormUm(forms.ModelForm):
             'senha_login': forms.PasswordInput(attrs={
                 'class': 'form-control',
                 'type': 'password',
+                'minlength': '8',
             }),
         }
-    
-    def clean_nome(self):
-        nome = self.cleaned_data.get('nome')
-        nome = Validacao.verifica_campo_vazio(nome)
-        if not nome:
-            raise forms.ValidationError('Nome inválido')
-        return nome
 
     def clean_cnpj(self):
         cnpj = self.cleaned_data.get('cnpj')
@@ -108,13 +102,6 @@ class EmpresaFormUm(forms.ModelForm):
         if cnpj == 'cadastrado':
             raise forms.ValidationError('CNPJ já cadastrado')
         return cnpj
-    
-    def clean_tipo_empresa(self):
-        tipo_empresa = self.cleaned_data.get('tipo_empresa')
-        tipo_empresa = Validacao.verifica_campo_vazio(tipo_empresa)
-        if not tipo_empresa:
-            raise forms.ValidationError('Tipo de empresa inválido')
-        return tipo_empresa
 
     def clean_email_login(self):
         email_login = self.cleaned_data.get('email_login')
@@ -171,42 +158,7 @@ class EmpresaFormDois(forms.ModelForm):
         cep = Validacao.verifica_cep(cep)
         if not cep:
             raise forms.ValidationError('CEP inválido')
-        return cep
-    
-    def clean_estado(self):
-        estado = self.cleaned_data.get('estado')
-        estado = Validacao.verifica_campo_vazio(estado)
-        if not estado:
-            raise forms.ValidationError('Estado inválido')
-        return estado
-    
-    def clean_cidade(self):
-        cidade = self.cleaned_data.get('cidade')
-        cidade = Validacao.verifica_campo_vazio(cidade)
-        if not cidade:
-            raise forms.ValidationError('Cidade inválida')
-        return cidade
-    
-    def clean_bairro(self):
-        bairro = self.cleaned_data.get('bairro')
-        bairro = Validacao.verifica_campo_vazio(bairro)
-        if not bairro:
-            raise forms.ValidationError('Bairro inválido')
-        return bairro
-    
-    def clean_rua(self):
-        rua = self.cleaned_data.get('rua')
-        rua = Validacao.verifica_campo_vazio(rua)
-        if not rua:
-            raise forms.ValidationError('Rua inválida')
-        return rua 
-
-    def clean_numero(self):
-        numero = self.cleaned_data.get('numero')
-        numero = Validacao.verifica_campo_vazio(numero)
-        if not numero:
-            raise forms.ValidationError('Número inválido')
-        return numero   
+        return cep  
 
 class EmpresaFormTres(forms.ModelForm):
     class Meta:
@@ -245,13 +197,6 @@ class EmpresaFormTres(forms.ModelForm):
         if not cpf_representante:
             raise forms.ValidationError('CPF do representante inválido')
         return cpf_representante
-    
-    def clean_email_representante(self):
-        email_representante = self.cleaned_data.get('email_representante')
-        email_representante = Validacao.verifica_campo_vazio(email_representante)
-        if not email_representante:
-            raise forms.ValidationError('Email do representante inválido')
-        return email_representante
     
     def clean_telefone_representante(self):
         telefone_representante = self.cleaned_data.get('telefone_representante')

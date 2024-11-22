@@ -1,4 +1,3 @@
-// Password.js
 class Password {
     constructor(campo, olhoIcone) {
         this.senha = campo;
@@ -12,26 +11,22 @@ class Password {
     MostraSenha() {
         if (this.senha.type === 'password') {
             this.senha.type = 'text';
+            this.olhoIcone.innerHTML = '<i class="fas fa-eye"></i>';
         } else {
             this.senha.type = 'password';
+            this.olhoIcone.innerHTML = '<i class="fas fa-eye-slash"></i>';
         }
     }
 
     static inicializar() {
         document.addEventListener('DOMContentLoaded', () => {
-            const campoSenhaCadastro = document.getElementById('id_senha_login_pessoa');
-            const olhoIconeCadastro = document.getElementById('img_olho');
-
-            const campoSenhaModal = document.getElementById('id_senha_login_modal');
-            const olhoIconeModal = document.getElementById('img_olho_login');
-
-            if (campoSenhaCadastro && olhoIconeCadastro) {
-                new Password(campoSenhaCadastro, olhoIconeCadastro);
-            }
-
-            if (campoSenhaModal && olhoIconeModal) {
-                new Password(campoSenhaModal, olhoIconeModal);
-            }
+            const senhas = document.querySelectorAll('input[type="password"]');
+            senhas.forEach(senha => {
+                const olhoIcone = senha.closest('.input-group').querySelector('.input-group-text');
+                if (olhoIcone) {
+                    new Password(senha, olhoIcone);
+                }
+            });
         });
     }
 }

@@ -77,7 +77,9 @@
                         <label for="id_senha_login">Senha para login:</label>
                         <div class="input-group">
                             {{ form.senha_login }}
-                            <span class="input-group-text" id="img_olho" style="cursor: pointer;">👁️</span>
+                            <span class="input-group-text" id="img_olho" style="cursor: pointer;">
+                                <i class="fas fa-eye"></i>
+                            </span>
                         </div>
                         {% if form.senha_login.errors %}
                             <div class="text-danger">

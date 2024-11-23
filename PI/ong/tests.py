@@ -38,24 +38,24 @@ class cadastra_dados_errado_etapa_1_cadastro(TestCase):
         resposta = self.client.post(reverse('ongpostcad'), self.dados)
         self.assertTemplateNotUsed(resposta, 'cadastro_dois_ong.html')
         self.assertTemplateUsed(resposta, 'cadastro_um_ong.html')
-        self.assertContains(resposta, 'CNPJ inválido')
-        self.assertNotContains(resposta, 'Senha inválida')
+        self.assertContains(resposta, 'CNPJ inválido', status_code=400)
+        self.assertNotContains(resposta, 'Senha inválida', status_code=400)
     def test_errado_etapa_1_senha(self):
         self.dados['senha_login'] = '123'
         self.dados['cnpj'] = '45997418001710'
         resposta = self.client.post(reverse('ongpostcad'), self.dados)
         self.assertTemplateNotUsed(resposta, 'cadastro_dois_ong.html')
         self.assertTemplateUsed(resposta, 'cadastro_um_ong.html')
-        self.assertContains(resposta, 'Senha inválida')
-        self.assertNotContains(resposta, 'CNPJ inválido')
+        self.assertContains(resposta, 'Senha inválida', status_code=400)
+        self.assertNotContains(resposta, 'CNPJ inválido', status_code=400)
     def test_errado_etapa_1_cnpj_senha(self):
         self.dados['senha_login'] = '123'
         self.dados['cnpj'] = '123'
         resposta = self.client.post(reverse('ongpostcad'), self.dados)
         self.assertTemplateNotUsed(resposta, 'cadastro_dois_ong.html')
         self.assertTemplateUsed(resposta, 'cadastro_um_ong.html')
-        self.assertContains(resposta, 'Senha inválida')
-        self.assertContains(resposta, 'CNPJ inválido')
+        self.assertContains(resposta, 'Senha inválida', status_code=400)
+        self.assertContains(resposta, 'CNPJ inválido', status_code=400)
  
 class cadastra_dados_errado_etapa_2_cadastro(TestCase):
     def test_errado_etapa_2_cep(self):
@@ -63,7 +63,7 @@ class cadastra_dados_errado_etapa_2_cadastro(TestCase):
         resposta = self.client.post(reverse('ongpostcad'), self.dados)
         self.assertTemplateNotUsed('cadastro_tres_ong.html')               
         self.assertTemplateUsed('cadastro_dois_ong.html') 
-        self.assertContains(resposta, 'CEP inválido')              
+        self.assertContains(resposta, 'CEP inválido', status_code=400)              
 
 class cadastra_dados_errado_etapa_3_cadastro(TestCase):
     def setUp(self):
@@ -72,20 +72,20 @@ class cadastra_dados_errado_etapa_3_cadastro(TestCase):
         resposta = self.client.post(reverse('ongpostcad'), self.dados)
         self.assertTemplateNotUsed(resposta, 'login.html')
         self.assertTemplateUsed(resposta, 'cadastro_tres_ong.html')
-        self.assertContains(resposta, 'CPF do representante inválido')
-        self.assertNotContains(resposta, 'Telefone do representante inválido')
+        self.assertContains(resposta, 'CPF do representante inválido', status_code=400)
+        self.assertNotContains(resposta, 'Telefone do representante inválido', status_code=400)
     def test_errado_etapa_3_telefone(self):
         self.dados['cpf_representante'] = '33787357084'
         self.dados['telefone_representante'] = '123'
         resposta = self.client.post(reverse('ongpostcad'), self.dados)
         self.assertTemplateNotUsed(resposta, 'login.html')
         self.assertTemplateUsed(resposta, 'cadastro_tres_ong.html')
-        self.assertNotContains(resposta, 'CPF do representante inválido')
-        self.assertContains(resposta, 'Telefone do representante inválido')
+        self.assertNotContains(resposta, 'CPF do representante inválido', status_code=400)
+        self.assertContains(resposta, 'Telefone do representante inválido', status_code=400)
     def test_errado_etapa_3_cpf_telefone(self):
         self.dados['telefone_representante'] = '123'
         resposta = self.client.post(reverse('ongpostcad'), self.dados)
         self.assertTemplateNotUsed(resposta, 'login.html')
         self.assertTemplateUsed(resposta, 'cadastro_tres_ong.html')
-        self.assertContains(resposta, 'CPF do representante inválido')
-        self.assertContains(resposta, 'Telefone do representante inválido')
+        self.assertContains(resposta, 'CPF do representante inválido', status_code=400)
+        self.assertContains(resposta, 'Telefone do representante inválido', status_code=400)

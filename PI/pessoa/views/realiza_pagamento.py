@@ -16,7 +16,7 @@ class PessoaDoacao(View):
     def get(self, request):
         return render(request=request, template_name='pix.html')
     def post(self, request):
-        site =  'http://localhost:8000'
+        site =  'http://127.0.0.1:8000/'
         valor = int(request.POST['valor'])
         sessao_pagamento = stripe.checkout.Session.create(
             payment_method_types=['card'],

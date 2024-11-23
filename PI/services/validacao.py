@@ -7,12 +7,6 @@ from django.utils import timezone
 from datetime import datetime
 
 class Validacao():
-
-    @staticmethod
-    def verifica_campo_vazio(campo):
-        if not campo or len(campo) == 0:
-            return False
-        return campo
     
     @staticmethod
     def verifica_cnpj(cnpj):
@@ -92,7 +86,6 @@ class Validacao():
     
     @staticmethod
     def verifica_data_nascimento(data):
-        print(type(data))
         if timezone.now().date().year - data.year < 18:
             return False
         return data

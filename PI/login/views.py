@@ -35,7 +35,7 @@ class Login(View):
         except Ong.DoesNotExist:
             pass
         if not autenticado:
-            return render(request=request, template_name='login.html', context={'email': email})
+            return render(request=request, template_name='login.html', context={'email': email}, status=400)
         return redirect('home')
 class Logout(View):
     def get(self, request):

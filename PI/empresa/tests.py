@@ -268,7 +268,7 @@ class doacao_todas_empresas(TestCase):
         self.assertNotContains(resposta, 'Próxima página')
 
 class deleta_doacao(TestCase):
-    def test_deleta_doacao(self):
+    def test_post_deleta_doacao(self):
         self.dados = {'nome': 'Coca-Cola', 'cnpj': '45997418002601', 'email_login': 'cocacolacontato@gmail.com', 'senha_login': '123456789', 'tipo_empresa': 'sociedade de capital fechado', 'etapa1': '1'}
         resposta = self.client.post(reverse('empresapostcad'), self.dados)
         self.dados = {'cep': '13610827', 'estado': 'SP', 'cidade': 'Leme', 'bairro': 'Jardim do Sol', 'rua': 'Maria Fercem', 'numero': '232', 'complemento': 'bloco 8 ap 104', 'etapa2': '2'}

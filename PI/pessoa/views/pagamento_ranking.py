@@ -11,5 +11,4 @@ class PessoaPagamentoRanking(View):
                 'valor_total_doado_pessoa': i.valor_total_doado_pessoa
             } for i in pessoas
         ]
-        print(lista_contexto)
         return render(request=request, template_name='ranking_pagamento.html', context={'pessoas': lista_contexto})

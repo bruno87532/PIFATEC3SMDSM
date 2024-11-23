@@ -1,7 +1,5 @@
 from django import forms
 from empresa.models import Empresa, Doacao
-from pessoa.models import Pessoa
-import requests
 import re
 from services.validacao import Validacao
 
@@ -58,8 +56,7 @@ class EmpresaDoacao(forms.ModelForm):
         unidade_medida = cleaned_data.get('unidade_medida_produto')
         quantidade_produto = cleaned_data.get('quantidade_produto')
         if unidade_medida == 'unidade' and ('.' in str(quantidade_produto) or quantidade_produto is None):
-            raise forms.ValidationError('A quantidade deve ser inteira para valores unitários')
-
+            raise forms.ValidationError('O valor deve ser inteiro para medidas unitária')
         return cleaned_data
 
 

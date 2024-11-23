@@ -33,13 +33,6 @@
                     <div class="col-md-6">
                         <div class="d-flex justify-content-between">
                             <label for="id_nome_produto">Nome do produto:</label>
-                            <div class="text-danger ms-2">
-                                {% if form.nome_produto.errors %}
-                                    {% for error in form.nome_produto.errors %}
-                                        <p>{{ error }}</p>
-                                    {% endfor %}
-                                {% endif %}
-                            </div>
                         </div>
                         {{ form.nome_produto }}
                     </div>
@@ -49,13 +42,6 @@
                     <div class="col-md-6">
                         <div class="d-flex justify-content-between">
                             <label for="id_descricao_produto">Descrição do produto:</label>
-                            <div class="text-danger ms-2">
-                                {% if form.descricao_produto.errors %}
-                                    {% for error in form.descricao_produto.errors %}
-                                        <p>{{ error }}</p>
-                                    {% endfor %}
-                                {% endif %}
-                            </div>
                         </div>
                         {{ form.descricao_produto }}
                     </div>
@@ -66,14 +52,11 @@
                         <div class="d-flex justify-content-between">
                             <label for="id_quantidade_produto">Quantidade do produto:</label>
                             <div class="text-danger ms-2">
-                                {% for i in erro %}
-                                    {% if i.quantidade_produto_erro %}
-                                        <p>{{ i.quantidade_produto_erro }}</p>
-                                    {% endif %}
-                                    {% if i.unidade_decimal_erro %}
-                                        <p>{{ i.unidade_decimal_erro }}</p>
-                                    {% endif %}
-                                {% endfor %}
+                                {% if form.quantidade_produto.errors %}
+                                    {% for error in form.quantidade_produto.errors %}
+                                        <label for="">{{ error }}</label>
+                                    {% endfor %}
+                                {% endif %}
                             </div>
                         </div>
                         {{ form.quantidade_produto }}
@@ -83,6 +66,11 @@
                 <div class="row justify-content-center mb-3">
                     <div class="col-md-6">
                         <label for="id_unidade_medida_produto">Unidade de medida do produto:</label>
+                        {% if form.non_field_errors %}
+                            {% for error in form.non_field_errors %}
+                                <label for="">{{ error }}</label>
+                            {% endfor %}
+                        {% endif %}
                         {{ form.unidade_medida_produto }}
                     </div>
                 </div>

@@ -22,12 +22,4 @@ class EmpresaDoacao(View):
             resposta = monta_pdf(doacao, empresa) 
             return resposta
         else:
-            lista_erro = list(form.errors.keys())
-            lista_contexto = []
-            if 'quantidade_produto' in lista_erro:
-                quantidade_produto = {'quantidade_produto_erro': 'Quantidade inválida'}
-                lista_contexto.append(quantidade_produto)
-            if '__all__' in lista_erro:
-                unidade_decimal = {'unidade_decimal_erro': 'O valor deve ser inteiro para medidas unitária'}
-                lista_contexto.append(unidade_decimal)
-            return render(request=request, template_name='doacao_empresa.html', context={'form': form, 'erro': lista_contexto}, status=400)
+            return render(request=request, template_name='doacao_empresa.html', context={'form': form}, status=400)

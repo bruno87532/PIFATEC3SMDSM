@@ -35,13 +35,11 @@
                         <label for="id_cep">CEP:</label>
                         <label id="cep_invalido" style="visibility: hidden;" class="text-danger ms-2">CEP inválido</label>
                         {{ form.cep }}
-                        {% for i in erro %}
-                            {% if i.cep_erro %}
-                                <div class="text-danger">
-                                    <label>{{ i.cep_erro }}</label>
-                                </div>
-                            {% endif %}
-                        {% endfor %}
+                        {% if form.cep.errors %}
+                            {% for error in form.cep.errors %}
+                                <label>{{ error }}</label>
+                            {% endfor %}
+                        {% endif %}
                     </div>
                 </div>
 

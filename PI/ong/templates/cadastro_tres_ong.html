@@ -35,11 +35,11 @@
                         <div class="d-flex justify-content-between">
                             <label for="id_nome_representante">Nome do representante:</label>
                             <div class="text-danger ms-2">
-                                {% for i in erro %}
-                                    {% if i.nome_erro %}
-                                        <label>{{ i.nome_erro }}</label>
-                                    {% endif %}
-                                {% endfor %}
+                                {% if form.nome_representante.errors %}
+                                    {% for error in form.nome_representante.errors %}
+                                        <label>{{ error }}</label>
+                                    {% endfor %}
+                                {% endif %}
                             </div>
                         </div>
                         {{ form.nome_representante }}
@@ -51,11 +51,11 @@
                         <div class="d-flex justify-content-between">
                             <label for="id_cpf_representante">CPF:</label>
                             <div class="text-danger ms-2">
-                                {% for i in erro %}
-                                    {% if i.cpf_representante_erro %}
-                                        <label>{{ i.cpf_representante_erro }}</label>
-                                    {% endif %}
-                                {% endfor %}
+                                {% if form.cpf_representante.errors %}
+                                    {% for error in form.cpf_representante.errors %}
+                                        <label>{{ error }}</label>
+                                    {% endfor %}
+                                {% endif %}
                             </div>
                         </div>
                         {{ form.cpf_representante }}
@@ -67,11 +67,11 @@
                         <div class="d-flex justify-content-between">
                             <label for="id_telefone_representante">Telefone:</label>
                             <div class="text-danger ms-2">
-                                {% for i in erro %}
-                                    {% if i.telefone_representante_erro %}
-                                        <label>{{ i.telefone_representante_erro }}</label>
-                                    {% endif %}
-                                {% endfor %}
+                                {% if form.telefone_representante.errors %}
+                                    {% for error in form.telefone_representante.errors %}
+                                        <label>{{ error }}</label>
+                                    {% endfor %}
+                                {% endif %}
                             </div>
                         </div>
                         {{ form.telefone_representante }}

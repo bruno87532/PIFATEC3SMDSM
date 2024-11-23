@@ -37,12 +37,4 @@ class EmpresaCadastro(View):
             request.session.modified = True
             return redirect('empresagetcad', etapa = chave + 1)
         else:
-            erros_chave = ['nome_erro', 'cnpj_erro', 'cnpj_existe', 'email_login_erro', 'senha_login_erro', 'cep_erro', 'nome_representante_erro', 'telefone_representante_erro', 'cpf_representante_erro']
-            erros_valor = ['Nome inválido', 'CNPJ inválido', 'CNPJ já cadastrado', 'Email já cadastrado', 'Senha inválida', 'CEP inválido', 'Nome do representante inválido', 'Telefone do representante inválido', 'CPF do representante inválido']
-            lista_erros = list(form.errors.values())
-            lista_erros = [i for erro in lista_erros for i in erro]
-            lista_contexto = []
-            for c, v in zip(erros_chave, erros_valor):
-                if v in lista_erros:
-                    lista_contexto.append({c: v})
-        return render(request=request, template_name=self.templates[chave][0], context={'form': form, 'erro': lista_contexto})
+            return render(request=request, template_name=self.templates[chave][0], context={'form': form}, status=400)

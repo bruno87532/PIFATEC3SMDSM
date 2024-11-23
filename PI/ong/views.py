@@ -1,5 +1,3 @@
-from typing import Any
-from django.http import HttpRequest
 from django.http.response import HttpResponse as HttpResponse
 from django.shortcuts import render, redirect
 from ong.forms import OngFormUm, OngFormDois, OngFormTres, OngCompleta
@@ -7,6 +5,7 @@ from django.views import View
 from empresa.models import Empresa, Doacao
 from ong.models import Ong, DoacaoRecebida
 from django.core.paginator import Paginator
+from services.contexto import GeraContexto
 
 class OngCadastro(View):
     def __init__(self, *args, **kwargs):
@@ -41,15 +40,7 @@ class OngCadastro(View):
             request.session.modified = True
             return redirect('onggetcad', etapa = chave + 1)
         else:
-            erros_chave = ['nome_erro', 'cnpj_erro', 'cnpj_existe', 'email_login_erro', 'senha_login_erro', 'cep_erro', 'nome_representante_erro', 'telefone_representante_erro', 'cpf_representante_erro']
-            erros_valor = ['Nome inválido', 'CNPJ inválido', 'CNPJ já cadastrado', 'Email já cadastrado', 'Senha inválida', 'CEP inválido', 'Nome do representante inválido',  'Telefone do representante inválido', 'CPF do representante inválido']
-            lista_erros = list(form.errors.values())
-            lista_erros = [i for erro in lista_erros for i in erro]
-            lista_contexto = []
-            for c, v in zip(erros_chave, erros_valor):
-                if v in lista_erros:
-                    lista_contexto.append({c: v})
-            return render(request=request, template_name=self.templates[chave][0], context={'form': form, 'erro': lista_contexto})
+            return render(request=request, template_name=self.templates[chave][0], context={'form': form}, status=400)
     
 class OngDistribuicao(View):
     def dispatch(self, request, *args, **kwargs):
@@ -62,15 +53,7 @@ class OngDistribuicao(View):
         nomes = {i['id']: i['nome'] for i in ongs}
         print(nomes)
         doacoes = Doacao.objects.filter(disponivel_produto__in=[True]).values('id_empresa', 'id', 'nome_produto', 'quantidade_produto', 'unidade_medida_produto', 'data_doado_produto', 'disponivel_produto') 
-        lista_contexto = [{
-            'id': i['id'],
-            'nome_empresa': empresas.get(int(i['id_empresa'])),
-            'nome_produto': i['nome_produto'],
-            'quantidade_produto': i['quantidade_produto'],
-            'unidade_medida_produto': i['unidade_medida_produto'],
-            'data_doado_produto': i['data_doado_produto'],
-            'disponivel_produto': i['disponivel_produto'],
-        } for i in doacoes]
+        lista_contexto = GeraContexto.ContextoEmpresa(doacoes, empresas)
         doacao_paginada = Paginator(lista_contexto, 10)
         pagina = doacao_paginada.get_page(numero_pagina)
         return render(request=request, template_name='distribui_doacao_ong.html', context={'doacoes': pagina, 'ongs': nomes})

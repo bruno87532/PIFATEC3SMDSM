@@ -19,8 +19,8 @@ class EmpresaDoacaoLocaliza(View):
             lista_contexto = GeraContexto.ContextoEmpresa(doacoes, empresas)
             doacao_paginada = Paginator(lista_contexto, 10)
             pagina = doacao_paginada.get_page(numero_pagina)
-            return render(request, 'visualiza_doacao_empresa.html', {'doacoes': pagina})       
-        return redirect('empresa_doacao_list', numero_pagina=1)
+            return render(request, 'visualiza_doacao_empresa.html', {'doacoes': pagina})
+        return redirect('empresa_doacao_lista', numero_pagina=1)
     def post(self, request, numero_pagina):
         nome_empresa = request.POST.get('nome_empresa')
         request.session['nome_empresa'] = nome_empresa

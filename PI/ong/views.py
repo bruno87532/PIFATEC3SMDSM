@@ -22,7 +22,9 @@ class OngCadastro(View):
             return redirect('onggetcad', etapa=1)
         return render(request=request, template_name=template, context={'form': form}) 
     def post(self, request):
-        chave = 1 if request.POST.get('etapa1', '') else (2 if request.POST.get('etapa2', '') else 3)
+        chave = 1 if request.POST.get('etapa1', '') else (2 if request.POST.get('etapa2', '') else (3 if request.POST.get('etapa3', '') else ''))
+        if chave == '':
+            return redirect('home')
         form = self.templates[chave][1](request.POST)
         if form.is_valid():
             if chave == 1:

@@ -654,7 +654,7 @@ progress {
 }
 @media (min-width: 1400px) {
   .container-xxl, .container-xl, .container-lg, .container-md, .container-sm, .container {
-    max-width: 80%;
+    max-width: 1400px;
   }
 }
 .row {
@@ -3962,6 +3962,7 @@ textarea.form-control-lg {
   .navbar-expand-lg .navbar-collapse {
     display: flex !important;
     flex-basis: auto;
+    margin-right: 120px !important;
   }
   .navbar-expand-lg .navbar-toggler {
     display: none;
@@ -7368,7 +7369,7 @@ textarea.form-control-lg {
 }
 
 .justify-content-center {
-  justify-content: center !important;
+  justify-content: space-around;
 }
 
 .justify-content-between {
@@ -8082,6 +8083,7 @@ textarea.form-control-lg {
 .text-muted {
   --bs-text-opacity: 1;
   color: #6c757d !important;
+  height: 130px;
 }
 
 .text-black-50 {
@@ -11315,4 +11317,10 @@ section#contact form#contactForm :-ms-input-placeholder {
   font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 
+.testeleft{
+  margin-left: 50px;
+}
 
+.altura{
+  height: 250px;
+}

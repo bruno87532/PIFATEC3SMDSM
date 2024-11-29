@@ -108,6 +108,38 @@ class rendeniza_ranking_pagamento(BaseTestCase):
         self.assertTemplateUsed(resposta, 'ranking_pagamento.html')
         self.assertContains(resposta, '<tr><td>1</td><td>Gabriel</td><td>5000.0</td></tr><tr><td>2</td><td>Bruno</td><td>2000.0</td></tr>', html=True)
 
+
 class visualiza_pagamento_proprio(BaseTestCase):
-    def test_meu(self):
-        pessoa = Pessoa.objects.create(nome_pessoa = 'Bruno', valor_total_doado_pessoa = '2000')
+    def test_meu_pagamento(self):
+        self.login_pessoa()
+        Doacao.objects.create(id_pessoa = Pessoa.objects.last().id, valor_doacao = '50', data_doado = date.today())
+        Doacao.objects.create(id_pessoa = Pessoa.objects.last().id - 1, valor_doacao = '30', data_doado = date.today())
+        resposta = self.client.get(reverse('pessoa_pagamento_proprio', kwargs={'numero_pagina': '1'}))
+        self.assertTemplateUsed(resposta, 'visualiza_pagamento_meu.html')
+        self.assertContains(resposta, '50')
+        self.assertNotContains(resposta, '30')
+
+class GET_redireciona_pagamento_proprio(BaseTestCase):
+    def test_redireciona_sem_login(self):
+        resposta = self.client.get(reverse('pessoa_pagamento_proprio', kwargs={'numero_pagina': '1'}))
+        self.assertEqual(302, resposta.status_code)
+        self.assertRedirects(resposta, reverse('login'))
+    def test_redireciona_com_login(self):
+        self.login_pessoa()
+        resposta = self.client.get(reverse('pessoa_pagamento_proprio', kwargs={'numero_pagina': '1'}))
+        self.assertTemplateUsed(resposta, 'visualiza_pagamento_meu.html')
+
+class visualiza_pagamento_lista(BaseTestCase):
+    def visualiza_todos_pagamentos(self):
+        self.login_pessoa()
+        Doacao.objects.create(id_pessoa = Pessoa.objects.last().id, data_doado = date.today(), valor_doacao = '50')
+        self.dados['nome_pessoa'] = 'Christian Santos Rocha'
+        self.dados['email_login_pessoa'] = 'teste2@gmail.com'
+        self.login_pessoa()
+        Doacao.objects.create(id_pessoa = Pessoa.objects.last().id, data_doado = date.today(), valor_doacao = '30')
+        resposta = self.client.get(reverse('pessoa_pagamento_lista', kwargs={'numero_pagina': '1'}))
+        self.assertContains(resposta, '30')
+        self.assertContains(resposta, 'Christian Santos Rocha')
+        self.assertContains(resposta, 'Bruno Henrique Guinerio')
+        self.assertContains(resposta, '50')
+

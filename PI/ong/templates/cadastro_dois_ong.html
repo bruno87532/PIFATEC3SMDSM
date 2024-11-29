@@ -31,7 +31,7 @@
                 {% csrf_token %}
                 
                 <div class="row justify-content-center mb-3">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <label for="id_cep">CEP:</label>
                         <label id="cep_invalido" style="visibility: hidden;" class="text-danger ms-2">CEP inválido</label>
                         {{ form.cep }}
@@ -44,42 +44,42 @@
                 </div>
 
                 <div class="row justify-content-center mb-3">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <label for="id_estado">Estado:</label>
                         {{ form.estado }}
                     </div>
                 </div>
 
                 <div class="row justify-content-center mb-3">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <label for="id_cidade">Cidade:</label>
                         {{ form.cidade }}
                     </div>
                 </div>
 
                 <div class="row justify-content-center mb-3">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <label for="id_bairro">Bairro:</label>
                         {{ form.bairro }}
                     </div>
                 </div>
 
                 <div class="row justify-content-center mb-3">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <label for="id_rua">Rua:</label>
                         {{ form.rua }}
                     </div>
                 </div>
 
                 <div class="row justify-content-center mb-3">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <label for="id_numero">Número:</label>
                         {{ form.numero }}
                     </div>
                 </div>
 
                 <div class="row justify-content-center mb-3">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <label for="id_complemento">Complemento:</label>
                         {{ form.complemento }}
                     </div>
@@ -88,7 +88,7 @@
                 <input type="hidden" name="etapa2" value="2">
 
                 <div class="text-center mt-4">
-                    <input type="submit" class="btn btn-primary btn-xl text-uppercase" value="Próximo">
+                    <input type="submit" class="btn btn-primary btn-xl text-uppercase text-black" value="Próximo">
                 </div>
             </form>
         </div>

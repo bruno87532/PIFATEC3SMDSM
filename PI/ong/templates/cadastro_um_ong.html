@@ -31,7 +31,7 @@
                 {% csrf_token %}
                 
                 <div class="row justify-content-center">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <label for="id_nome">Nome da ONG:</label>
                             {{ form.nome }}
@@ -40,7 +40,7 @@
                 </div>
                 <br>
                 <div class="row justify-content-center">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <label for="id_cnpj">CNPJ:</label>
                             {{ form.cnpj }}
@@ -54,7 +54,7 @@
                 </div>
                 <br>
                 <div class="row justify-content-center">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <label for="id_email_login">Email para login:</label>
                                 {{ form.email_login }}      
@@ -68,7 +68,7 @@
                 </div>
                 <br>
                 <div class="row justify-content-center">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <label for="id_senha_login">Senha para login:</label>
                             <div class="input-group">
@@ -87,7 +87,7 @@
                     </div>
                     <br>
                 <div class="row justify-content-center">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <label for="id_objetivo_ong">Objetivo da ONG:</label>
                             {{ form.objetivo_ong }}
@@ -98,7 +98,7 @@
                 <input type="hidden" name="etapa1" value="1">
 
                 <div class="text-center mt-4">
-                    <input type="submit" class="btn btn-primary btn-xl text-uppercase" value="Próximo">
+                    <input type="submit" class="btn btn-primary btn-xl text-uppercase text-black" value="Próximo">
                 </div>
             </form>
         </div>

@@ -13,9 +13,19 @@ class EmpresaCadastro(View):
     def get(self, request, etapa):
         template = self.templates[etapa][0]
         form = self.templates[etapa][1]()
+        login = {
+            'id_empresa': 'empresa',
+            'id_ong': 'ong',
+            'id_pessoa': 'pessoa'
+        }
+        for k, v in login.items():
+            if request.session.get(k):
+                context = v
+                break
+            context = ''
         if etapa > 1 and not f'etapa{etapa-1}' in request.session:
             return redirect('empresagetcad', etapa=1)
-        return render(request=request, template_name=template, context={'form': form}) 
+        return render(request=request, template_name=template, context={'form': form, 'logout': context }) 
     def post(self, request):
         chave = 1 if request.POST.get('etapa1', '') else (2 if request.POST.get('etapa2', '') else (3 if request.POST.get('etapa3', '') else ''))
         if chave == '':

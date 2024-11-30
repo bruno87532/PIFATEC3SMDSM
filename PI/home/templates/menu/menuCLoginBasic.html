@@ -7,10 +7,18 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'empresa_doacao' %}">Doação</a>
+                    <a class="nav-link btn btn-primary btn-lg text-black" href="
+                    {% if logout == 'empresa' %}
+                        {% url 'empresa_doacao' %}
+                    {% elif logout == 'pessoa' %}
+                        {% url 'pessoa_doacao' %}
+                    {% elif logout == 'ong' %}
+                        {% url 'home' %}
+                    {% endif %}
+                    ">{% if logout == 'ong' %}Ver minhas doações{% else %}Doação{% endif %}</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'logout' %}" >Logout</a>
+                    <a class="nav-link btn btn-primary btn-lg text-black" href="{% url 'logout' %}" >Logout</a>
                 </li>
             </ul>
         </div>

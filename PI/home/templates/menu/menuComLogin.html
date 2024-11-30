@@ -13,10 +13,18 @@
                 <li class="nav-item"><a class="nav-link" href="#beneficio-fiscal">Benefícios</a></li>
                 <li class="nav-item"><a class="nav-link" href="#team">Contatos</a></li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link btn btn-primary btn-lg text-black" href="{% url 'empresa_doacao' %}" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-target="#loginModal">Doação</a>
+                    <a class="nav-link btn btn-primary btn-lg text-black" href="
+                    {% if logout == 'empresa' %}
+                        {% url 'empresa_doacao' %}
+                    {% elif logout == 'pessoa' %}
+                        {% url 'pessoa_doacao' %}
+                    {% elif logout == 'ong' %}
+                        {% url 'home' %}
+                    {% endif %}
+                    " aria-expanded="false" data-bs-target="#loginModal">{% if logout == 'ong' %}Ver minhas doações{% else %} Doação {% endif %}</a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link btn btn-primary btn-lg text-black" href="{% url 'logout' %}" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-target="#loginModal">Logout</a>
+                    <a class="nav-link btn btn-primary btn-lg text-black" href="{% url 'logout' %}" aria-expanded="false" data-bs-target="#loginModal">Logout</a>
                 </li>
             </ul>
         </div>

@@ -3,7 +3,6 @@ from django.views import View
 from empresa.models import Empresa
 from pessoa.models import Pessoa
 from ong.models import Ong
-from django.contrib.auth import logout
 
 class Login(View):
     def get(self, request):

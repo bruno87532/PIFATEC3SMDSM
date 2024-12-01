@@ -19,41 +19,33 @@
     <section class="page-section d-flex justify-content-center align-items-center" id="checkout">
         <div class="container">
             <div class="text-center mb-4">
-                <h2 class="section-heading text-uppercase">Contribua com a Causa</h2>
-                <h3 class="section-subheading text-muted">Sua contribuição faz a diferença!</h3>
+                <h2 class="section-heading text-uppercase">Ajude a combater a fome</h2>
+                <h3 class="section-subheading">Sua contribuição faz a diferença!</h3>
             </div>
 
-            <div class="row justify-content-center">
-                <div class="col-md-6">
-                    <form action="{% url 'pessoa_doacao' %}" id="form_1" onsubmit="return envia_formulario(event)">
-                        <h4 class="text-center">Contribua com 10 reais</h4>
-                        {% csrf_token %}
-                        <input type="hidden" value="10" name="valor">
-                        <div class="text-center">
-                            <input type="submit" value="Contribuir" class="btn btn-primary btn-xl text-uppercase">
-                        </div>
-                    </form>
-                </div>
-                <div class="col-md-6">
-                    <form action="{% url 'pessoa_doacao' %}" id="form_2" onsubmit="return envia_formulario(event)">
-                        <h4 class="text-center">Contribua com 30 reais</h4>
-                        {% csrf_token %}
-                        <input type="hidden" value="30" name="valor">
-                        <div class="text-center">
-                            <input type="submit" value="Contribuir" class="btn btn-primary btn-xl text-uppercase">
-                        </div>
-                    </form>
-                </div>
-                <div class="col-md-6">
-                    <form action="{% url 'pessoa_doacao' %}" id="form_3" onsubmit="return envia_formulario(event)">
-                        <h4 class="text-center">Contribua com 50 reais</h4>
-                        {% csrf_token %}
-                        <input type="hidden" value="50" name="valor">
-                        <div class="text-center">
-                            <input type="submit" value="Contribuir" class="btn btn-primary btn-xl text-uppercase">
-                        </div>
-                    </form>
-                </div>
+            <div class="row g-4 justify-content-center">
+                        <form action="{% url 'pessoa_doacao' %}" id="form_1" onsubmit="return envia_formulario(event)">
+                            <h5 class="text-center">Escolha um valor para contribuir</h4>
+                            {% csrf_token %}
+                            <input type="hidden" value="10" name="valor">
+                            <div class="text-center">
+                                <input type="submit" value="10 reais" class="btn btn-primary btn-xl text-uppercase text-black">
+                            </div>
+                        </form>
+                        <form action="{% url 'pessoa_doacao' %}" id="form_2" onsubmit="return envia_formulario(event)">
+                            {% csrf_token %}
+                            <input type="hidden" value="30" name="valor">
+                            <div class="text-center">
+                                <input type="submit" value="30 reais" class="btn btn-primary btn-xl text-uppercase text-black">
+                            </div>
+                        </form>
+                        <form action="{% url 'pessoa_doacao' %}" id="form_3" onsubmit="return envia_formulario(event)">
+                            {% csrf_token %}
+                            <input type="hidden" value="50" name="valor">
+                            <div class="text-center">
+                                <input type="submit" value="50 reais" class="btn btn-primary btn-xl text-uppercase text-black">
+                            </div>
+                        </form> 
             </div>
         </div>
     </section>

@@ -24,14 +24,14 @@
         <div class="container">
             <div class="text-center mb-4">
                 <h2 class="section-heading text-uppercase">Cadastro de Endereço da ONG</h2>
-                <h3 class="section-subheading text-muted">Informe os dados de endereço da sua ONG</h3>
+                <h3 class="section-subheading">Informe os dados de endereço da sua ONG</h3>
             </div>
             
             <form action="{% url 'ongpostcad' %}" method="post">
                 {% csrf_token %}
                 
-                <div class="row justify-content-center mb-3">
-                    <div class="col-md-4">
+                <div class="row justify-content-center2 mb-3">
+                    <div class="col-md-3">
                         <label for="id_cep">CEP:</label>
                         <label id="cep_invalido" style="visibility: hidden;" class="text-danger ms-2">CEP inválido</label>
                         {{ form.cep }}
@@ -41,45 +41,39 @@
                             {% endfor %}
                         {% endif %}
                     </div>
-                </div>
 
-                <div class="row justify-content-center mb-3">
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <label for="id_estado">Estado:</label>
                         {{ form.estado }}
                     </div>
                 </div>
 
-                <div class="row justify-content-center mb-3">
-                    <div class="col-md-4">
+                <div class="row justify-content-center2 mb-3">
+                    <div class="col-md-3">
                         <label for="id_cidade">Cidade:</label>
                         {{ form.cidade }}
                     </div>
-                </div>
 
-                <div class="row justify-content-center mb-3">
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <label for="id_bairro">Bairro:</label>
                         {{ form.bairro }}
                     </div>
                 </div>
 
-                <div class="row justify-content-center mb-3">
-                    <div class="col-md-4">
+                <div class="row justify-content-center2 mb-3">
+                    <div class="col-md-3">
                         <label for="id_rua">Rua:</label>
                         {{ form.rua }}
                     </div>
-                </div>
 
-                <div class="row justify-content-center mb-3">
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <label for="id_numero">Número:</label>
                         {{ form.numero }}
                     </div>
                 </div>
 
                 <div class="row justify-content-center mb-3">
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <label for="id_complemento">Complemento:</label>
                         {{ form.complemento }}
                     </div>

@@ -14,7 +14,7 @@ class PessoaDoacao(View):
             return redirect('login')
         return super().dispatch(request, *args, **kwargs)
     def get(self, request):
-        return render(request=request, template_name='pix.html')
+        return render(request=request, template_name='pix.html', context={'logout': 'pessoa'})
     def post(self, request):
         site =  'http://127.0.0.1:8000/'
         valor = int(request.POST['valor'])

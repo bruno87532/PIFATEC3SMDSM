@@ -15,6 +15,16 @@
                     <li class="nav-item"><a class="nav-link" href="#team">Contatos</a></li>
                     <li class="nav-item dropdown testeleft">
                         <a class="nav-link btn btn-primary btn-lg text-black" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-target="#loginModal">
+                            Doação
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="{% url 'empresa_doacao_lista' 1 %}">Doações</a></li>
+                            <li><a class="dropdown-item" href="{% url 'pessoa_pagamento_lista' 1 %}">Pagamentos</a></li>
+                            <li><a class="dropdown-item" href="{% url 'pessoa_pagamento_ranking' %}">Maiores contribuentes</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown testeleft">
+                        <a class="nav-link btn btn-primary btn-lg text-black" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-target="#loginModal">
                             Cadastro
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdown">

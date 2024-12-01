@@ -5,6 +5,16 @@ from django.core.paginator import Paginator
 
 class PessoaPagamentoLista(View):
     def get(self, request, numero_pagina):
+        login = {
+            'id_empresa': 'empresa',
+            'id_ong': 'ong',
+            'id_pessoa': 'pessoa'
+        }
+        for k, v in login.items():
+            if request.session.get(k):
+                context = v
+                break
+            context = ''
         pessoas = {i.id: i.nome_pessoa for i in Pessoa.objects.all()}
         doacoes = Doacao.objects.all()
         lista_contexto = [
@@ -16,4 +26,4 @@ class PessoaPagamentoLista(View):
         ]
         doacao_paginada = Paginator(lista_contexto, 10)
         pagina = doacao_paginada.get_page(numero_pagina)
-        return render(request=request, template_name='visualiza_pagamento.html', context={'doacoes': pagina})
+        return render(request=request, template_name='visualiza_pagamento.html', context={'doacoes': pagina, 'logout': context})

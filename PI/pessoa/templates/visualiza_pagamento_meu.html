@@ -14,11 +14,7 @@
 
     <script src="{% static 'script/Password.js' %}"></script>
 
-    {% if logout %}
-        {% include 'Menu/menuCLoginBasic.html' %}
-    {% else %}
-        {% include 'Menu/menuSLoginBasic.html' %}
-    {% endif %}
+    {% include 'Menu/menuCLoginBasic.html' %}
     
     <section class="page-section" id="gerenciar-doacoes">
         <div class="container">

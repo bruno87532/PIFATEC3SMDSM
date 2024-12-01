@@ -27,11 +27,22 @@
     {% endif %} 
 
 <!-- Masthead -->
+
 <header class="masthead">
     <div class="container">
         <div class="masthead-subheading">Solidariedade do Campo</div>
         <div class="masthead-heading text-uppercase">Juntos, alimentamos esperança</div>
-        <a class="btn btn-primary btn-xl text-uppercase btn-lg text-black" href="{% url 'empresagetcad' 1 %}">DOE</a>
+        {% if logout %}
+        <a class="btn btn-primary btn-xl text-uppercase btn-lg text-black" href=
+        "{% if logout == 'empresa' %}
+            {% url 'empresa_doacao' %}
+        {% elif logout == 'pessoa' %}
+            {% url 'pessoa_doacao' %}
+        {% elif logout == 'ong' %}
+            {% url 'doacao_recebida' 1%}
+        {%endif%}
+        ">{% if logout == 'ong' %}Ver minhas doações{% else %} DOE {% endif %}</a>
+        {% endif %}
     </div>
 </header>
 

@@ -47,16 +47,6 @@
 
     <section class="page-section" id="gerenciar-doacoes">
         <div class="container">
-            <form action="{% url 'empresa_doacao_localiza' numero_pagina=1 %}" method="post">
-                {% csrf_token %}
-                <p>
-                    <label for="nome_empresa">Digite o nome da empresa</label>
-                    <input type="text" name="nome_empresa" id="nome_empresa">
-                </p>
-                <p>
-                    <input type="submit" value="Procurar">
-                </p>
-            </form>
             <div class="text-center">
                 <h2 class="section-heading text-uppercase">Doações de Produtos Alimentícios</h2>
                 <h3 class="section-subheading text-muted">Lista de doações recebidas</h3>
@@ -69,7 +59,6 @@
                         <th>Quantidade</th>
                         <th>Medida</th>
                         <th>Data</th>
-                        <th>Status</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -80,21 +69,16 @@
                             <td>{{ i.quantidade_produto }}</td>
                             <td>{{ i.unidade_medida_produto }}</td>
                             <td>{{ i.data_doado_produto | date:"d/m/Y" }}</td>
-                            {% if i.disponivel_produto %}
-                                <td>Disponível</td>
-                            {% else %} 
-                                <td>Não disponível</td>                                       
-                            {% endif %}
                         </tr>
                     {% endfor %}
                 </tbody>
             </table>
             <div>
                 {% if doacoes.has_previous %}
-                    <a href="{% url 'empresa_doacao_lista' numero_pagina=doacoes.previous_page_number %}">Página anterior</a>
+                    <a href="{% url 'doacao_recebida' numero_pagina=doacoes.previous_page_number %}">Página anterior</a>
                 {% endif %}
                 {% if doacoes.has_next %}
-                    <a href="{% url 'empresa_doacao_lista' numero_pagina=doacoes.next_page_number %}">Próxima página</a>
+                    <a href="{% url 'doacao_recebida' numero_pagina=doacoes.next_page_number %}">Próxima página</a>
                 {% endif %}
             </div>
         </div>

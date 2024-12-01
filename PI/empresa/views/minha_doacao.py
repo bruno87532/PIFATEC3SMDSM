@@ -16,4 +16,4 @@ class EmpresaDoacaoMinha(View):
         lista_contexto = GeraContexto.ContextoEmpresa(doacoes, empresas)
         doacao_paginada = Paginator(lista_contexto, 10)
         pagina = doacao_paginada.get_page(numero_pagina)
-        return render(request, 'visualiza_doacao_minha.html', {'doacoes': pagina})
+        return render(request, 'visualiza_doacao_minha.html', {'doacoes': pagina, 'logout': 'empresa'})

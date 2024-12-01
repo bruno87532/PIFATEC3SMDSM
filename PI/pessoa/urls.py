@@ -15,5 +15,5 @@ urlpatternsdoacao = [
     path('cancelado', redireciona_cancelado, name='pessoa_doacao_cancelado'),
     path('minha/<int:numero_pagina>', PessoaPagamentoProprio.as_view(), name='pessoa_pagamento_proprio'),
     path('lista/<int:numero_pagina>', PessoaPagamentoLista.as_view(), name='pessoa_pagamento_lista'),
-    path('ranking/<int:numero_pagina>', PessoaPagamentoRanking.as_view(), name='pessoa_pagamento_ranking')
+    path('ranking/', PessoaPagamentoRanking.as_view(), name='pessoa_pagamento_ranking')
 ]

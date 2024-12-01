@@ -53,7 +53,6 @@ class OngDistribuicao(View):
         empresas = {empresa.id: empresa.nome for empresa in Empresa.objects.all()}
         ongs = Ong.objects.all().values('id', 'nome')
         nomes = {i['id']: i['nome'] for i in ongs}
-        print(nomes)
         doacoes = Doacao.objects.filter(disponivel_produto__in=[True]).values('id_empresa', 'id', 'nome_produto', 'quantidade_produto', 'unidade_medida_produto', 'data_doado_produto', 'disponivel_produto') 
         lista_contexto = GeraContexto.ContextoEmpresa(doacoes, empresas)
         doacao_paginada = Paginator(lista_contexto, 10)
@@ -67,7 +66,7 @@ class OngDistribuicao(View):
             doacao.save()
             ong = Ong.objects.get(id=e)
             doacao_recebida = DoacaoRecebida(
-                id_empresa = i,
+                id_empresa = doacao.id_empresa,
                 id_ong = ong.id,
                 nome_produto = doacao.nome_produto,
                 descricao_produto = doacao.descricao_produto,
@@ -78,3 +77,16 @@ class OngDistribuicao(View):
             )
             doacao_recebida.save()
         return redirect('distribuicao_ong', numero_pagina=numero_pagina)
+    
+class OngDoacaoMinha(View):
+    def dispatch(self, request, *args, **kwargs):
+        if 'id_ong' not in request.session:
+            return redirect('login')
+        return super().dispatch(request, *args, **kwargs)
+    def get(self, request, numero_pagina):
+        empresas = {empresa.id: empresa.nome for empresa in Empresa.objects.all()}
+        doacoes = DoacaoRecebida.objects.values('id', 'id_empresa', 'nome_produto', 'quantidade_produto', 'unidade_medida_produto', 'data_doado_produto').filter(id_ong=request.session['id_ong'])
+        lista_contexto = GeraContexto.ContextoEmpresa(doacoes, empresas, ong=True)
+        doacao_paginada = Paginator(lista_contexto, 10)
+        pagina = doacao_paginada.get_page(numero_pagina)
+        return render(request=request, template_name='doacao_recebida.html', context={'doacoes': pagina, 'logout': 'ong'})

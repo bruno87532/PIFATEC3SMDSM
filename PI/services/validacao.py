@@ -3,8 +3,9 @@ from empresa.models import Empresa
 from pessoa.models import Pessoa
 from ong.models import Ong
 import requests
-from django.utils import timezone 
-from datetime import datetime
+from django.utils import timezone
+from django.shortcuts import redirect 
+from django.urls import reverse
 
 class Validacao():
     
@@ -19,7 +20,9 @@ class Validacao():
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.83 Safari/537.36'
         }
         r = requests.get(f'https://brasilapi.com.br/api/cnpj/v1/{cnpj}', headers=headers)
-        if r.status_code != 200 and r.status_code != 504:
+        if r.status_code == 503 or r.status_code == 504:
+            return redirect(reverse('erro'))
+        if r.status_code != 200:
             return False
         return cnpj
     
@@ -41,6 +44,8 @@ class Validacao():
         if len(cep) != 8:
             return False
         r = requests.get(f'https://viacep.com.br/ws/{cep}/json/')
+        if r.status_code == 503 or r.status_code == 504:
+            return redirect(reverse('erro'))
         if r.status_code != 200 or r.json().get('erro'):
             return False
         return cep

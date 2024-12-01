@@ -13,3 +13,7 @@ class Home(APIView):
             if request.session.get(k):
                 return render(request=request, template_name='index.html', context={'logout': v})
         return render(request=request, template_name='index.html') 
+
+class Erro(APIView):
+    def get(self, request):
+        return render(request=request, template_name='erro.html')

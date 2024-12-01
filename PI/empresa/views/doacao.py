@@ -11,7 +11,7 @@ class EmpresaDoacao(View):
         return super().dispatch(request, *args, **kwargs)
     def get(self, request):
         form = EmpresaDoacaoForm()
-        return render(request=request, template_name='doacao_empresa.html', context={'form': form})
+        return render(request=request, template_name='doacao_empresa.html', context={'form': form, 'logout': 'empresa'})
     def post(self, request):
         form = EmpresaDoacaoForm(request.POST)
         if form.is_valid():
@@ -22,4 +22,4 @@ class EmpresaDoacao(View):
             resposta = monta_pdf(doacao, empresa) 
             return resposta
         else:
-            return render(request=request, template_name='doacao_empresa.html', context={'form': form}, status=400)
+            return render(request=request, template_name='doacao_empresa.html', context={'form': form, 'logout': 'empresa'}, status=400)

@@ -258,7 +258,7 @@ class mostra_minha_doacao(BaseTestCase):
         self.contem_conteudo(resposta, ['Feijão', 'Coca-Cola', 'unidade', '5', (datetime.now() - timedelta(hours=3)).strftime("%d/%m/%Y")], 200)
         self.assertContains(resposta, (datetime.now() - timedelta(hours=3)).strftime("%d/%m/%Y"))
         doacao = Doacao.objects.last()
-        # self.assertContains(resposta, '<td><a href="/doacao/gera/16" target="_blank">Certificado da doação</a></td>', html=True)
+        self.assertContains(resposta, f'<td><a href="/doacao/gera/{doacao.id}" target="_blank">Certificado da doação</a></td>', html=True)
 
 class doacao_todas_empresas(BaseTestCase):
     def test_todas_doacoes(self):
@@ -299,7 +299,7 @@ class deleta_doacao(BaseTestCase):
         self.login_empresa()
         self.client.post(reverse('empresa_doacao'), self.dados_doacao)
         doacao = Doacao.objects.last()
-        resposta = self.client.get(reverse('deleta_doacao', kwargs={'id': 2, 'numero_pagina': 1}))
+        resposta = self.client.get(reverse('deleta_doacao', kwargs={'id': doacao.id, 'numero_pagina': 1}))
         self.assertEqual(302, resposta.status_code)
         self.assertRedirects(resposta, reverse('empresa_doacao_minha', kwargs={'numero_pagina': 1}))
         self.assertEqual(0, Doacao.objects.count())
@@ -313,7 +313,7 @@ class gera_pdf(BaseTestCase):
         self.login_empresa()
         resposta = self.client.post(reverse('empresa_doacao'), self.dados_doacao)
         doacao = Doacao.objects.last()
-        resposta = self.client.get(reverse('gera_pdf', kwargs={'id': 15}))
+        resposta = self.client.get(reverse('gera_pdf', kwargs={'id': doacao.id}))
         self.assertIn('application/pdf', resposta.headers['Content-Type'])
 
 class localiza_doacao(BaseTestCase):

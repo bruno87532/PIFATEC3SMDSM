@@ -11,25 +11,7 @@
     <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
 </head>
 <body id="page-top">
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
-        <div class="container">
-            <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
-                    <li class="nav-item"><a class="nav-link" href="index.html">Página Inicial</a></li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Cadastro
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="dados_empresa.html">Empresa</a></li>
-                            <li><a class="dropdown-item" href="gerenciar_ong.html">ONG</a></li>
-                            <li><a class="dropdown-item" href="gerenciar_pessoafisica.html">Pessoa Física</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+    {% include 'Menu/menuCLoginBasic.html' %}
     <section class="page-section" id="gerenciar-doacoes">
         <div class="container">
             <div class="text-center">
@@ -86,51 +68,8 @@
                         <a href="{% url 'distribuicao_ong' numero_pagina=doacoes.next_page_number %}">Próxima página</a>
                     {% endif %}
                 </div>
-                <div class="text-center mt-4">
-                    <button class="btn btn-primary" onclick="modalDoacaoAlimento()">Adicionar Doação</button>
-                </div>
             </div>
     </section>
-
-    <div class="modal fade" id="donationModal" tabindex="-1" aria-labelledby="donationModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="donationModalLabel">Adicionar Doação</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="donationForm">
-                        <div class="mb-3">
-                            <label for="nome_empresa" class="form-label">Nome da Empresa</label>
-                            <input type="text" class="form-control" id="nome_empresa" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="produto" class="form-label">Produto</label>
-                            <input type="text" class="form-control" id="produto" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="quantidade" class="form-label">Quantidade</label>
-                            <input type="number" class="form-control" id="quantidade" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="data" class="form-label">Data</label>
-                            <input type="date" class="form-control" id="data" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="status" class="form-label">Status</label>
-                            <select class="form-control" id="status" required>
-                                <option value="recebido">Recebido</option>
-                                <option value="pendente">Pendente</option>
-                                <option value="cancelado">Cancelado</option>
-                            </select>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Salvar</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
     <!-- Bootstrap core JS -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" crossorigin="anonymous"></script>
@@ -139,12 +78,6 @@
         document.getElementById('enviar_form').addEventListener('click', () => {
             document.getElementById('form').submit()
         })
-    </script>
-    <script>
-        function modalDoacaoAlimento() {
-            const donationModal = new bootstrap.Modal(document.getElementById('donationModal'));
-            donationModal.show();
-        }
     </script>
 </body>
 </html>

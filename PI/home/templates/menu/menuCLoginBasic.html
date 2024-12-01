@@ -6,17 +6,29 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link btn btn-primary btn-lg text-black" href="
-                    {% if logout == 'empresa' %}
-                        {% url 'empresa_doacao' %}
-                    {% elif logout == 'pessoa' %}
-                        {% url 'pessoa_doacao' %}
-                    {% elif logout == 'ong' %}
-                        {% url 'home' %}
-                    {% endif %}
-                    ">{% if logout == 'ong' %}Ver minhas doações{% else %}Doação{% endif %}</a>
-                </li>
+                <li class="nav-item dropdown testeleft">
+                    <a class="nav-link btn btn-primary btn-lg text-black" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-target="#loginModal">
+                        Doação
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdown">
+                        {% if logout != 'ong' %}
+                            <li><a class="dropdown-item" href="{% if logout == 'empresa' %}{% url 'empresa_doacao_minha' 1 %}{% elif logout == 'pessoa' %}{% url 'pessoa_pagamento_proprio' 1 %}{% endif %}">Minhas doações</a></li>
+                        {% endif %}      
+                        <li><a class="dropdown-item" href="{% url 'empresa_doacao_lista' 1 %}">Doações</a></li>
+                        <li><a class="dropdown-item" href="{% url 'pessoa_pagamento_lista' 1 %}">Pagamentos</a></li>
+                        <li><a class="dropdown-item" href="{% url 'pessoa_pagamento_ranking' %}">Maiores contribuentes</a></li>
+                        <li>
+                            <a class="dropdown-item" href="
+                            {% if logout == 'empresa' %}
+                                {% url 'empresa_doacao' %}
+                            {% elif logout == 'pessoa' %}
+                                {% url 'pessoa_doacao' %}
+                            {% elif logout == 'ong' %}
+                                {% url 'doacao_recebida' 1 %}
+                            {% endif %}
+                            " aria-expanded="false" data-bs-target="#loginModal">{% if logout == 'ong' %}Ver minhas doações{% else %} Doar {% endif %}</a>
+                        </li>
+                    </ul>
                 <li class="nav-item">
                     <a class="nav-link btn btn-primary btn-lg text-black" href="{% url 'logout' %}" >Logout</a>
                 </li>

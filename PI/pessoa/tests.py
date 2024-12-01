@@ -104,7 +104,7 @@ class rendeniza_ranking_pagamento(BaseTestCase):
     def test_ranking_pagamento(self):
         Pessoa.objects.create(nome_pessoa = 'Bruno', valor_total_doado_pessoa = '2000')
         Pessoa.objects.create(nome_pessoa = 'Gabriel', valor_total_doado_pessoa = '5000')
-        resposta = self.client.get(reverse('pessoa_pagamento_ranking', kwargs={'numero_pagina': '1'}))
+        resposta = self.client.get(reverse('pessoa_pagamento_ranking'))
         self.assertTemplateUsed(resposta, 'ranking_pagamento.html')
         self.assertContains(resposta, '<tr><td>1</td><td>Gabriel</td><td>5000.0</td></tr><tr><td>2</td><td>Bruno</td><td>2000.0</td></tr>', html=True)
 

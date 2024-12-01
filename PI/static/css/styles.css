@@ -3962,7 +3962,7 @@ textarea.form-control-lg {
   .navbar-expand-lg .navbar-collapse {
     display: flex !important;
     flex-basis: auto;
-    margin-right: 120px !important;
+    margin-right: auto !important;
   }
   .navbar-expand-lg .navbar-toggler {
     display: none;
@@ -7370,6 +7370,10 @@ textarea.form-control-lg {
 
 .justify-content-center {
   justify-content: space-around;
+}
+
+.justify-content-center2 {
+  justify-content: center;
 }
 
 .justify-content-between {

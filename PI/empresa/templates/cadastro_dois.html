@@ -30,7 +30,7 @@
             <form action="{% url 'empresapostcad' %}" method="post">
                 {% csrf_token %}
 
-                <div class="row justify-content-center mb-3">
+                <div class="row justify-content-center2 mb-3">
                     <div class="col-md-3">
                         <label for="id_cep">CEP:</label>
                         <label id="cep_invalido" style="visibility: hidden;" class="text-danger ms-2">CEP inválido</label>
@@ -48,7 +48,7 @@
                     </div>
                 </div>
 
-                <div class="row justify-content-center mb-3">
+                <div class="row justify-content-center2 mb-3">
                     <div class="col-md-3">
                         <label for="id_cidade">Cidade:</label>
                         {{ form.cidade }}
@@ -60,7 +60,7 @@
                     </div>
                 </div>
 
-                <div class="row justify-content-center mb-3">
+                <div class="row justify-content-center2 mb-3">
                     <div class="col-md-3">
                         <label for="id_rua">Rua:</label>
                         {{ form.rua }}

@@ -11,37 +11,15 @@
     <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
 </head>
 <body id="page-top">
+
+    <script src="{% static 'script/Password.js' %}"></script>
+
     {% if logout %}
         {% include 'Menu/menuCLoginBasic.html' %}
     {% else %}
         {% include 'Menu/menuSLoginBasic.html' %}
     {% endif %}
     
-    <!-- Modal de Login -->
-    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="loginModalLabel">Login</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form onsubmit="return validateForm()">
-                        <div class="mb-3">
-                            <label for="email" class="form-label">E-mail</label>
-                            <input type="email" class="form-control" id="email" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="password" class="form-label">Senha</label>
-                            <input type="password" class="form-control" id="password" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary btn-black-text">Entrar</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <section class="page-section" id="gerenciar-doacoes">
         <div class="container">
             <form action="{% url 'empresa_doacao_localiza' numero_pagina=1 %}" method="post">

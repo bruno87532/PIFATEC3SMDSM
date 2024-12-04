@@ -6,6 +6,14 @@
                 Menu <i class="fas fa-bars ms-1"></i>
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
+                            <!-- Logo isolada à esquerda -->
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <img src="{% static 'css/assets/img/logoflor.png' %}" alt="Logo" class="logo-img"/>
+                        </a>
+                    </li>
+                </ul>
                 <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
                     <li class="nav-item"><a class="nav-link" href="#como-funciona">Como Funciona</a></li>
                     <li class="nav-item"><a class="nav-link" href="#services">Serviços</a></li>
@@ -14,8 +22,8 @@
                     <li class="nav-item"><a class="nav-link" href="#beneficio-fiscal">Benefícios</a></li>
                     <li class="nav-item"><a class="nav-link" href="#team">Contatos</a></li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link btn btn-primary btn-lg text-black" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-target="#loginModal">
-                            Doação
+                        <a class="nav-link dropdown-toggle menudrop" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-target="#loginModal">
+                            <span>Doação</span>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdown">
                             <li><a class="dropdown-item" href="{% url 'empresa_doacao_lista' 1 %}">Doações</a></li>
@@ -24,8 +32,8 @@
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link btn btn-primary btn-lg text-black" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-target="#loginModal">
-                            Cadastro
+                        <a class="nav-link btn btn-primary btn-lg text-black dropdown-toggle  menudrop" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-target="#loginModal">
+                            Cadastre-se
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdown">
                             <li><a class="dropdown-item" href="{% url 'empresagetcad' 1 %}">Empresa</a></li>

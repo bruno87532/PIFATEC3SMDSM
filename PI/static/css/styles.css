@@ -1112,6 +1112,10 @@ progress {
     flex: 0 0 auto;
     width: 50%;
   }
+
+  .errologin{
+    width: 33%;
+  }
   .col-md-7 {
     flex: 0 0 auto;
     width: 58.33333333%;
@@ -11327,4 +11331,13 @@ section#contact form#contactForm :-ms-input-placeholder {
 
 .altura{
   height: 250px;
+}
+
+
+/* Ajusta o tamanho da logo */
+.logo-img {
+  height: 50px; /* Altura da logo */
+  width: auto; /* Preserva a proporção da imagem */
+  border-radius: 10px;
+ 
 }

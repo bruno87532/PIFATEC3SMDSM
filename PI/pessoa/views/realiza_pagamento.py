@@ -39,7 +39,7 @@ class PessoaDoacao(View):
         return JsonResponse({'id': sessao_pagamento.id})
     
 def rendeniza_sucesso(request):
-    return render(request=request, template_name='success.html')
+    return render(request=request, template_name='success.html', context={'logout': 'pessoa'})
 
 def redireciona_sucesso(request):
     session_id = request.GET.get('session_id')

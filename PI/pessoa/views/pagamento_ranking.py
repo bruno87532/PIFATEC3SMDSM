@@ -18,7 +18,7 @@ class PessoaPagamentoRanking(View):
         lista_contexto = [
             {
                 'nome_pessoa': i.nome_pessoa,
-                'valor_total_doado_pessoa': i.valor_total_doado_pessoa
+                'valor_total_doado_pessoa': int(i.valor_total_doado_pessoa) if i.valor_total_doado_pessoa % 10 == 0 else i.valor_total_doado_pessoa
             } for i in pessoas
         ]
         return render(request=request, template_name='ranking_pagamento.html', context={'pessoas': lista_contexto, 'logout': context})

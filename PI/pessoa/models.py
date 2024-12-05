@@ -8,6 +8,7 @@ import uuid
 from djongo import models
 
 class Doacao(models.Model):
+    id = models.ObjectIdField(primary_key=True)
     id_pessoa = models.CharField(max_length=256)
     valor_doacao = models.FloatField()
     data_doado = models.DateField(auto_now_add=True)

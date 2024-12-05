@@ -22,25 +22,24 @@
     
     <section class="page-section" id="gerenciar-doacoes">
         <div class="container">
+            <div class="text-center mb-4">
+                <h2 class="section-heading text-uppercase">Doações de Produtos Alimentícios</h2>
+                <h3 class="section-subheading">Lista de doações recebidas</h3>
+            </div>
+
             <form action="{% url 'empresa_doacao_localiza' numero_pagina=1 %}" method="post">
                 {% csrf_token %}
-                <p>
-                    <label for="nome_empresa">Digite o nome da empresa</label>
-                    {% if erro %}
-                        <input type="text" name="nome_empresa" id="nome_empresa" value="{{ nome_empresa }}">
-                    {% else %}
-                        <input type="text" name="nome_empresa" id="nome_empresa">    
-                    {% endif %}
-                </p>
-                <p>
-                    <input type="submit" value="Procurar">
-                </p>
+                <div class="row justify-content-center mb-3">
+                    <div class="col-md-6">
+                        <label for="nome_empresa">Digite o nome da empresa</label>
+                        <input type="text" name="nome_empresa" id="nome_empresa" class="form-control">
+                    </div>
+                </div>
+                <div class="text-center">
+                    <input class="btn btn-primary btn-lg text-uppercase text-black" type="submit" value="Procurar">
+                </div>
             </form>
-            <div class="text-center">
-                <h2 class="section-heading text-uppercase">Doações de Produtos Alimentícios</h2>
-                <h3 class="section-subheading text-muted">Lista de doações recebidas</h3>
-            </div>
-                {% if not erro %}
+            {% if not erro %}
                     <table class="table">
                         <thead>
                             <tr>

@@ -19,6 +19,7 @@ class EmpresaDoacaoLocaliza(View):
         empresas = {empresa.id: empresa.nome for empresa in Empresa.objects.all()}
         lista_empresas = [i for i, e in empresas.items() if e == nome_empresa]
         doacoes = list(Doacao.objects.filter(id_empresa__in=lista_empresas).values('id', 'id_empresa', 'nome_produto', 'quantidade_produto', 'unidade_medida_produto', 'data_doado_produto', 'disponivel_produto'))
+        print(Doacao.objects.filter(id_empresa=1))
         return empresas, doacoes, context
     def get(self, request, numero_pagina):
         if 'nome_empresa' in request.session:
